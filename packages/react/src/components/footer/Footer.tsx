@@ -3,7 +3,6 @@ import React, { useReducer } from 'react';
 // import core base styles
 import 'hds-core';
 import styles from './Footer.module.scss';
-import { Logo, LogoLanguage } from '../logo';
 import { Koros, KorosType } from '../koros';
 import classNames from '../../utils/classNames';
 import { FooterNavigation } from './footerNavigation/FooterNavigation';
@@ -30,11 +29,6 @@ export type FooterProps = React.PropsWithChildren<{
    * Koros type to use in the footer
    */
   korosType?: KorosType;
-  /**
-   * The language of the Helsinki-logo
-   * @default 'fi'
-   */
-  logoLanguage?: LogoLanguage;
   /**
    * Defines the footer theme
    */
@@ -63,7 +57,6 @@ export const Footer = ({
   className,
   footerProps,
   korosType = 'basic',
-  logoLanguage = 'fi',
   theme = 'light',
   title,
 }: FooterProps) => {
@@ -92,10 +85,7 @@ export const Footer = ({
         <Koros className={classNames(styles.koros, styles[korosType])} type={korosType} />
         <div className={styles.footerContent}>
           <section className={classNames(styles.navigationContainer, styles[navigationVariant])}>
-            <div className={styles.titleWrapper}>
-              <Logo size="medium" language={logoLanguage} aria-hidden />
-              {title && <h2 className={styles.title}>{title}</h2>}
-            </div>
+            <div className={styles.titleWrapper}>{title && <h2 className={styles.title}>{title}</h2>}</div>
             {navigation}
           </section>
           {childrenWithoutNavigation}
