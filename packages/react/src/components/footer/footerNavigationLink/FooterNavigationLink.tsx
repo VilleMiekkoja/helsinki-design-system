@@ -2,7 +2,7 @@ import React from 'react';
 
 // import core base styles
 import 'hds-core';
-import styles from './FooterItem.module.scss';
+import styles from './FooterNavigationLink.module.scss';
 import { MergeElementProps } from '../../../common/types';
 import classNames from '../../../utils/classNames';
 import { IconAngleRight } from '../../../icons';
@@ -22,13 +22,17 @@ type ItemProps<Element> = React.PropsWithChildren<{
   label?: string | React.ReactNode;
   /**
    * Whether the item should be displayed as an sub item in a sitemap item group
+   * @internal
    */
   subItem?: boolean;
 }>;
 
-export type FooterItemProps<Element extends React.ElementType = 'a'> = MergeElementProps<Element, ItemProps<Element>>;
+export type FooterNavigationLinkProps<Element extends React.ElementType = 'a'> = MergeElementProps<
+  Element,
+  ItemProps<Element>
+>;
 
-export const FooterItem = <T extends React.ElementType = 'a'>({
+export const FooterNavigationLink = <T extends React.ElementType = 'a'>({
   as,
   children,
   className,
@@ -36,7 +40,7 @@ export const FooterItem = <T extends React.ElementType = 'a'>({
   label,
   subItem = false,
   ...rest
-}: FooterItemProps<T>) => {
+}: FooterNavigationLinkProps<T>) => {
   const Item: React.ElementType = as;
 
   return (
@@ -50,6 +54,6 @@ export const FooterItem = <T extends React.ElementType = 'a'>({
   );
 };
 
-FooterItem.defaultProps = {
+FooterNavigationLink.defaultProps = {
   as: 'a',
 };
