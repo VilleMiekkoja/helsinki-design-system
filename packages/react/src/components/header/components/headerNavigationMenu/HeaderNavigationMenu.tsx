@@ -38,23 +38,20 @@ export const HeaderNavigationMenu = ({ ariaLabel, children, id }: HeaderNavigati
       <ul className={styles.headerNavigationMenuList}>
         <HeaderNavigationMenuContext.Provider value={context}>
           {Children.map(childElements, (child, index) => {
-            if (React.isValidElement(child)) {
-              const linkContainerClasses = child.props.active
-                ? classNames(styles.headerNavigationMenuLinkContent, styles.headerNavigationMenuLinkContentActive)
-                : styles.headerNavigationMenuLinkContent;
-              return (
-                // eslint-disable-next-line react/no-array-index-key
-                <li key={index} className={styles.headerNavigationMenuLinkContainer}>
-                  <span className={linkContainerClasses}>
-                    {cloneElement(child as React.ReactElement, {
-                      className: classNames(child.props.className, styles.headerNavigationMenuLink),
-                      index,
-                    })}
-                  </span>
-                </li>
-              );
-            }
-            return null;
+            const linkContainerClasses = child.props.active
+              ? classNames(styles.headerNavigationMenuLinkContent, styles.headerNavigationMenuLinkContentActive)
+              : styles.headerNavigationMenuLinkContent;
+            return (
+              // eslint-disable-next-line react/no-array-index-key
+              <li key={index} className={styles.headerNavigationMenuLinkContainer}>
+                <span className={linkContainerClasses}>
+                  {cloneElement(child, {
+                    className: classNames(child.props.className, styles.headerNavigationMenuLink),
+                    index,
+                  })}
+                </span>
+              </li>
+            );
           })}
         </HeaderNavigationMenuContext.Provider>
       </ul>

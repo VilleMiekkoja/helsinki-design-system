@@ -53,17 +53,14 @@ export const HeaderUniversalBar = ({
           <NavigationLink href={primaryLinkHref} label={primaryLinkText} className={styles.universalBarLink} />
         </li>
         {Children.map(childElements, (child, index) => {
-          if (React.isValidElement(child)) {
-            return (
-              // eslint-disable-next-line react/no-array-index-key
-              <li key={`secondary-link-${index}`} className={styles.universalBarSecondaryLinkContainer}>
-                {cloneElement(child as React.ReactElement, {
-                  className: classNames(child.props.className, styles.universalBarLink),
-                })}
-              </li>
-            );
-          }
-          return null;
+          return (
+            // eslint-disable-next-line react/no-array-index-key
+            <li key={`secondary-link-${index}`} className={styles.universalBarSecondaryLinkContainer}>
+              {cloneElement(child, {
+                className: classNames(child.props.className, styles.universalBarLink),
+              })}
+            </li>
+          );
         })}
       </ul>
     </nav>

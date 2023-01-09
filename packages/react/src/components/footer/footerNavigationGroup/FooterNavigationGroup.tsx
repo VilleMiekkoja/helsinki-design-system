@@ -37,26 +37,23 @@ export const FooterNavigationGroup = ({
   id,
 }: FooterNavigationGroupProps) => {
   const childElements = getChildElementsEvenIfContainerInbetween(children);
-  console.log(headingClassName);
+  console.log(hasSubLinks);
   return (
     <nav role="navigation" aria-label={ariaLabel} id={id} className={classNames(styles.navigationGroup, className)}>
       <ul className={styles.navigationGroupList}>
         {Children.map(childElements, (child, index) => {
-          if (React.isValidElement(child)) {
-            return (
-              // eslint-disable-next-line react/no-array-index-key
-              <li key={index} className={styles.navigationGroupLinkContainer}>
-                {cloneElement(child as React.ReactElement, {
-                  className: classNames(
-                    child.props.className,
-                    (child.type as FCWithName).componentName === 'FooterNavigationHeading' && headingClassName,
-                    styles.navigationGroupLink,
-                  ),
-                })}
-              </li>
-            );
-          }
-          return null;
+          return (
+            // eslint-disable-next-line react/no-array-index-key
+            <li key={index} className={styles.navigationGroupLinkContainer}>
+              {cloneElement(child, {
+                className: classNames(
+                  child.props.className,
+                  (child.type as FCWithName).componentName === 'FooterNavigationHeading' && headingClassName,
+                  styles.navigationGroupLink,
+                ),
+              })}
+            </li>
+          );
         })}
       </ul>
     </nav>
