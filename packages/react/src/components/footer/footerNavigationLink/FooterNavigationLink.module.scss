@@ -1,4 +1,4 @@
-@value small-down from "../../../styles/breakpoints.css";
+@value large-down from "../../../styles/breakpoints.css";
 @import "../common";
 
 .subItem.subItem {
@@ -25,10 +25,8 @@
   }
 }
 
-
-@media small-down {
+@media large-down {
   .item.item {
     font-size: var(--fontsize-body-m);
   }
 }
-
