@@ -18,19 +18,8 @@ type FooterNavigationGroupProps = React.PropsWithChildren<{
    * ID of the navigation element.
    */
   id?: string;
-  /**
-   * Class name for link item.
-   * @internal
-   */
-  linkClassName?: string;
 }>;
-export const FooterNavigationGroup = ({
-  ariaLabel,
-  className,
-  children,
-  id,
-  linkClassName,
-}: FooterNavigationGroupProps) => {
+export const FooterNavigationGroup = ({ ariaLabel, className, children, id }: FooterNavigationGroupProps) => {
   const childElements = getChildElementsEvenIfContainerInbetween(children);
 
   return (
@@ -41,7 +30,6 @@ export const FooterNavigationGroup = ({
             // eslint-disable-next-line react/no-array-index-key
             <li key={index}>
               {cloneElement(child, {
-                className: classNames(child.props.className, styles.navigationGroupLink, linkClassName),
                 ...((child.type as FCWithName).componentName !== 'FooterNavigationHeading' && {
                   subItem: true,
                 }),
