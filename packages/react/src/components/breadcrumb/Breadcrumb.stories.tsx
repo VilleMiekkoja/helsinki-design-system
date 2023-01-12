@@ -22,6 +22,8 @@ export default {
   },
 };
 
+export const Example = (args) => <Breadcrumb {...args} />;
+
 export const ExampleInHeader = (args) => {
   return (
     <Header>
@@ -62,15 +64,18 @@ export const ExampleInHeader = (args) => {
   );
 };
 
-export const Example = (args) => <Breadcrumb {...args} />;
-export const NonActiveLastItem = (args) => (
+ExampleInHeader.storyName = 'Breadcrumb in header';
+
+export const LastItemIsLink = (args) => (
   <Breadcrumb
     {...args}
     list={[
-      { title: 'Home 0', path: '/' },
+      { title: 'Home', path: '/' },
       { title: 'Level 1', path: '/level1' },
-      { title: 'Level 2', path: '/level2' },
-      { title: 'Current page', path: null },
+      { title: 'Level 2', path: '/level1/level2' },
+      { title: 'Level 3', path: '/level1/level2/level3' },
     ]}
   />
 );
+
+LastItemIsLink.storyName = 'Last item a link';
