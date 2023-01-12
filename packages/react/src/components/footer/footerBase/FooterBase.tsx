@@ -7,6 +7,7 @@ import { Logo, LogoLanguage } from '../../logo';
 import { IconArrowUp } from '../../../icons';
 import getKeyboardFocusableElements from '../../../utils/getKeyboardFocusableElements';
 import { FooterVariant } from '../Footer.interface';
+import { FooterNavigationLink } from '../footerNavigationLink/FooterNavigationLink';
 
 export type FooterBaseProps = React.PropsWithChildren<{
   /**
@@ -21,6 +22,10 @@ export type FooterBaseProps = React.PropsWithChildren<{
    * Text to be displayed after the copyright holder text
    */
   copyrightText?: React.ReactNode;
+  /**
+   * Link for the logo. Should direct to the main page.
+   */
+  logoHref?: string;
   /**
    * The language of the Helsinki-logo
    * @default 'fi'
@@ -51,6 +56,7 @@ export const FooterBase = ({
   children,
   copyrightHolder,
   copyrightText,
+  logoHref,
   logoLanguage = 'fi',
   onBackToTopClick,
   showBackToTopButton = true,
@@ -61,7 +67,11 @@ export const FooterBase = ({
     <div className={styles.base}>
       <hr className={styles.divider} aria-hidden />
       <div className={styles.logoWrapper}>
-        <Logo size="medium" language={logoLanguage} aria-hidden />
+        <FooterNavigationLink
+          tabIndex={0}
+          icon={<Logo size="medium" language={logoLanguage} aria-hidden />}
+          href={logoHref}
+        />
       </div>
       {(copyrightHolder || copyrightText) && (
         <div className={styles.copyright}>

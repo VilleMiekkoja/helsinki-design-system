@@ -1,4 +1,4 @@
-import React, { Children, cloneElement } from 'react';
+import React from 'react';
 
 // import core base styles
 import 'hds-core';
