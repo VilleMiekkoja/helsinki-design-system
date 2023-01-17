@@ -21,32 +21,32 @@ export default ({ children, pageContext }) => <TabsLayout pageContext={pageConte
 ```jsx
  <Footer title="Helsinki Design System" footerAriaLabel="HDS Footer">
     <Footer.Navigation navigationAriaLabel="HDS Footer navigation">
-        <Footer.Item label="Item" />
-        <Footer.Item label="Item" />
-        <Footer.Item label="Item" />
-        <Footer.Item label="Item" />
-        <Footer.Item label="Item" />
-        <Footer.Item label="Item" />
-        <Footer.Item label="Item" />
-        <Footer.Item label="Item" />
+        <Footer.NavigationLink label="Item" />
+        <Footer.NavigationLink label="Item" />
+        <Footer.NavigationLink label="Item" />
+        <Footer.NavigationLink label="Item" />
+        <Footer.NavigationLink label="Item" />
+        <Footer.NavigationLink label="Item" />
+        <Footer.NavigationLink label="Item" />
+        <Footer.NavigationLink label="Item" />
     </Footer.Navigation>
     <Footer.Utilities backToTopLabel="Back to top">
         <Footer.SoMe>
-          <Footer.Item icon={<IconFacebook />} />
-          <Footer.Item icon={<IconTwitter />} />
-          <Footer.Item icon={<IconInstagram />} />
-          <Footer.Item icon={<IconYoutube />} />
-          <Footer.Item icon={<IconTiktok />} />
+          <Footer.NavigationLink icon={<IconFacebook />} />
+          <Footer.NavigationLink icon={<IconTwitter />} />
+          <Footer.NavigationLink icon={<IconInstagram />} />
+          <Footer.NavigationLink icon={<IconYoutube />} />
+          <Footer.NavigationLink icon={<IconTiktok />} />
         </Footer.SoMe>
-        <Footer.Item label="Contact us" />
-        <Footer.Item label="Give feedback" />
+        <Footer.NavigationLink label="Contact us" />
+        <Footer.NavigationLink label="Give feedback" />
       </Footer.Utilities>
       <Footer.Base copyrightHolder="Copyright" copyrightText="All rights reserved">
-        <Footer.Item label="Link" />
-        <Footer.Item label="Link" />
-        <Footer.Item label="Link" />
-        <Footer.Item label="Link" />
-        <Footer.Item label="Link" />
+        <Footer.NavigationLink label="Link" />
+        <Footer.NavigationLink label="Link" />
+        <Footer.NavigationLink label="Link" />
+        <Footer.NavigationLink label="Link" />
+        <Footer.NavigationLink label="Link" />
       </Footer.Base>
   </Footer>
 ```
@@ -63,33 +63,33 @@ export default ({ children, pageContext }) => <TabsLayout pageContext={pageConte
 <>
 <Footer title="Helsinki Design System" footerAriaLabel="HDS Footer">
     <Footer.Navigation navigationAriaLabel="HDS Footer navigation">
-        <Footer.Item label="Item" />
-        <Footer.Item label="Item" />
-        <Footer.Item label="Item" />
-        <Footer.Item label="Item" />
-        <Footer.Item label="Item" />
-        <Footer.Item label="Item" />
+        <Footer.NavigationLink label="Item" />
+        <Footer.NavigationLink label="Item" />
+        <Footer.NavigationLink label="Item" />
+        <Footer.NavigationLink label="Item" />
+        <Footer.NavigationLink label="Item" />
+        <Footer.NavigationLink label="Item" />
     </Footer.Navigation>
     <Footer.Base copyrightHolder="Copyright" copyrightText="All rights reserved">
-      <Footer.Item label="Link" />
-      <Footer.Item label="Link" />
-      <Footer.Item label="Link" />
+      <Footer.NavigationLink label="Link" />
+      <Footer.NavigationLink label="Link" />
+      <Footer.NavigationLink label="Link" />
     </Footer.Base>
   </Footer>
   <br />
   <Footer title="Helsinki Design System" theme="dark" footerAriaLabel="HDS Footer">
     <Footer.Navigation navigationAriaLabel="HDS Footer navigation">
-        <Footer.Item label="Item" />
-        <Footer.Item label="Item" />
-        <Footer.Item label="Item" />
-        <Footer.Item label="Item" />
-        <Footer.Item label="Item" />
-        <Footer.Item label="Item" />
+        <Footer.NavigationLink label="Item" />
+        <Footer.NavigationLink label="Item" />
+        <Footer.NavigationLink label="Item" />
+        <Footer.NavigationLink label="Item" />
+        <Footer.NavigationLink label="Item" />
+        <Footer.NavigationLink label="Item" />
     </Footer.Navigation>
     <Footer.Base copyrightHolder="Copyright" copyrightText="All rights reserved">
-      <Footer.Item label="Link" />
-      <Footer.Item label="Link" />
-      <Footer.Item label="Link" />
+      <Footer.NavigationLink label="Link" />
+      <Footer.NavigationLink label="Link" />
+      <Footer.NavigationLink label="Link" />
     </Footer.Base>
 </Footer>
 </>
@@ -106,38 +106,30 @@ export default ({ children, pageContext }) => <TabsLayout pageContext={pageConte
 <>
 <Footer title="Default" footerAriaLabel="HDS Footer">
   <Footer.Navigation navigationAriaLabel="HDS Footer navigation">
-      <Footer.Item label="Item" />
-      <Footer.Item label="Item" />
-      <Footer.Item label="Item" />
-      <Footer.Item label="Item" />
-      <Footer.Item label="Item" />
-      <Footer.Item label="Item" />
-      <Footer.Item label="Item" />
-      <Footer.Item label="Item" />
+      <Footer.NavigationLink label="Item" />
+      <Footer.NavigationLink label="Item" />
+      <Footer.NavigationLink label="Item" />
+      <Footer.NavigationLink label="Item" />
+      <Footer.NavigationLink label="Item" />
+      <Footer.NavigationLink label="Item" />
+      <Footer.NavigationLink label="Item" />
+      <Footer.NavigationLink label="Item" />
   </Footer.Navigation>
 </Footer>
 <br />
-<Footer title="Minimal" footerAriaLabel="HDS Footer">
-  <Footer.Navigation variant="minimal" navigationAriaLabel="HDS Footer navigation">
-      <Footer.Item label="Item" />
-      <Footer.Item label="Item" />
-      <Footer.Item label="Item" />
-      <Footer.Item label="Item" />
-  </Footer.Navigation>
-</Footer>
 <br />
 <Footer title="Sitemap" footerAriaLabel="HDS Footer">
-  <Footer.Navigation variant="sitemap" navigationAriaLabel="HDS Footer navigation">
+  <Footer.Navigation navigationAriaLabel="HDS Footer navigation">
     {[1, 2, 3, 4].map((key) =>
-       <Footer.ItemGroup key={key}>
-          <Footer.Item label="Item" />
-          <Footer.Item subItem label="Sub item" />
-          <Footer.Item subItem label="Sub item" />
-          <Footer.Item subItem label="Sub item" />
-          <Footer.Item subItem label="Sub item" />
-          <Footer.Item subItem label="Sub item" />
-          <Footer.Item subItem label="Sub item" />
-      </Footer.ItemGroup>
+       <Footer.NavigationGroup key={key}>
+          <Footer.NavigationHeading href="http://www.google.com" onClick={(e) => e.preventDefault()} label="Item" />
+          <Footer.NavigationLink label="Sub item" />
+          <Footer.NavigationLink label="Sub item" />
+          <Footer.NavigationLink label="Sub item" />
+          <Footer.NavigationLink label="Sub item" />
+          <Footer.NavigationLink label="Sub item" />
+          <Footer.NavigationLink label="Sub item" />
+      </Footer.NavigationGroup>
     )}
   </Footer.Navigation>
 </Footer>
