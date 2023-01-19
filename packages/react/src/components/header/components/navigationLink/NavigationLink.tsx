@@ -1,4 +1,4 @@
-import React, { cloneElement, useCallback, useContext, useEffect, useRef, useState } from 'react';
+import React, { cloneElement, useCallback, useEffect, useRef, useState } from 'react';
 
 // import core base styles
 import 'hds-core';
@@ -6,7 +6,7 @@ import styles from './NavigationLink.module.scss';
 import classNames from '../../../../utils/classNames';
 import { Link } from '../../../link';
 import { NavigationLinkDropdown, NavigationLinkInteraction, DropdownMenuPosition } from './navigationLinkDropdown';
-import { HeaderNavigationMenuContext } from '../headerNavigationMenu/HeaderNavigationMenuContext';
+import { useHeaderNavigationMenuContext } from '../headerNavigationMenu/HeaderNavigationMenuContext';
 import { DropdownDirection } from './types';
 
 export type NavigationLinkProps = Omit<
@@ -21,6 +21,9 @@ export type NavigationLinkProps = Omit<
    * Additional class names to apply.
    */
   className?: string;
+  wrapperClassName?: string;
+  dropdownClassName?: string;
+  dropdownLinkClassName?: string;
   /**
    * Set the direction where the dropdown should appear. Use DropdownDirection.Dynamic for nested dropdowns as it sets the dropdown menu to the right but if there's no space it'll put it to the left.
    * @default DropdownDirection.Down;
@@ -58,8 +61,11 @@ export type NavigationLinkProps = Omit<
 export const NavigationLink = ({
   active,
   className,
+  wrapperClassName,
   dropdownDirection = DropdownDirection.Down,
+  dropdownClassName,
   dropdownLinks,
+  dropdownLinkClassName,
   href,
   index,
   label,
@@ -70,7 +76,7 @@ export const NavigationLink = ({
   const [isDropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const [dropdownOpenedBy, setDropdownOpenedBy] = useState<null | NavigationLinkInteraction>(null);
   const [dynamicPosition, setDynamicPosition] = useState<null | DropdownMenuPosition>(null);
-  const { openMainNavIndex, setOpenMainNavIndex } = useContext(HeaderNavigationMenuContext);
+  const { openMainNavIndex, setOpenMainNavIndex } = useHeaderNavigationMenuContext();
   const containerRef = useRef<HTMLSpanElement>(null);
   const isSubNavLink = openSubNavIndex !== undefined && setOpenSubNavIndex !== undefined;
 
@@ -152,7 +158,7 @@ export const NavigationLink = ({
 
   return (
     <span
-      className={styles.navigationLinkWrapper}
+      className={classNames(styles.navigationLinkWrapper, wrapperClassName)}
       {...(dropdownLinks &&
         dropdownOpenedBy === NavigationLinkInteraction.Hover && {
           onMouseLeave: () => handleDropdownOpen(false),
@@ -176,11 +182,15 @@ export const NavigationLink = ({
           open={isDropdownOpen}
           setOpen={handleDropdownOpen}
           index={index}
+          className={dropdownClassName}
           dynamicPosition={dynamicPosition}
         >
           {React.Children.map(dropdownLinks, (child, childIndex) => {
             return cloneElement(child as React.ReactElement, {
               key: childIndex,
+              wrapperClassName,
+              dropdownClassName,
+              dropdownLinkClassName,
             });
           })}
         </NavigationLinkDropdown>

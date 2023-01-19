@@ -4,9 +4,9 @@ import React from 'react';
 import 'hds-core';
 import styles from './Header.module.scss';
 import classNames from '../../utils/classNames';
-import { HeaderContext, HeaderContextProps } from './HeaderContext';
-import { useMediaQueryLessThan } from '../../hooks/useMediaQuery';
+import { HeaderContextProvider } from './HeaderContext';
 import { HeaderUniversalBar } from './components/headerUniversalBar';
+import { HeaderActionBar } from './components/headerActionBar';
 import { HeaderNavigationMenu } from './components/headerNavigationMenu';
 import { NavigationLink } from './components/navigationLink';
 
@@ -22,17 +22,16 @@ export type HeaderProps = React.PropsWithChildren<{
 }>;
 
 export const Header = ({ children, className, id }: HeaderProps) => {
-  const isSmallScreen = useMediaQueryLessThan('s');
-  const context: HeaderContextProps = { isSmallScreen };
   return (
-    <HeaderContext.Provider value={context}>
+    <HeaderContextProvider>
       <header id={id} className={classNames(styles.header, className)}>
         <div className={styles.headerBackgroundWrapper}>{children}</div>
       </header>
-    </HeaderContext.Provider>
+    </HeaderContextProvider>
   );
 };
 
 Header.UniversalBar = HeaderUniversalBar;
+Header.ActionBar = HeaderActionBar;
 Header.NavigationMenu = HeaderNavigationMenu;
 Header.NavigationLink = NavigationLink;

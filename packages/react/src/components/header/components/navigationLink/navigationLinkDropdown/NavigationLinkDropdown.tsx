@@ -15,6 +15,8 @@ export enum DropdownMenuPosition {
   Right = 'right',
 }
 export type NavigationLinkDropdownProps = React.PropsWithChildren<{
+  className?: string;
+
   /**
    * Direction for dropdown position.
    * @default DropdownMenuPosition.Right
@@ -38,6 +40,7 @@ export type NavigationLinkDropdownProps = React.PropsWithChildren<{
 export const NavigationLinkDropdown = ({
   children,
   dynamicPosition = DropdownMenuPosition.Right,
+  className,
   index,
   open,
   setOpen,
@@ -53,7 +56,7 @@ export const NavigationLinkDropdown = ({
   const handleMenuButtonClick = () => setOpen(!open, NavigationLinkInteraction.Click);
 
   return (
-    <div className={styles.navigationLinkDropdownContainer}>
+    <>
       <button
         type="button"
         className={styles.button}
@@ -63,7 +66,7 @@ export const NavigationLinkDropdown = ({
         <IconAngleDown className={chevronClasses} />
       </button>
       <ul
-        className={dropdownDirectionClass}
+        className={classNames(dropdownDirectionClass, className)}
         {...(!open && { style: { display: 'none' } })}
         data-testid={`dropdown-menu-${index}`}
         ref={ref}
@@ -86,7 +89,7 @@ export const NavigationLinkDropdown = ({
           );
         })}
       </ul>
-    </div>
+    </>
   );
 };
 NavigationLinkDropdown.componentName = 'HDSNavigationLinkDropdown';
