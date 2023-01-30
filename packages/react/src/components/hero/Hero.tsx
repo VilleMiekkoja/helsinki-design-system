@@ -6,6 +6,8 @@ import styles from './Hero.module.scss';
 import classNames from '../../utils/classNames';
 import { useTheme } from '../../hooks/useTheme';
 import { Koros, KorosProps } from '../koros';
+import { getChildrenAsArray } from '../../utils/getChildren';
+import { FCWithName } from '../../common/types';
 
 export type HeroProps = React.PropsWithChildren<{
   theme?: HeroCustomTheme;
@@ -17,9 +19,44 @@ export interface HeroCustomTheme {
   '--color'?: string;
 }
 
+export type ChildProps = {
+  imageChildIndex: number;
+  cardChildIndex: number;
+  components: React.ReactElement<React.ImgHTMLAttributes<HTMLImageElement>>[];
+};
+
+const pickChildProps = (children: React.ReactNode): ChildProps => {
+  const childProps: ChildProps = {
+    imageChildIndex: -1,
+    cardChildIndex: -1,
+    components: [],
+  };
+
+  getChildrenAsArray(children).forEach((child, index) => {
+    const { componentName } = (child.type as FCWithName) || {};
+    childProps.components.push(child);
+    switch (componentName) {
+      case 'ImageContainer': {
+        childProps.imageChildIndex = index;
+        break;
+      }
+      case 'Card': {
+        childProps.cardChildIndex = index;
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+  });
+  return childProps;
+};
+
 const Card = ({ children }: React.PropsWithChildren<unknown>) => {
   return <div className={styles.card}>{children}</div>;
 };
+
+Card.componentName = 'Card';
 
 const ImageContainer = (props: React.ImgHTMLAttributes<HTMLImageElement>) => {
   return (
@@ -28,12 +65,26 @@ const ImageContainer = (props: React.ImgHTMLAttributes<HTMLImageElement>) => {
   );
 };
 
+ImageContainer.componentName = 'ImageContainer';
+
 export const Hero = ({ children, theme, koros }: HeroProps) => {
   const customThemeClass = useTheme<HeroCustomTheme>(styles.hero, theme);
+  const { components, imageChildIndex } = pickChildProps(children);
+  const Content = () => <>{components.map((c) => c)}</>;
+  const ImageClone = () => {
+    if (imageChildIndex === -1) {
+      return null;
+    }
+    const imageComponent = components[imageChildIndex];
+    return React.cloneElement(imageComponent, imageComponent.props);
+  };
   return (
     <div className={classNames(styles.hero, customThemeClass)}>
-      <div className={classNames(styles.content, styles.twoColumns)}>{children}</div>
+      <div className={classNames(styles.content, styles.twoColumns)}>
+        <Content />
+      </div>
       <Koros {...koros} flipHorizontal style={{ fill: 'var(--background-color)' }} />
+      <ImageClone />
     </div>
   );
 };
