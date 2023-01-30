@@ -5,9 +5,11 @@ import 'hds-core';
 import styles from './Hero.module.scss';
 import classNames from '../../utils/classNames';
 import { useTheme } from '../../hooks/useTheme';
+import { Koros, KorosProps } from '../koros';
 
 export type HeroProps = React.PropsWithChildren<{
   theme?: HeroCustomTheme;
+  koros?: Exclude<KorosProps, 'flipHorizontal'>;
 }>;
 
 export interface HeroCustomTheme {
@@ -26,9 +28,14 @@ const ImageContainer = (props: React.ImgHTMLAttributes<HTMLImageElement>) => {
   );
 };
 
-export const Hero = ({ children, theme }: HeroProps) => {
+export const Hero = ({ children, theme, koros }: HeroProps) => {
   const customThemeClass = useTheme<HeroCustomTheme>(styles.hero, theme);
-  return <div className={classNames(styles.hero, styles.twoColumns, customThemeClass)}>{children}</div>;
+  return (
+    <div className={classNames(styles.hero, customThemeClass)}>
+      <div className={classNames(styles.content, styles.twoColumns)}>{children}</div>
+      <Koros {...koros} flipHorizontal style={{ fill: 'var(--background-color)' }} />
+    </div>
+  );
 };
 
 Hero.Card = Card;
