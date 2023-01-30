@@ -1,6 +1,9 @@
 import React from 'react';
 
 import { Hero } from './Hero';
+import { Button } from '../button/Button';
+// @ts-ignore
+import imageFile from '../../assets/img/placeholder_1920x1080.jpg';
 
 export default {
   component: Hero,
@@ -11,4 +14,15 @@ export default {
   args: {},
 };
 
-export const Example = (args) => <Hero {...args}>Hero</Hero>;
+export const Example = (args) => (
+  <Hero {...args}>
+    <Hero.Card>
+      <h1>This is a hero header</h1>
+      <p>This is a hero text with lorem ipsum</p>
+      <Button variant="secondary" role="link">
+        Button
+      </Button>
+    </Hero.Card>
+    <Hero.Image src={imageFile} />
+  </Hero>
+);
