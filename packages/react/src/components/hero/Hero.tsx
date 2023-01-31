@@ -70,7 +70,16 @@ ImageContainer.componentName = 'ImageContainer';
 export const Hero = ({ children, theme, koros }: HeroProps) => {
   const customThemeClass = useTheme<HeroCustomTheme>(styles.hero, theme);
   const { components, imageChildIndex } = pickChildProps(children);
-  const Content = () => <>{components.map((c) => c)}</>;
+  const Content = () => (
+    <>
+      {components.map((c, index) => {
+        if (index === imageChildIndex) {
+          return <div className={styles.imageContainer}>{c}</div>;
+        }
+        return c;
+      })}
+    </>
+  );
   const ImageClone = () => {
     if (imageChildIndex === -1) {
       return null;
@@ -84,7 +93,9 @@ export const Hero = ({ children, theme, koros }: HeroProps) => {
         <Content />
       </div>
       <Koros {...koros} flipHorizontal style={{ fill: 'var(--background-color)' }} />
-      <ImageClone />
+      <div className={classNames(styles.imageContainer, styles.imageBelowKoros)}>
+        <ImageClone />
+      </div>
     </div>
   );
 };

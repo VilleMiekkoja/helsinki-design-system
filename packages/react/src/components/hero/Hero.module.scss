@@ -1,3 +1,5 @@
+@value small-up from "../../styles/breakpoints.css";
+
 .hero {
   --background-color: var(--color-white);
   --border-color: var(--color-black-90);
@@ -20,9 +22,9 @@
 
 .twoColumns {
   display: flex;
-  flex-direction: row;
-  > * {
-    width: 50%;
+  flex-direction: column;
+  .imageContainer {
+    display: none;
   }
 }
 
@@ -30,6 +32,30 @@
   display: block;
 }
 
+.imageContainer {
+  display: flex;
+}
+
+.imageBelowKoros {
+  display: block;
+}
+
 .image {
   display: block;
+  width: 100%;
+}
+
+@media small-up {
+  .imageBelowKoros {
+    display: none;
+  }
+  .twoColumns {
+    flex-direction: row;
+    > * {
+      width: 50%;
+    }
+    .imageContainer {
+      display: block;
+    }
+  }
 }
