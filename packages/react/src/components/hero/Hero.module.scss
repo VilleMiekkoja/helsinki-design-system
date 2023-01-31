@@ -7,6 +7,7 @@
   --border-width: 2px;
   --padding-horizontal: var(--spacing-l);
   --padding-vertical: var(--spacing-m);
+  --image-aspect-ratio: unset;
 
   color: var(--color);
 
@@ -23,6 +24,7 @@
 .twoColumns {
   display: flex;
   flex-direction: column;
+  align-items: center;
   .imageContainer {
     display: none;
   }
@@ -34,6 +36,7 @@
 
 .imageContainer {
   display: flex;
+  aspect-ratio: var(--image-aspect-ratio);
 }
 
 .imageBelowKoros {
@@ -43,6 +46,14 @@
 .image {
   display: block;
   width: 100%;
+}
+
+.fixedImageAspectRatio {
+  .image {
+    object-fit: fill;
+    width: 100%;
+    height: 100%;
+  }
 }
 
 @media small-up {

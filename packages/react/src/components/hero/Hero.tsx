@@ -12,11 +12,13 @@ import { FCWithName } from '../../common/types';
 export type HeroProps = React.PropsWithChildren<{
   theme?: HeroCustomTheme;
   koros?: Exclude<KorosProps, 'flipHorizontal'>;
+  imageAspectRatio?: string;
 }>;
 
 export interface HeroCustomTheme {
   '--background-color'?: string;
   '--color'?: string;
+  '--image-aspect-ratio'?: string;
 }
 
 export type ChildProps = {
@@ -67,14 +69,20 @@ const ImageContainer = (props: React.ImgHTMLAttributes<HTMLImageElement>) => {
 
 ImageContainer.componentName = 'ImageContainer';
 
-export const Hero = ({ children, theme, koros }: HeroProps) => {
-  const customThemeClass = useTheme<HeroCustomTheme>(styles.hero, theme);
+export const Hero = ({ children, theme, koros, imageAspectRatio }: HeroProps) => {
+  const combinedTheme = imageAspectRatio
+    ? { ...theme, '--image-aspect-ratio': imageAspectRatio.replace(/(\D)+/g, ' / ') }
+    : theme;
+  const customThemeClass = useTheme<HeroCustomTheme>(styles.hero, combinedTheme);
   const { components, imageChildIndex } = pickChildProps(children);
+  const imageContainerClasses = imageAspectRatio
+    ? classNames(styles.imageContainer, styles.fixedImageAspectRatio)
+    : styles.imageContainer;
   const Content = () => (
     <>
       {components.map((c, index) => {
         if (index === imageChildIndex) {
-          return <div className={styles.imageContainer}>{c}</div>;
+          return <div className={imageContainerClasses}>{c}</div>;
         }
         return c;
       })}
@@ -93,7 +101,7 @@ export const Hero = ({ children, theme, koros }: HeroProps) => {
         <Content />
       </div>
       <Koros {...koros} flipHorizontal style={{ fill: 'var(--background-color)' }} />
-      <div className={classNames(styles.imageContainer, styles.imageBelowKoros)}>
+      <div className={classNames(imageContainerClasses, styles.imageBelowKoros)}>
         <ImageClone />
       </div>
     </div>
