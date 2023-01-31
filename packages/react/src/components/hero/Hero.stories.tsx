@@ -39,3 +39,16 @@ export const WithTopBackgroundImage = (args) => (
     </Hero.Card>
   </Hero>
 );
+
+export const WithAngledBackgroundImage = (args) => (
+  <Hero {...args} theme={{ '--background-color': '#ccc', '--color': '#000' }}>
+    <Hero.Card>
+      <h1>This is a hero header</h1>
+      <p>This is a hero text with lorem ipsum</p>
+      <Button variant="secondary" role="link">
+        Button
+      </Button>
+    </Hero.Card>
+    <Hero.BackgroundImage src={imageFile} />
+  </Hero>
+);

@@ -122,7 +122,8 @@ export const Hero = ({ children, theme, koros, imageAspectRatio }: HeroProps) =>
     return React.cloneElement(imageComponent, imageComponent.props);
   };
 
-  if (backgroundChildIndex > -1) {
+  // if background is first, then the Hero version is the one where card is floating over background image
+  if (backgroundChildIndex === 0) {
     const containerClasses = imageAspectRatio
       ? styles.backgroundContainer
       : classNames(styles.backgroundContainer, styles.noImageAspectRatio);
@@ -146,6 +147,24 @@ export const Hero = ({ children, theme, koros, imageAspectRatio }: HeroProps) =>
           </div>
         </div>
         <CommonKoros className={styles.bottomKoros} />
+      </div>
+    );
+  }
+  // if background is last, then the Hero version is the one with angled Koros
+  if (backgroundChildIndex > 0) {
+    return (
+      <div className={classNames(styles.hero, customThemeClass)}>
+        <div className={styles.angledKorosContainer}>
+          <div className={styles.contentBox}>
+            <Content />
+            <div className={styles.backgroundArea}>
+              <div className={styles.clippedBackground} />
+              <div className={styles.korosContainer}>
+                <Koros {...koros} flipHorizontal rotate="45deg" style={{ fill: 'var(--background-color)' }} />;
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

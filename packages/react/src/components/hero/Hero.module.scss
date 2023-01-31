@@ -88,6 +88,59 @@
   display: block;
 }
 
+.angledKorosContainer {
+  display: flex;
+  position: relative;
+  background-image: var(--background-image);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: bottom right;
+  background-color: transparent;
+  overflow: hidden;
+  .contentBox {
+    display: block;
+    z-index: 2;
+    width: 50%;
+    padding: var(--padding-vertical) var(--padding-horizontal);
+  }
+  .backgroundArea {
+    display: block;
+    position: absolute;
+    z-index: -1;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    overflow: hidden;
+    &:before {
+      content: '';
+      width: 1px;
+      margin-left: -1px;
+      float: left;
+      height: 0;
+      padding-top: 56.25%;
+    }
+    .clippedBackground {
+      display: block;
+      background-color: var(--background-color);
+      position: absolute;
+      inset: 0;
+      clip-path: polygon(0 0, 100% 0, 45% 100%, 0% 100%);
+    }
+    .korosContainer {
+      display: block;
+      position: absolute;
+      width: 142%;
+      right: -50px;
+      top: 0;
+      > * {
+        position: absolute;
+        transform-origin: top right;
+      }
+      z-index: -1;
+    }
+  }
+}
+
 @media small-up {
   .imageBelowKoros {
     display: none;
