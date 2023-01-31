@@ -27,6 +27,18 @@ export const Example = (args) => (
   </Hero>
 );
 
+export const JustTextCard = (args) => (
+  <Hero {...args} theme={{ '--background-color': '#9fc9eb', '--color': '#000', '--koros-color': '#009246' }}>
+    <Hero.Card centered>
+      <h1>This is a hero header</h1>
+      <p>This is a hero text with lorem ipsum</p>
+      <Button variant="secondary" role="link">
+        Button
+      </Button>
+    </Hero.Card>
+  </Hero>
+);
+
 export const WithTopBackgroundImage = (args) => (
   <Hero {...args} theme={{ '--background-color': '#ccc', '--color': '#000' }}>
     <Hero.BackgroundImage src={imageFile} />

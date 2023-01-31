@@ -69,8 +69,9 @@ const pickChildProps = (children: React.ReactNode): ChildProps => {
   return childProps;
 };
 
-const Card = ({ children }: React.PropsWithChildren<unknown>) => {
-  return <div className={styles.card}>{children}</div>;
+const Card = ({ children, centered }: React.PropsWithChildren<{ centered?: boolean }>) => {
+  const className = centered ? classNames(styles.card, styles.centeredContent) : styles.card;
+  return <div className={className}>{children}</div>;
 };
 
 Card.componentName = 'Card';
@@ -101,9 +102,14 @@ const BackgroundImage = (props: React.ImgHTMLAttributes<HTMLImageElement>) => {
 BackgroundImage.componentName = 'BackgroundImage';
 
 export const Hero = ({ children, theme, koros, imageAspectRatio }: HeroProps) => {
-  const { components, imageChildIndex, backgroundChildIndex, backgroundImageSrc, wideImageChildIndex } = pickChildProps(
-    children,
-  );
+  const {
+    components,
+    imageChildIndex,
+    backgroundChildIndex,
+    backgroundImageSrc,
+    wideImageChildIndex,
+    cardChildIndex,
+  } = pickChildProps(children);
   const combinedTheme = imageAspectRatio
     ? { ...theme, '--image-aspect-ratio': imageAspectRatio.replace(/(\D)+/g, ' / ') }
     : theme;
@@ -135,7 +141,6 @@ export const Hero = ({ children, theme, koros, imageAspectRatio }: HeroProps) =>
 
   const ImageClone = () => {
     const imageIndex = wideImageChildIndex > -1 ? wideImageChildIndex : imageChildIndex;
-    console.log('imageIndex', imageIndex);
     if (imageIndex === -1) {
       return null;
     }
@@ -185,10 +190,10 @@ export const Hero = ({ children, theme, koros, imageAspectRatio }: HeroProps) =>
       </div>
     );
   }
-
+  const columnStyle = imageChildIndex > 0 && cardChildIndex > 0 ? styles.twoColumns : styles.singleColumn;
   return (
     <div className={classNames(styles.hero, customThemeClass)}>
-      <div className={classNames(styles.content, styles.twoColumns)}>
+      <div className={classNames(styles.content, columnStyle)}>
         <Content />
       </div>
       <Koros {...koros} flipHorizontal style={korosStyle} />

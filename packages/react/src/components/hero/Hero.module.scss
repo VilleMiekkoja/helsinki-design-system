@@ -38,6 +38,10 @@
 
 .card {
   display: block;
+  &.centeredContent {
+    width: 100%;
+    text-align: center;
+  }
 }
 
 .imageContainer {
@@ -171,9 +175,6 @@
       display: block;
     }
   }
-  .singleColumn {
-    width: 50%;
-  }
 
   .backgroundMobileSpacer {
     display: none;
@@ -182,6 +183,9 @@
   .backgroundContainer {
     background-size: cover;
     padding: var(--padding-vertical) var(--padding-horizontal);
+    .singleColumn {
+      width: 50%;
+    }
   }
   .topKoros {
     display: none;
