@@ -19,6 +19,7 @@ export interface HeroCustomTheme {
   '--background-color'?: string;
   '--color'?: string;
   '--image-aspect-ratio'?: string;
+  '--image-position'?: string;
 }
 
 export type ChildProps = {
@@ -26,6 +27,7 @@ export type ChildProps = {
   cardChildIndex: number;
   backgroundChildIndex: number;
   backgroundImageSrc?: string;
+  wideImageChildIndex?: number;
   components: React.ReactElement<React.ImgHTMLAttributes<HTMLImageElement>>[];
 };
 
@@ -43,6 +45,10 @@ const pickChildProps = (children: React.ReactNode): ChildProps => {
     switch (componentName) {
       case 'ImageContainer': {
         childProps.imageChildIndex = index;
+        break;
+      }
+      case 'WideImage': {
+        childProps.wideImageChildIndex = index;
         break;
       }
       case 'Card': {
@@ -77,6 +83,12 @@ const ImageContainer = (props: React.ImgHTMLAttributes<HTMLImageElement>) => {
 
 ImageContainer.componentName = 'ImageContainer';
 
+const WideImage = (props: React.ImgHTMLAttributes<HTMLImageElement>) => {
+  return <ImageContainer {...props} />;
+};
+
+WideImage.componentName = 'WideImage';
+
 const BackgroundImage = (props: React.ImgHTMLAttributes<HTMLImageElement>) => {
   return (
     <div className={styles.backgroundImage}>
@@ -88,7 +100,9 @@ const BackgroundImage = (props: React.ImgHTMLAttributes<HTMLImageElement>) => {
 BackgroundImage.componentName = 'BackgroundImage';
 
 export const Hero = ({ children, theme, koros, imageAspectRatio }: HeroProps) => {
-  const { components, imageChildIndex, backgroundChildIndex, backgroundImageSrc } = pickChildProps(children);
+  const { components, imageChildIndex, backgroundChildIndex, backgroundImageSrc, wideImageChildIndex } = pickChildProps(
+    children,
+  );
   const combinedTheme = imageAspectRatio
     ? { ...theme, '--image-aspect-ratio': imageAspectRatio.replace(/(\D)+/g, ' / ') }
     : theme;
@@ -106,7 +120,7 @@ export const Hero = ({ children, theme, koros, imageAspectRatio }: HeroProps) =>
         if (index === imageChildIndex) {
           return <div className={imageContainerClasses}>{c}</div>;
         }
-        if (index === backgroundChildIndex) {
+        if (index === backgroundChildIndex || index === wideImageChildIndex) {
           return null;
         }
         return c;
@@ -115,10 +129,12 @@ export const Hero = ({ children, theme, koros, imageAspectRatio }: HeroProps) =>
   );
 
   const ImageClone = () => {
-    if (imageChildIndex === -1) {
+    const imageIndex = wideImageChildIndex > -1 ? wideImageChildIndex : imageChildIndex;
+    console.log('imageIndex', imageIndex);
+    if (imageIndex === -1) {
       return null;
     }
-    const imageComponent = components[imageChildIndex];
+    const imageComponent = components[imageIndex];
     return React.cloneElement(imageComponent, imageComponent.props);
   };
 
@@ -175,7 +191,12 @@ export const Hero = ({ children, theme, koros, imageAspectRatio }: HeroProps) =>
         <Content />
       </div>
       <Koros {...koros} flipHorizontal style={{ fill: 'var(--background-color)' }} />
-      <div className={classNames(imageContainerClasses, styles.imageBelowKoros)}>
+      <div
+        className={classNames(
+          imageContainerClasses,
+          wideImageChildIndex > -1 ? styles.wideImageContainer : styles.imageBelowKoros,
+        )}
+      >
         <ImageClone />
       </div>
     </div>
@@ -185,3 +206,4 @@ export const Hero = ({ children, theme, koros, imageAspectRatio }: HeroProps) =>
 Hero.Card = Card;
 Hero.Image = ImageContainer;
 Hero.BackgroundImage = BackgroundImage;
+Hero.WideImage = WideImage;

@@ -8,6 +8,7 @@
   --padding-horizontal: var(--spacing-l);
   --padding-vertical: var(--spacing-m);
   --image-aspect-ratio: unset;
+  --image-position: bottom right;
 
   color: var(--color);
 
@@ -60,6 +61,21 @@
   }
 }
 
+.wideImageContainer {
+  .image {
+    height: 275px;
+    object-fit: cover;
+    width: 100%;
+    object-position: var(--image-position);
+  }
+}
+
+.wideImageContainer.fixedImageAspectRatio {
+  .image {
+    height: 100%;
+  }
+}
+
 .backgroundContainer {
   background-image: var(--background-image);
   background-size: contain;
@@ -94,7 +110,7 @@
   background-image: var(--background-image);
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: bottom right;
+  background-position: var(--image-position);
   background-color: transparent;
   overflow: hidden;
   .contentBox {
