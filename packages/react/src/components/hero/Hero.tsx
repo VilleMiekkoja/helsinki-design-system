@@ -20,6 +20,7 @@ export interface HeroCustomTheme {
   '--color'?: string;
   '--image-aspect-ratio'?: string;
   '--image-position'?: string;
+  '--koros-color'?: string;
 }
 
 export type ChildProps = {
@@ -109,10 +110,14 @@ export const Hero = ({ children, theme, koros, imageAspectRatio }: HeroProps) =>
   if (backgroundImageSrc) {
     combinedTheme['--background-image'] = `url(${backgroundImageSrc})`;
   }
+  if (!combinedTheme['--koros-color']) {
+    combinedTheme['--koros-color'] = 'var(--background-color)';
+  }
   const customThemeClass = useTheme<HeroCustomTheme>(styles.hero, combinedTheme);
   const imageContainerClasses = imageAspectRatio
     ? classNames(styles.imageContainer, styles.fixedImageAspectRatio)
     : styles.imageContainer;
+  const korosStyle = { fill: 'var(--koros-color)' };
 
   const Content = () => (
     <>
@@ -144,11 +149,7 @@ export const Hero = ({ children, theme, koros, imageAspectRatio }: HeroProps) =>
       ? styles.backgroundContainer
       : classNames(styles.backgroundContainer, styles.noImageAspectRatio);
     const CommonKoros = ({ className }: { className: string }) => (
-      <Koros
-        {...koros}
-        className={`${(koros && koros.className) || ''} ${className}`}
-        style={{ fill: 'var(--background-color)' }}
-      />
+      <Koros {...koros} className={`${(koros && koros.className) || ''} ${className}`} style={korosStyle} />
     );
     return (
       <div className={classNames(styles.hero, customThemeClass)}>
@@ -176,7 +177,7 @@ export const Hero = ({ children, theme, koros, imageAspectRatio }: HeroProps) =>
             <div className={styles.backgroundArea}>
               <div className={styles.clippedBackground} />
               <div className={styles.korosContainer}>
-                <Koros {...koros} flipHorizontal rotate="45deg" style={{ fill: 'var(--background-color)' }} />;
+                <Koros {...koros} flipHorizontal rotate="45deg" style={korosStyle} />;
               </div>
             </div>
           </div>
@@ -190,7 +191,7 @@ export const Hero = ({ children, theme, koros, imageAspectRatio }: HeroProps) =>
       <div className={classNames(styles.content, styles.twoColumns)}>
         <Content />
       </div>
-      <Koros {...koros} flipHorizontal style={{ fill: 'var(--background-color)' }} />
+      <Koros {...koros} flipHorizontal style={korosStyle} />
       <div
         className={classNames(
           imageContainerClasses,
