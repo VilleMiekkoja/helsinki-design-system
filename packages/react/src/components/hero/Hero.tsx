@@ -24,6 +24,8 @@ export interface HeroCustomTheme {
 export type ChildProps = {
   imageChildIndex: number;
   cardChildIndex: number;
+  backgroundChildIndex: number;
+  backgroundImageSrc?: string;
   components: React.ReactElement<React.ImgHTMLAttributes<HTMLImageElement>>[];
 };
 
@@ -31,6 +33,7 @@ const pickChildProps = (children: React.ReactNode): ChildProps => {
   const childProps: ChildProps = {
     imageChildIndex: -1,
     cardChildIndex: -1,
+    backgroundChildIndex: -1,
     components: [],
   };
 
@@ -44,6 +47,11 @@ const pickChildProps = (children: React.ReactNode): ChildProps => {
       }
       case 'Card': {
         childProps.cardChildIndex = index;
+        break;
+      }
+      case 'BackgroundImage': {
+        childProps.backgroundChildIndex = index;
+        childProps.backgroundImageSrc = child.props.src;
         break;
       }
       default: {
@@ -69,25 +77,43 @@ const ImageContainer = (props: React.ImgHTMLAttributes<HTMLImageElement>) => {
 
 ImageContainer.componentName = 'ImageContainer';
 
+const BackgroundImage = (props: React.ImgHTMLAttributes<HTMLImageElement>) => {
+  return (
+    <div className={styles.backgroundImage}>
+      {/* eslint-disable-next-line jsx-a11y/alt-text */}
+      <img {...props} />
+    </div>
+  );
+};
+BackgroundImage.componentName = 'BackgroundImage';
+
 export const Hero = ({ children, theme, koros, imageAspectRatio }: HeroProps) => {
+  const { components, imageChildIndex, backgroundChildIndex, backgroundImageSrc } = pickChildProps(children);
   const combinedTheme = imageAspectRatio
     ? { ...theme, '--image-aspect-ratio': imageAspectRatio.replace(/(\D)+/g, ' / ') }
     : theme;
+  if (backgroundImageSrc) {
+    combinedTheme['--background-image'] = `url(${backgroundImageSrc})`;
+  }
   const customThemeClass = useTheme<HeroCustomTheme>(styles.hero, combinedTheme);
-  const { components, imageChildIndex } = pickChildProps(children);
   const imageContainerClasses = imageAspectRatio
     ? classNames(styles.imageContainer, styles.fixedImageAspectRatio)
     : styles.imageContainer;
+
   const Content = () => (
     <>
       {components.map((c, index) => {
         if (index === imageChildIndex) {
           return <div className={imageContainerClasses}>{c}</div>;
         }
+        if (index === backgroundChildIndex) {
+          return null;
+        }
         return c;
       })}
     </>
   );
+
   const ImageClone = () => {
     if (imageChildIndex === -1) {
       return null;
@@ -95,6 +121,35 @@ export const Hero = ({ children, theme, koros, imageAspectRatio }: HeroProps) =>
     const imageComponent = components[imageChildIndex];
     return React.cloneElement(imageComponent, imageComponent.props);
   };
+
+  if (backgroundChildIndex > -1) {
+    const containerClasses = imageAspectRatio
+      ? styles.backgroundContainer
+      : classNames(styles.backgroundContainer, styles.noImageAspectRatio);
+    const CommonKoros = ({ className }: { className: string }) => (
+      <Koros
+        {...koros}
+        className={`${(koros && koros.className) || ''} ${className}`}
+        style={{ fill: 'var(--background-color)' }}
+      />
+    );
+    return (
+      <div className={classNames(styles.hero, customThemeClass)}>
+        <div className={containerClasses}>
+          <div className={classNames(imageContainerClasses, styles.imageBelowKoros)}>
+            <ImageClone />
+          </div>
+          <div className={styles.backgroundMobileSpacer} />
+          <CommonKoros className={styles.topKoros} />
+          <div className={classNames(styles.content, styles.singleColumn)}>
+            <Content />
+          </div>
+        </div>
+        <CommonKoros className={styles.bottomKoros} />
+      </div>
+    );
+  }
+
   return (
     <div className={classNames(styles.hero, customThemeClass)}>
       <div className={classNames(styles.content, styles.twoColumns)}>
@@ -110,3 +165,4 @@ export const Hero = ({ children, theme, koros, imageAspectRatio }: HeroProps) =>
 
 Hero.Card = Card;
 Hero.Image = ImageContainer;
+Hero.BackgroundImage = BackgroundImage;
