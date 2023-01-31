@@ -25,7 +25,7 @@ export const FooterUtilities = ({ ariaLabel, children }: FooterUtilitiesProps) =
   );
 
   return (
-    <div className={styles.utilities}>
+    <div className={styles.utilities} aria-label={ariaLabel}>
       <hr className={styles.divider} aria-hidden />
       {groups && groups.length > 0 ? (
         <div className={styles.groups}>
@@ -36,9 +36,7 @@ export const FooterUtilities = ({ ariaLabel, children }: FooterUtilitiesProps) =
           })}
         </div>
       ) : (
-        <nav aria-label={ariaLabel} className={styles.links}>
-          {childrenWithoutSoMeGroup}
-        </nav>
+        <nav className={styles.links}>{childrenWithoutSoMeGroup}</nav>
       )}
       {soMeGroup}
     </div>

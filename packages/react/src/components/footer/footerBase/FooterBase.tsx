@@ -60,6 +60,7 @@ const handleBackToTop = (): void => {
 };
 
 export const FooterBase = ({
+  ariaLabel,
   backToTopLabel,
   children,
   copyrightHolder,
@@ -71,7 +72,7 @@ export const FooterBase = ({
   year = new Date().getFullYear(),
 }: FooterBaseProps) => {
   return (
-    <div className={styles.base}>
+    <div className={styles.base} aria-label={ariaLabel}>
       <hr className={styles.divider} aria-hidden />
       <div className={styles.logoWrapper}>
         <FooterNavigationLink
