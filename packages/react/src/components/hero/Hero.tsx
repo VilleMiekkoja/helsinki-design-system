@@ -5,7 +5,7 @@ import 'hds-core';
 import styles from './Hero.module.scss';
 import classNames from '../../utils/classNames';
 import { useTheme } from '../../hooks/useTheme';
-import { Koros, KorosProps } from '../koros';
+import { Koros, KorosProps, KorosShiftSpacer } from '../koros';
 import { getChildrenAsArray } from '../../utils/getChildren';
 import { FCWithName } from '../../common/types';
 
@@ -156,7 +156,7 @@ export const Hero = ({ children, theme, koros, imageAspectRatio }: HeroProps) =>
       ? styles.backgroundContainer
       : classNames(styles.backgroundContainer, styles.noImageAspectRatio);
     const CommonKoros = ({ className }: { className: string }) => (
-      <Koros {...koros} className={`${(koros && koros.className) || ''} ${className}`} style={korosStyle} />
+      <Koros {...koros} shift className={`${(koros && koros.className) || ''} ${className}`} style={korosStyle} />
     );
     return (
       <div className={classNames(styles.hero, customThemeClass)}>
@@ -202,8 +202,9 @@ export const Hero = ({ children, theme, koros, imageAspectRatio }: HeroProps) =>
     <div className={classNames(styles.hero, customThemeClass)}>
       <div className={classNames(styles.content, columnStyle)}>
         <Content />
+        {!hideKoros && !canKorosBeFlipped && <KorosShiftSpacer {...koros} />}
       </div>
-      {!hideKoros && <Koros {...koros} flipHorizontal={canKorosBeFlipped} style={korosStyle} />}
+      {!hideKoros && <Koros {...koros} shift flipHorizontal={canKorosBeFlipped} style={korosStyle} />}
       <div
         className={classNames(
           imageContainerClasses,
