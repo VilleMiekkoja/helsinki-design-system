@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 import { ArgsTable, Stories, Title } from '@storybook/addon-docs/blocks';
 
-import { Koros } from './Koros';
+import { getShiftHeight, Koros, KorosProps, KorosShiftSpacer } from './Koros';
+// @ts-ignore
+import imageFile from '../../assets/img/placeholder_1920x1080.jpg';
+import { Button } from '../button';
+import { Card } from '../card/Card';
 
 export default {
   component: Koros,
@@ -139,6 +143,97 @@ Playground.args = {
 Playground.argTypes = {
   type: {
     options: ['basic', 'beat', 'pulse', 'wave', 'storm'],
+    control: { type: 'radio' },
+  },
+};
+
+const ShiftDemo = ({
+  type,
+  bgColor,
+  korosColor,
+}: Pick<KorosProps, 'type' | 'dense'> & { bgColor?: string; korosColor: string }) => {
+  const commonProps: KorosProps = {
+    shift: true,
+    type,
+    style: { fill: korosColor },
+  };
+  const divStyle = { display: 'flex', flexDirection: 'column', background: bgColor || '#000' } as HTMLAttributes<
+    HTMLDivElement
+  >['style'];
+
+  return (
+    <div>
+      <h2>Koros type: {type}, dense: false</h2>
+      <div style={divStyle}>
+        <Koros {...commonProps} flipHorizontal />
+        <img src={imageFile} alt="Demo" />
+        <Koros {...commonProps} />
+      </div>
+      <h2>Koros type: {type}, dense: true</h2>
+      <div style={divStyle}>
+        <Koros {...commonProps} flipHorizontal dense />
+        <img src={imageFile} alt="Demo" />
+        <Koros {...commonProps} dense />
+      </div>
+      <h2>Adjust padding{type} with a spacer</h2>
+      <div style={{ ...divStyle, background: '#ccc' }}>
+        <Card
+          theme={{
+            '--background-color': '#ccc',
+            '--padding-horizontal': 'var(--spacing-l)',
+            '--padding-vertical': '0',
+          }}
+        >
+          <h3>Demo content </h3>
+          <Button variant="secondary" role="link">
+            Koros woud overflow here without spacer
+          </Button>
+        </Card>
+        <KorosShiftSpacer {...commonProps} />
+        <Koros {...commonProps} />
+      </div>
+      <h2>Adjust padding{type} with a theme and getShiftHeight()</h2>
+      <div style={{ ...divStyle, background: '#ccc' }}>
+        <Card
+          theme={{
+            '--background-color': '#ccc',
+            '--padding-horizontal': 'var(--spacing-l)',
+            '--padding-vertical': `${getShiftHeight(commonProps)}px`,
+          }}
+        >
+          <h3>Demo content </h3>
+          <Button variant="secondary" role="link">
+            Koros woud overflow here without extra padding
+          </Button>
+        </Card>
+        <Koros {...commonProps} />
+      </div>
+    </div>
+  );
+};
+
+export const Shifted = (args) => {
+  const { type, color } = args;
+  const bgColor = color !== 'non-white' ? '#fff' : 'rgb(40 148 187)';
+  return (
+    <div>
+      <h1>Examples for shifting koros over an element</h1>
+      <ShiftDemo type={type} korosColor={bgColor} bgColor={bgColor} />
+    </div>
+  );
+};
+
+Shifted.args = {
+  type: 'basic',
+};
+
+Shifted.argTypes = {
+  type: {
+    options: ['basic', 'beat', 'pulse', 'wave', 'storm'],
+    control: { type: 'radio' },
+  },
+  color: {
+    options: ['white', 'non-white'],
     control: { type: 'radio' },
   },
 };

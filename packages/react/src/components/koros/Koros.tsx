@@ -36,6 +36,12 @@ export type KorosProps = {
    * Additional style properties to apply to component
    */
   style?: React.CSSProperties;
+  /**
+   * Shift koros up/down for the height of the wave/shape.
+   * Useful when koros should cover part of the adjacent element
+   * Koros is shifted to the direction of the koros shape
+   */
+  shift?: boolean;
 };
 
 const getSVG = (dense: boolean, type: string, patternName: string): React.SVGProps<SVGElement> => {
@@ -73,6 +79,37 @@ const getSVG = (dense: boolean, type: string, patternName: string): React.SVGPro
   );
 };
 
+// first number is default, second for dense
+const waveHeights: Record<KorosType, [number, number]> = {
+  basic: [14, 5],
+  beat: [70, 24],
+  pulse: [34, 12],
+  storm: [35, 12],
+  wave: [54, 18],
+  calm: [0, 0],
+};
+
+export const getShiftHeight = ({ dense = false, type = 'basic' }: Pick<KorosProps, 'dense' | 'type'>): number => {
+  const waveData = waveHeights[type];
+  const index = dense ? 1 : 0;
+  return (waveData && waveData[index]) || 0;
+};
+
+const getShiftStyle = ({
+  shift,
+  dense,
+  type,
+  flipHorizontal,
+}: KorosProps): { marginTop?: string; marginBottom?: string } | undefined => {
+  if (shift) {
+    const height = getShiftHeight({ dense, type });
+    if (height) {
+      return { [flipHorizontal ? 'marginBottom' : 'marginTop']: `-${height}px` };
+    }
+  }
+  return undefined;
+};
+
 export const Koros = ({
   dense = false,
   flipHorizontal = false,
@@ -80,19 +117,28 @@ export const Koros = ({
   rotate,
   className = '',
   style,
+  shift,
 }: KorosProps) => {
   const patternName = `koros_${type}`;
   const [id] = useState(uniqueId(`${patternName}-`));
   const cssTransforms: string[] = [flipHorizontal && 'scaleY(-1)', rotate && `rotate(${rotate}) translateZ(0)`].filter(
     (t) => !!t,
   );
-
+  const shiftStyle = getShiftStyle({ dense, flipHorizontal, type, shift }) || {};
   return (
     <div
       className={classNames(styles.koros, styles[type], rotate && styles.rotate, className)}
-      style={{ ...style, ...(cssTransforms.length > 0 ? { transform: cssTransforms.join(' ') } : {}) }}
+      style={{ ...style, ...(cssTransforms.length > 0 ? { transform: cssTransforms.join(' ') } : {}), ...shiftStyle }}
     >
       {getSVG(dense, type, id)}
     </div>
   );
+};
+
+export const KorosShiftSpacer = ({ dense = false, type = 'basic', className }: KorosProps) => {
+  const height = getShiftHeight({ dense, type });
+  if (!height) {
+    return null;
+  }
+  return <div className={classNames(styles.koros, className)} style={{ height: `${height}px` }} />;
 };
