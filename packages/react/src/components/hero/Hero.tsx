@@ -11,7 +11,7 @@ import { FCWithName } from '../../common/types';
 
 export type HeroProps = React.PropsWithChildren<{
   theme?: HeroCustomTheme;
-  koros?: Exclude<KorosProps, 'flipHorizontal'>;
+  koros?: Exclude<KorosProps, 'flipHorizontal'> & { forcedDirection?: 'up' | 'down'; hide?: boolean };
   imageAspectRatio?: string;
 }>;
 
@@ -112,7 +112,7 @@ export const Hero = ({ children, theme, koros, imageAspectRatio }: HeroProps) =>
   } = pickChildProps(children);
   const combinedTheme = imageAspectRatio
     ? { ...theme, '--image-aspect-ratio': imageAspectRatio.replace(/(\D)+/g, ' / ') }
-    : theme;
+    : { ...theme };
   if (backgroundImageSrc) {
     combinedTheme['--background-image'] = `url(${backgroundImageSrc})`;
   }
@@ -124,6 +124,8 @@ export const Hero = ({ children, theme, koros, imageAspectRatio }: HeroProps) =>
     ? classNames(styles.imageContainer, styles.fixedImageAspectRatio)
     : styles.imageContainer;
   const korosStyle = { fill: 'var(--koros-color)' };
+  const canKorosBeFlipped = koros?.forcedDirection !== 'up';
+  const hideKoros = !!koros?.hide;
 
   const Content = () => (
     <>
@@ -196,7 +198,7 @@ export const Hero = ({ children, theme, koros, imageAspectRatio }: HeroProps) =>
       <div className={classNames(styles.content, columnStyle)}>
         <Content />
       </div>
-      <Koros {...koros} flipHorizontal style={korosStyle} />
+      {!hideKoros && <Koros {...koros} flipHorizontal={canKorosBeFlipped} style={korosStyle} />}
       <div
         className={classNames(
           imageContainerClasses,

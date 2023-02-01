@@ -28,7 +28,11 @@ export const Example = (args) => (
 );
 
 export const JustTextCard = (args) => (
-  <Hero {...args} theme={{ '--background-color': '#9fc9eb', '--color': '#000', '--koros-color': '#009246' }}>
+  <Hero
+    {...args}
+    theme={{ '--background-color': '#9fc9eb', '--color': '#000', '--koros-color': '#009246' }}
+    koros={{ type: 'storm', forcedDirection: 'up' }}
+  >
     <Hero.Card centered>
       <h1>This is a hero header</h1>
       <p>This is a hero text with lorem ipsum</p>
@@ -37,6 +41,37 @@ export const JustTextCard = (args) => (
       </Button>
     </Hero.Card>
   </Hero>
+);
+
+export const BlackAndWhite = (args) => (
+  <Hero {...args} theme={{ '--background-color': '#000', '--color': '#fff' }}>
+    <Hero.Card>
+      <h1>This is a hero header</h1>
+      <p>This is a hero text with lorem ipsum</p>
+      <Button
+        variant="secondary"
+        role="link"
+        // @ts-ignore
+        style={{ '--background-color': '#fff', '--color': '#000', '--border-color': '#fff' }}
+      >
+        Button
+      </Button>
+    </Hero.Card>
+  </Hero>
+);
+
+export const NoKoros = (args) => (
+  <div style={{ backgroundColor: '#ccc', padding: '60px 10px' }}>
+    <Hero {...args} koros={{ hide: true }}>
+      <Hero.Card>
+        <h1>This is a hero header</h1>
+        <p>This is a hero text with lorem ipsum</p>
+        <Button variant="secondary" role="link">
+          Button
+        </Button>
+      </Hero.Card>
+    </Hero>
+  </div>
 );
 
 export const WithTopBackgroundImage = (args) => (
@@ -53,20 +88,22 @@ export const WithTopBackgroundImage = (args) => (
 );
 
 export const WithTopBackgroundImageCustomKoros = (args) => (
-  <Hero
-    {...args}
-    theme={{ '--background-color': '#ccc', '--color': '#000', '--koros-color': '#f00' }}
-    koros={{ type: 'pulse' }}
-  >
-    <Hero.BackgroundImage src={imageFile} />
-    <Hero.Card>
-      <h1>This is a hero header</h1>
-      <p>This is a hero text with lorem ipsum</p>
-      <Button variant="secondary" role="link">
-        Button
-      </Button>
-    </Hero.Card>
-  </Hero>
+  <div style={{ backgroundColor: '#ff0', padding: '60px 10px' }}>
+    <Hero
+      {...args}
+      theme={{ '--background-color': '#ccc', '--color': '#000', '--koros-color': '#f00' }}
+      koros={{ type: 'pulse' }}
+    >
+      <Hero.BackgroundImage src={imageFile} />
+      <Hero.Card>
+        <h1>This is a hero header</h1>
+        <p>This is a hero text with lorem ipsum</p>
+        <Button variant="secondary" role="link">
+          Button
+        </Button>
+      </Hero.Card>
+    </Hero>
+  </div>
 );
 
 export const WithAngledBackgroundImage = (args) => (
