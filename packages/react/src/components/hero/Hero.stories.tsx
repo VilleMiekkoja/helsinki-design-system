@@ -130,6 +130,26 @@ export const WithAngledBackgroundImage = (args) => (
     <Hero.BackgroundImage src={imageFile} />
   </Hero>
 );
+export const WithAngledBackgroundImageVersion2 = (args) => (
+  <Hero {...args} theme={{ '--background-color': '#f5a3c7', '--color': '#000' }}>
+    <Hero.Card>
+      <h1>This is a hero header with too much text for single line</h1>
+      <p>This is a hero text with lorem ipsum</p>
+      <p>This is a hero text with lorem ipsum</p>
+      <p>This is a hero text with lorem ipsum</p>
+      <Button variant="secondary" role="link">
+        Button
+      </Button>
+      <p>
+        <Button variant="secondary" role="link">
+          Button
+        </Button>
+      </p>
+    </Hero.Card>
+    <Hero.BackgroundImage src={imageFile} />
+  </Hero>
+);
+
 export const WideImageVersion = (args) => (
   <Hero
     {...args}
