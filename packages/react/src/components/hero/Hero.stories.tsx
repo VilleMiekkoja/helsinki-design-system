@@ -107,7 +107,7 @@ export const WithTopBackgroundImageCustomKoros = (args) => (
 );
 
 export const WithAngledBackgroundImage = (args) => (
-  <Hero {...args} theme={{ '--background-color': '#ccc', '--color': '#000' }}>
+  <Hero {...args} theme={{ '--background-color': '#f5a3c7', '--color': '#000' }}>
     <Hero.Card>
       <h1>This is a hero header</h1>
       <p>This is a hero text with lorem ipsum</p>

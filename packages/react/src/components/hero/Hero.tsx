@@ -181,6 +181,10 @@ export const Hero = ({ children, theme, koros, imageAspectRatio }: HeroProps) =>
         <div className={styles.angledKorosContainer}>
           <div className={styles.contentBox}>
             <Content />
+            <div className={styles.mobileImageAndKoros}>
+              <Koros {...koros} flipHorizontal style={korosStyle} />
+              <div className={styles.mobileImage} />
+            </div>
             <div className={styles.backgroundArea}>
               <div className={styles.clippedBackground} />
               <div className={styles.korosContainer}>

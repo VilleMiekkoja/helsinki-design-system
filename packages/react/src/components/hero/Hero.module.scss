@@ -112,20 +112,31 @@
 .angledKorosContainer {
   display: flex;
   position: relative;
-  background-image: var(--background-image);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: var(--image-position);
+  background-image: none;
   background-color: transparent;
   overflow: hidden;
   .contentBox {
     display: block;
     z-index: 2;
-    width: 50%;
-    padding: var(--padding-vertical) var(--padding-horizontal);
+    width: 100%;
+    background-color: var(--background-color);
+    .card {
+      padding: var(--padding-vertical) var(--padding-horizontal);
+    }
+  }
+  .mobileImageAndKoros {
+    display: block;
+    .mobileImage {
+      display: flex;
+      background-image: var(--background-image);
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: var(--image-position);
+      aspect-ratio: 4/3;
+    }
   }
   .backgroundArea {
-    display: block;
+    display: none;
     position: absolute;
     z-index: -1;
     bottom: 0;
@@ -192,5 +203,27 @@
   }
   .bottomKoros {
     display: block;
+  }
+  .angledKorosContainer {
+    background-image: var(--background-image);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: var(--image-position);
+    .contentBox {
+      background-color: transparent;
+      .card {
+        padding: 0;
+      }
+    }
+    .mobileImageAndKoros {
+      display: none;
+    }
+    .backgroundArea {
+      display: block;
+    }
+    .contentBox {
+      width: 50%;
+      padding: var(--padding-vertical) var(--padding-horizontal);
+    }
   }
 }
