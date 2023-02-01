@@ -196,7 +196,7 @@ export const Hero = ({ children, theme, koros, imageAspectRatio }: HeroProps) =>
       </div>
     );
   }
-  const columnStyle = imageChildIndex > 0 && cardChildIndex > 0 ? styles.twoColumns : styles.singleColumn;
+  const columnStyle = imageChildIndex > -1 && cardChildIndex > -1 ? styles.twoColumns : styles.singleColumn;
   return (
     <div className={classNames(styles.hero, customThemeClass)}>
       <div className={classNames(styles.content, columnStyle)}>

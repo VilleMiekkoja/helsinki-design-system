@@ -14,7 +14,7 @@ export default {
   args: {},
 };
 
-export const Example = (args) => (
+export const TextAndImage = (args) => (
   <Hero {...args} theme={{ '--background-color': '#ccc', '--color': '#000' }} imageAspectRatio="4:3">
     <Hero.Card>
       <h1>This is a hero header</h1>
@@ -24,6 +24,18 @@ export const Example = (args) => (
       </Button>
     </Hero.Card>
     <Hero.Image src={imageFile} />
+  </Hero>
+);
+export const ImageAndText = (args) => (
+  <Hero {...args} theme={{ '--background-color': '#ccc', '--color': '#000' }} imageAspectRatio="4:3">
+    <Hero.Image src={imageFile} />
+    <Hero.Card>
+      <h1>This is a hero header</h1>
+      <p>This is a hero text with lorem ipsum</p>
+      <Button variant="secondary" role="link">
+        Button
+      </Button>
+    </Hero.Card>
   </Hero>
 );
 

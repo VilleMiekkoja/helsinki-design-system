@@ -181,7 +181,14 @@
     flex-direction: row;
     > * {
       width: 50%;
+      &:first-child {
+        margin-right: var(--spacing-s);
+      }
+      &:last-child {
+        margin-left: var(--spacing-s);
+      }
     }
+
     .imageContainer {
       display: block;
     }
