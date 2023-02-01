@@ -15,11 +15,16 @@ export default {
 };
 
 export const TextAndImage = (args) => (
-  <Hero {...args} theme={{ '--background-color': '#ccc', '--color': '#000' }} imageAspectRatio="4:3">
+  <Hero {...args} theme={{ '--background-color': '#c2a251', '--color': '#000' }} imageAspectRatio="16:9">
     <Hero.Card>
       <h1>This is a hero header</h1>
       <p>This is a hero text with lorem ipsum</p>
-      <Button variant="secondary" role="link">
+      <Button
+        variant="secondary"
+        role="link"
+        // @ts-ignore
+        style={{ '--background-color': '#000', '--color': '#fff', '--border-color': '#000' }}
+      >
         Button
       </Button>
     </Hero.Card>
@@ -27,19 +32,24 @@ export const TextAndImage = (args) => (
   </Hero>
 );
 export const ImageAndText = (args) => (
-  <Hero {...args} theme={{ '--background-color': '#ccc', '--color': '#000' }} imageAspectRatio="4:3">
+  <Hero {...args} theme={{ '--background-color': 'var(--color-bus)', '--color': '#fff' }} imageAspectRatio="16:9">
     <Hero.Image src={imageFile} />
     <Hero.Card>
       <h1>This is a hero header</h1>
       <p>This is a hero text with lorem ipsum</p>
-      <Button variant="secondary" role="link">
+      <Button
+        variant="secondary"
+        role="link"
+        // @ts-ignore
+        style={{ '--background-color': '#fff', '--color': '#000', '--border-color': '#fff' }}
+      >
         Button
       </Button>
     </Hero.Card>
   </Hero>
 );
 
-export const JustTextCard = (args) => (
+export const CenteredTextCard = (args) => (
   <Hero
     {...args}
     theme={{ '--background-color': '#9fc9eb', '--color': '#000', '--koros-color': '#009246' }}
@@ -55,7 +65,7 @@ export const JustTextCard = (args) => (
   </Hero>
 );
 
-export const BlackAndWhite = (args) => (
+export const NoImage = (args) => (
   <Hero {...args} theme={{ '--background-color': '#000', '--color': '#fff' }}>
     <Hero.Card>
       <h1>This is a hero header</h1>
@@ -87,7 +97,7 @@ export const NoKoros = (args) => (
 );
 
 export const WithTopBackgroundImage = (args) => (
-  <Hero {...args} theme={{ '--background-color': '#ccc', '--color': '#000' }}>
+  <Hero {...args} theme={{ '--background-color': '#ccc', '--color': '#000', '--koros-color': '#fff' }}>
     <Hero.BackgroundImage src={imageFile} />
     <Hero.Card>
       <h1>This is a hero header</h1>
@@ -100,10 +110,10 @@ export const WithTopBackgroundImage = (args) => (
 );
 
 export const WithTopBackgroundImageCustomKoros = (args) => (
-  <div style={{ backgroundColor: '#ff0', padding: '60px 10px' }}>
+  <div style={{ backgroundColor: '#c2a251', padding: '60px 10px' }}>
     <Hero
       {...args}
-      theme={{ '--background-color': '#ccc', '--color': '#000', '--koros-color': '#f00' }}
+      theme={{ '--background-color': '#fff', '--color': '#000', '--koros-color': '#c2a251' }}
       koros={{ type: 'pulse' }}
     >
       <Hero.BackgroundImage src={imageFile} />
@@ -151,11 +161,7 @@ export const WithAngledBackgroundImageVersion2 = (args) => (
 );
 
 export const WideImageVersion = (args) => (
-  <Hero
-    {...args}
-    theme={{ '--background-color': '#ccc', '--color': '#000', '--image-position': 'bottom left' }}
-    imageAspectRatio="1:1"
-  >
+  <Hero {...args} theme={{ '--background-color': '#fff', '--image-position': 'bottom left' }} imageAspectRatio="1:1">
     <Hero.Card>
       <h1>This is a hero header</h1>
       <p>This is a hero text with lorem ipsum</p>
