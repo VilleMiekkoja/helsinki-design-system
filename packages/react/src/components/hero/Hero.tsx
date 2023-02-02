@@ -9,6 +9,8 @@ import { Koros, KorosProps, KorosShiftSpacer } from '../koros';
 import { getChildrenAsArray } from '../../utils/getChildren';
 import { FCWithName } from '../../common/types';
 
+type HTMLElementAttributes = React.HtmlHTMLAttributes<HTMLDivElement>;
+type ImgElementAttributes = React.ImgHTMLAttributes<HTMLImageElement>;
 export type HeroProps = React.PropsWithChildren<{
   theme?: HeroCustomTheme;
   koros?: Exclude<KorosProps, 'flipHorizontal'> & { forcedDirection?: 'up' | 'down'; hide?: boolean };
@@ -29,7 +31,7 @@ export type ChildProps = {
   backgroundChildIndex: number;
   backgroundImageSrc?: string;
   wideImageChildIndex?: number;
-  components: React.ReactElement<React.ImgHTMLAttributes<HTMLImageElement>>[];
+  components: React.ReactElement[];
 };
 
 const pickChildProps = (children: React.ReactNode): ChildProps => {
@@ -69,14 +71,25 @@ const pickChildProps = (children: React.ReactNode): ChildProps => {
   return childProps;
 };
 
-const Card = ({ children, centered }: React.PropsWithChildren<{ centered?: boolean }>) => {
-  const className = centered ? classNames(styles.card, styles.centeredContent) : styles.card;
-  return <div className={className}>{children}</div>;
+const Card = ({
+  children,
+  centered,
+  className,
+  ...elementAttributes
+}: React.PropsWithChildren<HTMLElementAttributes & { centered?: boolean }>) => {
+  const classNameList = centered
+    ? classNames(styles.card, styles.centeredContent, className)
+    : classNames(styles.card, className);
+  return (
+    <div {...elementAttributes} className={classNameList}>
+      {children}
+    </div>
+  );
 };
 
 Card.componentName = 'Card';
 
-const ImageContainer = (props: React.ImgHTMLAttributes<HTMLImageElement>) => {
+const ImageContainer = (props: ImgElementAttributes) => {
   return (
     /* eslint-disable-next-line jsx-a11y/alt-text */
     <img className={styles.image} {...props} />
@@ -85,13 +98,13 @@ const ImageContainer = (props: React.ImgHTMLAttributes<HTMLImageElement>) => {
 
 ImageContainer.componentName = 'ImageContainer';
 
-const WideImage = (props: React.ImgHTMLAttributes<HTMLImageElement>) => {
+const WideImage = (props: ImgElementAttributes) => {
   return <ImageContainer {...props} />;
 };
 
 WideImage.componentName = 'WideImage';
 
-const BackgroundImage = (props: React.ImgHTMLAttributes<HTMLImageElement>) => {
+const BackgroundImage = (props: ImgElementAttributes) => {
   return (
     <div className={styles.backgroundImage}>
       {/* eslint-disable-next-line jsx-a11y/alt-text */}
@@ -101,7 +114,7 @@ const BackgroundImage = (props: React.ImgHTMLAttributes<HTMLImageElement>) => {
 };
 BackgroundImage.componentName = 'BackgroundImage';
 
-export const Hero = ({ children, theme, koros, imageAspectRatio }: HeroProps) => {
+export const Hero = ({ children, theme, koros, imageAspectRatio, ...elementAttributes }: HeroProps) => {
   const {
     components,
     imageChildIndex,
@@ -126,6 +139,10 @@ export const Hero = ({ children, theme, koros, imageAspectRatio }: HeroProps) =>
   const korosStyle = { fill: 'var(--koros-color)' };
   const canKorosBeFlipped = koros?.forcedDirection !== 'up';
   const hideKoros = !!koros?.hide;
+  const heroElementAttributes: HTMLElementAttributes = {
+    ...elementAttributes,
+    className: classNames(styles.hero, customThemeClass, (elementAttributes as HTMLElementAttributes).className),
+  };
 
   const Content = () => (
     <>
@@ -147,7 +164,11 @@ export const Hero = ({ children, theme, koros, imageAspectRatio }: HeroProps) =>
       return null;
     }
     const imageComponent = components[imageIndex];
-    return React.cloneElement(imageComponent, imageComponent.props);
+    const clonedProps = { ...imageComponent.props };
+    if (clonedProps.id) {
+      clonedProps.id = `${clonedProps.id}-clone`;
+    }
+    return React.cloneElement(imageComponent, clonedProps);
   };
 
   // if background is first, then the Hero version is the one where card is floating over background image
@@ -155,11 +176,13 @@ export const Hero = ({ children, theme, koros, imageAspectRatio }: HeroProps) =>
     const containerClasses = imageAspectRatio
       ? styles.backgroundContainer
       : classNames(styles.backgroundContainer, styles.noImageAspectRatio);
+
     const CommonKoros = ({ className }: { className: string }) => (
       <Koros {...koros} shift className={`${(koros && koros.className) || ''} ${className}`} style={korosStyle} />
     );
+
     return (
-      <div className={classNames(styles.hero, customThemeClass)}>
+      <div {...heroElementAttributes}>
         <div className={containerClasses}>
           <div className={classNames(imageContainerClasses, styles.imageBelowKoros)}>
             <ImageClone />
@@ -177,7 +200,7 @@ export const Hero = ({ children, theme, koros, imageAspectRatio }: HeroProps) =>
   // if background is last, then the Hero version is the one with angled Koros
   if (backgroundChildIndex > 0) {
     return (
-      <div className={classNames(styles.hero, customThemeClass)}>
+      <div {...heroElementAttributes}>
         <div className={styles.angledKorosContainer}>
           <div className={styles.contentBox}>
             <Content />
@@ -199,7 +222,7 @@ export const Hero = ({ children, theme, koros, imageAspectRatio }: HeroProps) =>
   }
   const columnStyle = imageChildIndex > -1 && cardChildIndex > -1 ? styles.twoColumns : styles.singleColumn;
   return (
-    <div className={classNames(styles.hero, customThemeClass)}>
+    <div {...heroElementAttributes}>
       <div className={classNames(styles.content, columnStyle)}>
         <Content />
         {!hideKoros && !canKorosBeFlipped && <KorosShiftSpacer {...koros} />}

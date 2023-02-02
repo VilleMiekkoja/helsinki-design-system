@@ -172,3 +172,22 @@ export const WideImageVersion = (args) => (
     <Hero.WideImage src={imageFile} />
   </Hero>
 );
+
+export const WithElementAttributes = (args) => (
+  <Hero
+    {...args}
+    id="hero"
+    theme={{ '--background-color': '#fff', '--image-position': 'bottom left' }}
+    imageAspectRatio="16:9"
+    className="hero-style"
+  >
+    <Hero.Card id="hero-card" className="hero-card-style">
+      <h1>This is a hero header</h1>
+      <p>This is a hero text with lorem ipsum</p>
+      <Button variant="secondary" role="link">
+        Button
+      </Button>
+    </Hero.Card>
+    <Hero.WideImage id="hero-image" src={imageFile} />
+  </Hero>
+);
