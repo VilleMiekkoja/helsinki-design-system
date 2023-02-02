@@ -11,11 +11,16 @@ import { FCWithName } from '../../common/types';
 
 type HTMLElementAttributes = React.HtmlHTMLAttributes<HTMLDivElement>;
 type ImgElementAttributes = React.ImgHTMLAttributes<HTMLImageElement>;
-export type HeroProps = React.PropsWithChildren<{
-  theme?: HeroCustomTheme;
-  koros?: Exclude<KorosProps, 'flipHorizontal'> & { forcedDirection?: 'up' | 'down'; hide?: boolean };
-  imageAspectRatio?: string;
-}>;
+export type HeroProps = React.PropsWithChildren<
+  HTMLElementAttributes & {
+    theme?: HeroCustomTheme;
+    koros?: Exclude<KorosProps, 'flipHorizontal' | 'shift' | 'rotate'> & {
+      forcedDirection?: 'up' | 'down';
+      hide?: boolean;
+    };
+    imageAspectRatio?: string;
+  }
+>;
 
 export interface HeroCustomTheme {
   '--background-color'?: string;
