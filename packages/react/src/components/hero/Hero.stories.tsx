@@ -138,9 +138,8 @@ WithBackgroundImage.argTypes = {
   },
 };
 
-export const WithElementAttributes = (args) => (
+export const WithElementAttributes = () => (
   <Hero
-    {...args}
     id="hero"
     theme={{ '--background-color': '#fff', '--image-position': 'bottom left' }}
     imageAspectRatio="16:9"
@@ -156,3 +155,96 @@ export const WithElementAttributes = (args) => (
     <Hero.WideImage id="hero-image" src={imageFile} />
   </Hero>
 );
+
+export const KorosPlayground = (args) => {
+  const heroProps: HeroProps = {
+    koros: {
+      type: args.type,
+      dense: !!args.dense,
+      hide: !!args.hide,
+      forcedDirection: args.forcedDirection || undefined,
+    },
+    theme: {
+      '--background-color': '#9fc9eb',
+      '--koros-color': args.color || '#9fc9eb',
+    },
+  };
+
+  return (
+    <Hero {...heroProps}>
+      <Hero.Image src={imageFile} />
+      <Hero.Card>
+        <DefaultCardContent />
+      </Hero.Card>
+    </Hero>
+  );
+};
+
+KorosPlayground.argTypes = {
+  type: {
+    control: {
+      type: 'select',
+      options: ['basic', 'pulse'],
+      defaultValue: 'basic',
+    },
+  },
+  color: { control: { type: 'color' } },
+  dense: {
+    control: 'boolean',
+  },
+  hide: {
+    control: 'boolean',
+  },
+  forcedDirection: {
+    control: {
+      type: 'select',
+      options: ['up', 'down', 'none'],
+      defaultValue: 'none',
+    },
+  },
+};
+
+export const ImagePlayground = (args) => {
+  const { imagePosition, imageAspectRatio } = args;
+  const heroProps: HeroProps = {
+    imageAspectRatio: imageAspectRatio || undefined,
+    theme: {
+      '--background-color': '#9fc9eb',
+      ...(imagePosition && { '--image-position': imagePosition }),
+    },
+  };
+
+  return (
+    <Hero {...heroProps}>
+      <Hero.Image src={imageFile} />
+      <Hero.Card>
+        <DefaultCardContent />
+      </Hero.Card>
+    </Hero>
+  );
+};
+
+ImagePlayground.argTypes = {
+  imageAspectRatio: {
+    type: 'text',
+    defaultValue: '',
+  },
+  imagePosition: {
+    control: {
+      type: 'select',
+      options: [
+        'top left',
+        'top center',
+        'top right',
+        'center left',
+        'center center',
+        'center right',
+        'bottom left',
+        'bottom center',
+        'bottom right',
+        'default',
+      ],
+      defaultValue: 'default',
+    },
+  },
+};
