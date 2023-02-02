@@ -65,7 +65,7 @@ const TitleLogoArea = ({ title, titleStyle }) => {
   return (
     <>
       <Logo className={styles.logo} language={logoLanguage} aria-hidden />
-      {title && <span className={classNames(styles.title)}>{title}</span>}
+      {title && <span className={classNames(styles.title, titleStyle)}>{title}</span>}
     </>
   );
 };
