@@ -59,7 +59,7 @@ export const NavigationLinkDropdown = ({
   const handleMenuButtonClick = () => setOpen(!open, NavigationLinkInteraction.Click);
 
   return (
-    <div className={styles.navigationLinkDropdownContainer}>
+    <>
       <button
         type="button"
         className={styles.button}
@@ -93,7 +93,7 @@ export const NavigationLinkDropdown = ({
           );
         })}
       </ul>
-    </div>
+    </>
   );
 };
 NavigationLinkDropdown.componentName = 'HDSNavigationLinkDropdown';
