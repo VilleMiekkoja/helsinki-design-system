@@ -1,7 +1,7 @@
 import React, { HTMLAttributes } from 'react';
 import { ArgsTable, Stories, Title } from '@storybook/addon-docs/blocks';
 
-import { getShiftHeight, Koros, KorosProps, KorosShiftSpacer } from './Koros';
+import { getShapeHeight, Koros, KorosProps, KorosShiftSpacer } from './Koros';
 // @ts-ignore
 import imageFile from '../../assets/img/placeholder_1920x1080.jpg';
 import { Button } from '../button';
@@ -192,13 +192,13 @@ const ShiftDemo = ({
         <KorosShiftSpacer {...commonProps} />
         <Koros {...commonProps} />
       </div>
-      <h2>Adjust padding{type} with a theme and getShiftHeight()</h2>
+      <h2>Adjust padding{type} with a theme and getShapeHeight()</h2>
       <div style={{ ...divStyle, background: '#ccc' }}>
         <Card
           theme={{
             '--background-color': '#ccc',
             '--padding-horizontal': 'var(--spacing-l)',
-            '--padding-vertical': `${getShiftHeight(commonProps)}px`,
+            '--padding-vertical': `${getShapeHeight(commonProps)}px`,
           }}
         >
           <h3>Demo content </h3>
