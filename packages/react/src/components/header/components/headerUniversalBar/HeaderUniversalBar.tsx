@@ -1,12 +1,12 @@
 import React, { Children, cloneElement } from 'react';
-import classNames from 'classnames';
 
-// import core base styles
-import 'hds-core';
-import styles from './HeaderUniversalBar.module.scss';
+import classNames from '../../../../utils/classNames';
 import { NavigationLink } from '../navigationLink';
 import { useHeaderContext } from '../../HeaderContext';
 import { getChildElementsEvenIfContainerInbetween } from '../../../../utils/getChildren';
+// import core base styles
+import 'hds-core';
+import styles from './HeaderUniversalBar.module.scss';
 
 export type HeaderUniversalBarProps = React.PropsWithChildren<{
   /**

@@ -1,6 +1,6 @@
 import React, { ComponentType, PropsWithChildren } from 'react';
-import classNames from 'classnames';
 
+import classNames from '../../utils/classNames';
 import { HeaderContextProvider, useHeaderContext } from './HeaderContext';
 import { HeaderUniversalBar } from './components/headerUniversalBar';
 import { HeaderActionBar } from './components/headerActionBar';
