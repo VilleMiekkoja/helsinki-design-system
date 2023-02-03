@@ -4,6 +4,8 @@ import { Hero, HeroProps } from './Hero';
 import { Button } from '../button/Button';
 // @ts-ignore
 import imageFile from '../../assets/img/placeholder_1920x1080.jpg';
+import { Navigation } from '../navigation/Navigation';
+import { Section } from '../section/Section';
 
 export default {
   component: Hero,
@@ -57,6 +59,37 @@ const DefaultCardContent = (props: DefaultCardContentProps) => {
     </>
   );
 };
+
+const NavigationComponent = () => (
+  <Navigation menuToggleAriaLabel="Menu" skipTo="#content" skipToContentLabel="Skip to main content">
+    {/* NAVIGATION ROW */}
+    <Navigation.Row ariaLabel="Main navigation">
+      <Navigation.Item href="#" label="Link" active onClick={(e) => e.preventDefault()} />
+      <Navigation.Item href="#" label="Link" onClick={(e) => e.preventDefault()} />
+      <Navigation.Item href="#" label="Link" onClick={(e) => e.preventDefault()} />
+      <Navigation.Item href="#" label="Link" onClick={(e) => e.preventDefault()} />
+      <Navigation.Dropdown label="Dropdown">
+        <Navigation.Item href="#" label="Link" onClick={(e) => e.preventDefault()} />
+        <Navigation.Item href="#" label="Link" onClick={(e) => e.preventDefault()} />
+        <Navigation.Item href="#" label="Link" onClick={(e) => e.preventDefault()} />
+        <Navigation.Item href="#" label="Link" onClick={(e) => e.preventDefault()} />
+      </Navigation.Dropdown>
+    </Navigation.Row>
+
+    {/* NAVIGATION ACTIONS */}
+    <Navigation.Actions>
+      {/* LANGUAGE SELECTOR */}
+      <Navigation.LanguageSelector label="FI">
+        <Navigation.Item href="#" onClick={(e) => e.preventDefault()} lang="fi" label="Suomeksi" />
+        <Navigation.Item href="#" onClick={(e) => e.preventDefault()} lang="sv" label="På svenska" />
+        <Navigation.Item href="#" onClick={(e) => e.preventDefault()} lang="en" label="In English" />
+        <Navigation.Item href="#" onClick={(e) => e.preventDefault()} lang="fr" label="En français" />
+        <Navigation.Item href="#" onClick={(e) => e.preventDefault()} lang="de" label="Auf deutsch" />
+        <Navigation.Item href="#" onClick={(e) => e.preventDefault()} lang="ru" label="По-русски" />
+      </Navigation.LanguageSelector>
+    </Navigation.Actions>
+  </Navigation>
+);
 
 export const ImageLeftOrRight = (args) => (
   <Hero theme={{ '--background-color': '#c2a251', '--color': '#000' }} imageAspectRatio="16:9">
@@ -113,9 +146,9 @@ WithoutImage.argTypes = {
 export const WithBackgroundImage = (args) => {
   const heroProps: HeroProps = {};
   if (args.imagePosition === 'top') {
-    heroProps.theme = { '--background-color': '#ccc', '--color': '#000', '--koros-color': '#fff' };
+    heroProps.theme = { '--background-color': '#fff', ...args.theme };
   } else if (args.imagePosition === 'right') {
-    heroProps.theme = { '--background-color': '#f5a3c7', '--color': '#000' };
+    heroProps.theme = { '--background-color': '#f5a3c7', '--color': '#000', ...args.theme };
   }
 
   return (
@@ -293,6 +326,62 @@ ImagePlayground.argTypes = {
         'default',
       ],
       defaultValue: 'default',
+    },
+  },
+};
+
+const componentTypes = {
+  imageOnSide: 'image on side',
+  backgroundImage: 'background image',
+  withoutImage: 'without image',
+};
+
+export const EmbeddedToPage = (args) => {
+  const { componentType, variant } = args;
+  const { imageOnSide, backgroundImage, withoutImage } = componentTypes;
+  const BasicImageVersion = () => {
+    const imagePosition = variant === '1' ? 'left' : 'right';
+    return <ImageLeftOrRight imagePosition={imagePosition} />;
+  };
+  const BackgroundImageVersion = () => {
+    const imagePosition = variant === '1' ? 'top' : 'right';
+    const theme = imagePosition === 'top' ? { '--bottom-koros-color': 'var(--color-fog)' } : {};
+    return <WithBackgroundImage imagePosition={imagePosition} theme={theme} />;
+  };
+  const NoImage = () => {
+    const heroTypes = ['blueAndGreen', 'whiteWithoutKoros', 'blackAndWhite'];
+    return <WithoutImage heroType={heroTypes[parseInt(variant, 10) - 1]} />;
+  };
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <NavigationComponent />
+      {componentType === imageOnSide && <BasicImageVersion />}
+      {componentType === backgroundImage && <BackgroundImageVersion />}
+      {componentType === withoutImage && <NoImage />}
+      <Section color="secondary">
+        <h1 className="heading-xl">Component after hero</h1>
+        This component shows padding after hero
+      </Section>
+    </div>
+  );
+};
+
+EmbeddedToPage.argTypes = {
+  componentType: {
+    defaultValue: 'image on side',
+    control: {
+      type: 'select',
+      options: Object.values(componentTypes),
+    },
+  },
+  variant: {
+    defaultValue: '1',
+    control: {
+      type: 'select',
+      options: ['1', '2', '3'],
+    },
+    table: {
+      type: { summary: 'Changes to another variant of the selected component.' },
     },
   },
 };
