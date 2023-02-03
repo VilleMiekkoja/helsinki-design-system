@@ -4,7 +4,7 @@ import { useMediaQueryLessThan } from '../../hooks/useMediaQuery';
 
 export type HeaderContextType = {
   /**
-   * Flag for whether the viewport is under breakpoint value small.
+   * Flag for whether the viewport is under breakpoint value medium.
    */
   isSmallScreen?: boolean;
   mobileMenuOpen?: boolean;

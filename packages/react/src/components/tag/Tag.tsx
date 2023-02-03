@@ -29,13 +29,17 @@ export type TagProps = {
    */
   deleteButtonAriaLabel?: string;
   /**
-   * Props that will be passed to the delete button `<button>` element.
+   * Prop will be passed to the delete button `<button>` element. It also hides the default label from screen readers to prevent confusion with labels when present.
    */
   deleteButtonProps?: React.ComponentPropsWithoutRef<'button'>;
   /**
    * Used to generate the first part of the id on the elements.
    */
   id?: string;
+  /**
+   * Additional class names to apply to the tag's label element
+   */
+  labelClassName?: string;
   /**
    * Props that will be passed to the label `<span>` element.
    */
@@ -53,7 +57,7 @@ export type TagProps = {
    */
   role?: 'link' | 'button';
   /**
-   * Label that is only visible to screen readers. Can be used to to give screen reader users additional information about the tag.
+   * The label is only visible to screen readers. Can be used to give screen reader users additional information about the tag.
    */
   srOnlyLabel?: string;
   /**
@@ -73,6 +77,7 @@ export const Tag = forwardRef<HTMLDivElement, TagProps>(
       deleteButtonAriaLabel,
       deleteButtonProps,
       id = 'hds-tag',
+      labelClassName,
       labelProps,
       onClick,
       onDelete,
@@ -88,11 +93,14 @@ export const Tag = forwardRef<HTMLDivElement, TagProps>(
     const containerClassName = classNames(styles.tag, customThemeClass, className);
     const clickable = typeof onClick === 'function';
     const deletable = typeof onDelete === 'function';
+    const hideLabelFromScreenReaders = srOnlyLabel || deleteButtonAriaLabel;
 
     // handle key down
     const onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
       if (event.key === 'Enter' || event.key === ' ') onClick(event);
     };
+
+    const labelContainerClassName = classNames(styles.label, labelClassName);
 
     return (
       <div
@@ -102,9 +110,9 @@ export const Tag = forwardRef<HTMLDivElement, TagProps>(
         {...(clickable && { tabIndex: 0, role, onClick, onKeyDown })}
         {...rest}
       >
-        <span id={id && `${id}-label`} className={styles.label} {...labelProps}>
+        <span id={id && `${id}-label`} className={labelContainerClassName} {...labelProps}>
           {srOnlyLabel && <span className={styles.visuallyHidden}>{srOnlyLabel}</span>}
-          <span aria-hidden={!!srOnlyLabel}>{children}</span>
+          <span {...(hideLabelFromScreenReaders ? { 'aria-hidden': true } : {})}>{children}</span>
         </span>
 
         {deletable && (

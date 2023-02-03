@@ -21,3 +21,9 @@ export const HeaderNavigationMenuWrapper = ({ children }: WrapperProps) => (
     <Header.NavigationMenu>{children}</Header.NavigationMenu>
   </Header>
 );
+
+export const HeaderNavigationMenuWrapper = ({ children }: PropsWithChildren<Record<string, unknown>>) => (
+  <Header>
+    <HeaderNavigationMenu>{children}</HeaderNavigationMenu>
+  </Header>
+);

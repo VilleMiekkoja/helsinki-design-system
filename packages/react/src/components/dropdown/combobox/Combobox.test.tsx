@@ -33,7 +33,7 @@ const defaultProps: ComboboxProps<{ label: string; value: string }> = {
   toggleButtonAriaLabel: 'Open the combobox',
 };
 
-const getWrapper = (props?: unknown) => render(<Combobox {...defaultProps} {...props} />);
+const getWrapper = (props?: Record<string, unknown>) => render(<Combobox {...defaultProps} {...props} />);
 
 describe('<Combobox />', () => {
   it('renders the component', () => {
@@ -61,7 +61,7 @@ describe('<Combobox />', () => {
 
   it('user should be able to search and choose an option ', async () => {
     const onChange = jest.fn();
-    const { getAllByLabelText, getAllByRole, queryByDisplayValue } = getWrapper({ onChange });
+    const { getAllByLabelText, getAllByRole, getByDisplayValue } = getWrapper({ onChange });
     const input = getAllByLabelText(label)[0];
     userEvent.type(input, 'Fi');
     const visibleOptions = getAllByRole('option');
@@ -72,7 +72,7 @@ describe('<Combobox />', () => {
     userEvent.click(visibleOptions[0]);
     await waitFor(() => {
       // Ensure that chosen option is shown as value of input
-      expect(queryByDisplayValue(options[0].label)).toBeDefined();
+      expect(getByDisplayValue(options[0].label)).toBeDefined();
       // Ensure that chosen option has been sent with the onChange event
       expect(onChange).toHaveBeenCalledWith(options[0]);
     });
@@ -121,7 +121,7 @@ describe('<Combobox />', () => {
         multiselect: true,
       });
 
-      const input = getAllByLabelText(label)[0];
+      const input = getAllByLabelText(label)[0] as HTMLInputElement;
 
       // Search an option
       userEvent.type(input, 'Fi');
@@ -131,6 +131,8 @@ describe('<Combobox />', () => {
       // Choose one option
       userEvent.click(visibleOptions[0]);
       await waitFor(() => {
+        // input value is not cleared on selection
+        expect(input.value).toBe('Fi');
         // Ensure that it's visible in selected items
         expect(queryAllByText(options[0].label).length).toEqual(2);
         // Ensure that it has been passed upwards with onChange
@@ -138,10 +140,24 @@ describe('<Combobox />', () => {
         expect(onChange).toHaveBeenCalledWith([options[0]]);
       });
 
+      // clear input text
+      userEvent.clear(input);
       // Search another option
       userEvent.type(input, 'bo');
-      expect(getAllByRole('option').length).toBe(2);
-      userEvent.click(getAllByRole('option')[1]);
+      const newVisibleOptions = getAllByRole('option');
+      // Ensure that options are filtered correctly
+      expect(newVisibleOptions.length).toBe(2);
+      userEvent.click(newVisibleOptions[1]);
+      await waitFor(() => {
+        // input value is not cleared on selection
+        expect(input.value).toBe('bo');
+        // Ensure that it's visible in selected items
+        expect(queryAllByText(options[4].label).length).toEqual(2);
+        // Ensure that it has been passed upwards with onChange
+      });
+
+      // clear input text so all options will be visible again
+      userEvent.clear(input);
       await waitFor(() => {
         // Ensure that previous and current selection are visible in
         // selected items
@@ -208,6 +224,53 @@ describe('<Combobox />', () => {
       userEvent.type(input, 'northeast');
       const visibleOptions = getAllByRole('option');
       expect(visibleOptions.length).toBe(1);
+    });
+
+    it('deleting an item while suggestions are shown, should only delete the item and not add an option', async () => {
+      const onChange = jest.fn();
+      const { getAllByLabelText, getAllByRole, queryAllByText } = getWrapper({
+        onChange,
+        multiselect: true,
+        options: multiWordOptions,
+      });
+
+      const getTags = () =>
+        getAllByRole('button').filter((t) => {
+          const child = t.firstChild as HTMLElement;
+          return child && String(child.getAttribute('id')).includes('hds-tag');
+        });
+
+      const input = getAllByLabelText(label)[0];
+
+      // Search an option
+      userEvent.type(input, 'hel');
+      const visibleOptions = getAllByRole('option');
+      // Choose three options, not the one at index 0!
+      // item at #0 would be added when a tag is deleted
+      // if tested bug was not fixed.
+      userEvent.click(visibleOptions[1]);
+      userEvent.click(visibleOptions[2]);
+      userEvent.click(visibleOptions[3]);
+      await waitFor(() => {
+        expect(getTags()).toHaveLength(3);
+        expect(onChange).toHaveBeenCalledTimes(3);
+      });
+      const tagForLabel2 = getTags().filter((t) => {
+        const span = (t.childNodes[0] as HTMLElement).childNodes[1] as HTMLElement;
+        return !!span && span.textContent === multiWordOptions[2].label;
+      })[0];
+
+      expect(tagForLabel2).not.toBeUndefined();
+      const deleteButtonForTag = tagForLabel2.querySelector('button') as HTMLButtonElement;
+      userEvent.click(deleteButtonForTag);
+      await waitFor(() => {
+        expect(onChange).toHaveBeenCalledTimes(4);
+        expect(getTags()).toHaveLength(2);
+        // deleteButtonClick causes onBlur and menu closes, so only tags are visible
+        expect(queryAllByText(multiWordOptions[1].label).length).toEqual(1);
+        expect(queryAllByText(multiWordOptions[2].label).length).toEqual(0);
+        expect(queryAllByText(multiWordOptions[3].label).length).toEqual(1);
+      });
     });
   });
 });
