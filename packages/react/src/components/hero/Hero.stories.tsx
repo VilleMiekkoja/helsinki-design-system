@@ -19,11 +19,28 @@ type DefaultCardContentProps = {
   text?: string;
   buttonStyle?: Record<string, string>;
 };
+
+const disabledArgType = {
+  table: {
+    type: {
+      summary: '-',
+    },
+  },
+  control: false,
+};
+
+const disabledPropControls = {
+  theme: disabledArgType,
+  koros: disabledArgType,
+  imageAspectRatio: disabledArgType,
+};
+
 const defaultText =
   'Nullam ut nunc consectetur, accumsan nunc sed, luctus nisl. Curabitur lacinia tristique est, sit amet egestas velit elementum sit amet. Nam lacinia volutpat erat vel faucibus.';
+
 const DefaultCardContent = (props: DefaultCardContentProps) => {
   const { title, text, buttonStyle } = props;
-  const h1Text = title || 'Welcome to the page hero';
+  const h1Text = title || 'Welcome to the hero story';
   const paragraphText = text || defaultText;
   return (
     <>
@@ -57,6 +74,7 @@ ImageLeftOrRight.argTypes = {
     control: { type: 'radio' },
     defaultValue: 'right',
   },
+  ...disabledPropControls,
 };
 
 export const WithoutImage = (args) => {
@@ -87,7 +105,9 @@ WithoutImage.argTypes = {
     options: ['blackAndWhite', 'blueAndGreen', 'whiteWithoutKoros'],
     control: { type: 'radio' },
     defaultValue: 'blueAndGreen',
+    description: 'Choose a preset hero type',
   },
+  ...disabledPropControls,
 };
 
 export const WithBackgroundImage = (args) => {
@@ -136,24 +156,51 @@ WithBackgroundImage.argTypes = {
   demoLongContent: {
     control: 'boolean',
   },
+  ...disabledPropControls,
 };
 
-export const WithElementAttributes = () => (
-  <Hero
-    id="hero"
-    theme={{ '--background-color': '#fff', '--image-position': 'bottom left' }}
-    imageAspectRatio="16:9"
-    className="hero-style"
-  >
-    <Hero.Card id="hero-card" className="hero-card-style">
-      <h1>This is a hero header</h1>
-      <p>This is a hero text with lorem ipsum</p>
-      <Button variant="secondary" role="link">
-        Button
-      </Button>
-    </Hero.Card>
-    <Hero.WideImage id="hero-image" src={imageFile} />
-  </Hero>
+export const CustomStyling = () => (
+  <div>
+    <style>
+      {`
+        .hero {
+          padding: 50px;
+          border: 4px solid rgba(10,147,175,1);
+          background: linear-gradient(291deg, rgba(2,0,36,1) 0%, rgba(15,170,203,1) 60%, rgba(10,147,175,1) 100%);
+          --image-position: top left;
+          --background-color: rgba(10,147,175,1);
+        }
+        #hero{
+          --koros-color: rgba(2,0,36,1);
+          
+        }
+        .hero-card {
+          border: 2px solid rgba(15,170,203,1);
+          padding: 10px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          
+        }
+        .hero-card h1,
+        .hero-card p,
+        .hero-card button {
+          color: #fff;
+          font-weight: 600;
+          border-color: #fff !important;
+          max-width:500px;
+          
+        }
+      `}
+    </style>
+    <Hero id="hero" className="hero">
+      <Hero.Card id="hero-card" className="hero-card">
+        <DefaultCardContent />
+      </Hero.Card>
+      <Hero.WideImage id="hero-image" src={imageFile} />
+    </Hero>
+  </div>
 );
 
 export const KorosPlayground = (args) => {
@@ -202,6 +249,7 @@ KorosPlayground.argTypes = {
       defaultValue: 'none',
     },
   },
+  ...disabledPropControls,
 };
 
 export const ImagePlayground = (args) => {
