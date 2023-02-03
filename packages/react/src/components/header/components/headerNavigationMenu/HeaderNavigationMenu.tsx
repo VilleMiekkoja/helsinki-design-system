@@ -57,7 +57,7 @@ const HeaderNavigationMenuContent = () => {
 };
 
 export const HeaderNavigationMenu = ({ ariaLabel, children, id }: HeaderNavigationMenuProps) => {
-  const { isSmallScreen } = useHeaderContext();
+  const { isNotLargeScreen } = useHeaderContext();
   const { setNavigationContent } = useSetHeaderContext();
 
   useEffect(() => {
@@ -68,7 +68,7 @@ export const HeaderNavigationMenu = ({ ariaLabel, children, id }: HeaderNavigati
   /* On small screen return null for now. Later when ActionBar's first version is done,
   we could see if this component with its contents (altered for small screens) could be
   sent to HeaderContext and used in ActionBar? */
-  if (isSmallScreen) return null;
+  if (isNotLargeScreen) return null;
 
   return (
     <nav role="navigation" aria-label={ariaLabel} id={id} className={styles.headerNavigationMenu}>

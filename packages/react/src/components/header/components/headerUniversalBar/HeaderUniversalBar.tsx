@@ -42,8 +42,8 @@ export const HeaderUniversalBar = ({
   primaryLinkHref,
   primaryLinkText,
 }: HeaderUniversalBarProps) => {
-  const { isSmallScreen } = useHeaderContext();
-  if (isSmallScreen) return null;
+  const { isNotLargeScreen } = useHeaderContext();
+  if (isNotLargeScreen) return null;
   const childElements = getChildElementsEvenIfContainerInbetween(children);
 
   return (
