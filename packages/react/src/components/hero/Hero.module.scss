@@ -94,7 +94,8 @@
   }
 }
 
-.backgroundContainer {
+.backgroundContainer,
+.angledKorosContainer {
   .mobileImage {
     background-image: var(--background-image);
     background-repeat: no-repeat;
@@ -124,25 +125,19 @@
   background-image: none;
   background-color: transparent;
   overflow: hidden;
-  .contentBox {
+  z-index: 1;
+  .content {
     display: block;
     z-index: 2;
     width: 100%;
-    background-color: var(--background-color);
+    padding: 0;
     .card {
+      background-color: var(--background-color);
       padding: var(--padding-vertical) var(--padding-horizontal);
     }
   }
   .mobileImageAndKoros {
     display: block;
-    .mobileImage {
-      display: flex;
-      background-image: var(--background-image);
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: var(--image-position);
-      aspect-ratio: 4/3;
-    }
   }
   .backgroundArea {
     display: none;
@@ -247,8 +242,10 @@
     background-size: cover;
     background-repeat: no-repeat;
     background-position: var(--image-position);
-    .contentBox {
+    .content {
       background-color: transparent;
+      width: 50%;
+      padding: var(--padding-vertical) var(--padding-horizontal);
       .card {
         padding: 0;
       }
@@ -258,10 +255,6 @@
     }
     .backgroundArea {
       display: block;
-    }
-    .contentBox {
-      width: 50%;
-      padding: var(--padding-vertical) var(--padding-horizontal);
     }
   }
 }

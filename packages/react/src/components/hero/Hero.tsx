@@ -217,18 +217,18 @@ export const Hero = ({ children, theme, koros, imageAspectRatio, ...elementAttri
     return (
       <div {...heroElementAttributes}>
         <div className={styles.angledKorosContainer}>
-          <div className={styles.contentBox}>
+          <div className={styles.content}>
             <Content />
             <div className={styles.mobileImageAndKoros}>
-              <Koros {...koros} flipHorizontal style={korosStyle} />
-              <div className={styles.mobileImage} />
+              <Koros {...koros} flipHorizontal shift compact style={korosStyle} />
+              <div className={classNames(imageContainerClasses, styles.mobileImage)} />
             </div>
-            <div className={styles.backgroundArea}>
-              <div className={styles.clippedBackground} />
-              <div className={styles.overflowBackground} />
-              <div className={styles.korosContainer}>
-                <Koros {...koros} flipHorizontal rotate="45deg" style={korosStyle} />;
-              </div>
+          </div>
+          <div className={styles.backgroundArea}>
+            <div className={styles.clippedBackground} />
+            <div className={styles.overflowBackground} />
+            <div className={styles.korosContainer}>
+              <Koros {...koros} flipHorizontal rotate="45deg" style={korosStyle} />;
             </div>
           </div>
         </div>
