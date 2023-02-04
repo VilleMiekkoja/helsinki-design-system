@@ -150,6 +150,9 @@ export const WithBackgroundImage = (args) => {
   } else if (args.imagePosition === 'right') {
     heroProps.theme = { '--background-color': '#f5a3c7', '--color': '#000', ...args.theme };
   }
+  if (args.imageAspectRatio) {
+    heroProps.imageAspectRatio = args.imageAspectRatio;
+  }
 
   return (
     <Hero {...heroProps}>
@@ -189,7 +192,6 @@ WithBackgroundImage.argTypes = {
   demoLongContent: {
     control: 'boolean',
   },
-  ...disabledPropControls,
 };
 
 export const CustomStyling = () => (
@@ -197,6 +199,7 @@ export const CustomStyling = () => (
     <style>
       {`
         .hero {
+          margin: 20px 0;
           padding: 50px;
           border: 4px solid rgba(10,147,175,1);
           background: linear-gradient(291deg, rgba(2,0,36,1) 0%, rgba(15,170,203,1) 60%, rgba(10,147,175,1) 100%);
@@ -204,7 +207,7 @@ export const CustomStyling = () => (
           --background-color: rgba(10,147,175,1);
         }
         #hero{
-          --koros-color: rgba(2,0,36,1);
+          --bottom-koros-color: rgba(2,0,36,1);
           
         }
         .hero-card {
@@ -334,11 +337,12 @@ const componentTypes = {
   imageOnSide: 'image on side',
   backgroundImage: 'background image',
   withoutImage: 'without image',
+  customStyling: 'custom styling',
 };
 
 export const EmbeddedToPage = (args) => {
   const { componentType, variant } = args;
-  const { imageOnSide, backgroundImage, withoutImage } = componentTypes;
+  const { imageOnSide, backgroundImage, withoutImage, customStyling } = componentTypes;
   const BasicImageVersion = () => {
     const imagePosition = variant === '1' ? 'left' : 'right';
     return <ImageLeftOrRight imagePosition={imagePosition} />;
@@ -358,6 +362,7 @@ export const EmbeddedToPage = (args) => {
       {componentType === imageOnSide && <BasicImageVersion />}
       {componentType === backgroundImage && <BackgroundImageVersion />}
       {componentType === withoutImage && <NoImage />}
+      {componentType === customStyling && <CustomStyling />}
       <Section color="secondary">
         <h1 className="heading-xl">Component after hero</h1>
         This component shows padding after hero
