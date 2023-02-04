@@ -58,7 +58,7 @@
 
 .imageContainer {
   display: flex;
-  aspect-ratio: var(--image-aspect-ratio);
+  width: 100%;
 }
 
 .imageBelowKoros {
@@ -71,6 +71,7 @@
 }
 
 .fixedImageAspectRatio {
+  aspect-ratio: var(--image-aspect-ratio);
   .image {
     object-fit: fill;
     width: 100%;
@@ -94,12 +95,18 @@
 }
 
 .backgroundContainer {
-  background-image: var(--background-image);
-  background-size: contain;
-  background-repeat: no-repeat;
-  &.noImageAspectRatio {
-    .backgroundMobileSpacer {
+  .mobileImage {
+    background-image: var(--background-image);
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: block;
+    height: 300px;
+    width: 100%;
+  }
+  .fixedImageAspectRatio {
+    &.mobileImage {
       aspect-ratio: 16 / 9;
+      height: auto;
     }
   }
 }
@@ -109,16 +116,6 @@
 }
 .bottomKoros {
   display: none;
-}
-
-.backgroundMobileSpacer {
-  aspect-ratio: var(--image-aspect-ratio);
-  display: block;
-}
-
-.backgroundMobileImage {
-  aspect-ratio: var(--image-aspect-ratio);
-  display: block;
 }
 
 .angledKorosContainer {
@@ -222,11 +219,10 @@
     }
   }
 
-  .backgroundMobileSpacer {
-    display: none;
-  }
-
   .backgroundContainer {
+    background-image: var(--background-image);
+    background-size: contain;
+    background-repeat: no-repeat;
     background-size: cover;
     padding: var(--padding-vertical) var(--padding-horizontal);
     .singleColumn {
@@ -235,6 +231,9 @@
     .content {
       --padding-vertical: var(--spacing-2-xl);
       --padding-horizontal: var(--spacing-xl);
+    }
+    .mobileImage {
+      display: none;
     }
   }
   .topKoros {

@@ -184,10 +184,6 @@ export const Hero = ({ children, theme, koros, imageAspectRatio, ...elementAttri
 
   // if background is first, then the Hero version is the one where card is floating over background image
   if (backgroundChildIndex === 0) {
-    const containerClasses = imageAspectRatio
-      ? styles.backgroundContainer
-      : classNames(styles.backgroundContainer, styles.noImageAspectRatio);
-
     const CommonKoros = ({ top }: { top?: boolean }) => {
       const className = top ? styles.topKoros : styles.bottomKoros;
       const topKorosFillColor =
@@ -205,11 +201,8 @@ export const Hero = ({ children, theme, koros, imageAspectRatio, ...elementAttri
 
     return (
       <div {...heroElementAttributes}>
-        <div className={containerClasses}>
-          <div className={classNames(imageContainerClasses, styles.imageBelowKoros)}>
-            <ImageClone />
-          </div>
-          <div className={styles.backgroundMobileSpacer} />
+        <div className={styles.backgroundContainer}>
+          <div className={classNames(imageContainerClasses, styles.mobileImage)} />
           <CommonKoros top />
           <div className={classNames(styles.content, styles.singleColumn)}>
             <Content />
