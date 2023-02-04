@@ -1,4 +1,4 @@
-@value small-up from "../../styles/breakpoints.css";
+@value large-up from "../../styles/breakpoints.css";
 
 .hero {
   --background-color: var(--color-white);
@@ -19,10 +19,13 @@
   h1 {
     font-size: var(--fontsize-heading-xl);
     font-weight: normal;
+    line-height: 1em;
+    margin-top: 0;
   }
   p {
     font-size: var(--fontsize-body-xl);
   }
+  z-index: 1;
 }
 
 .content {
@@ -191,10 +194,10 @@
   }
 }
 
-@media small-up {
+@media large-up {
   .hero {
     --padding-horizontal: var(--spacing-m);
-    --padding-vertical: var(--spacing-5-xl);
+    --padding-vertical: var(--spacing-layout-xl);
     h1 {
       font-size: var(--fontsize-heading-xxl);
     }
@@ -228,6 +231,10 @@
     padding: var(--padding-vertical) var(--padding-horizontal);
     .singleColumn {
       width: 50%;
+    }
+    .content {
+      --padding-vertical: var(--spacing-2-xl);
+      --padding-horizontal: var(--spacing-xl);
     }
   }
   .topKoros {
