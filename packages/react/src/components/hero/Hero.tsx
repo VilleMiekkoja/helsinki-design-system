@@ -28,6 +28,8 @@ export interface HeroCustomTheme {
   '--image-aspect-ratio'?: string;
   '--image-position'?: string;
   '--koros-color'?: string;
+  // used only with bg image!
+  '--bottom-koros-color'?: string;
 }
 
 export type ChildProps = {
@@ -153,7 +155,11 @@ export const Hero = ({ children, theme, koros, imageAspectRatio, ...elementAttri
     <>
       {components.map((c, index) => {
         if (index === imageChildIndex) {
-          return <div className={imageContainerClasses}>{c}</div>;
+          return (
+            <div key="imageContainer" className={imageContainerClasses}>
+              {c}
+            </div>
+          );
         }
         if (index === backgroundChildIndex || index === wideImageChildIndex) {
           return null;
@@ -182,9 +188,20 @@ export const Hero = ({ children, theme, koros, imageAspectRatio, ...elementAttri
       ? styles.backgroundContainer
       : classNames(styles.backgroundContainer, styles.noImageAspectRatio);
 
-    const CommonKoros = ({ className }: { className: string }) => (
-      <Koros {...koros} shift className={`${(koros && koros.className) || ''} ${className}`} style={korosStyle} />
-    );
+    const CommonKoros = ({ top }: { top?: boolean }) => {
+      const className = top ? styles.topKoros : styles.bottomKoros;
+      const topKorosFillColor =
+        !top && theme && theme['--bottom-koros-color'] ? theme['--bottom-koros-color'] : 'var(--koros-color)';
+      return (
+        <Koros
+          {...koros}
+          shift
+          compact
+          className={`${(koros && koros.className) || ''} ${className}`}
+          style={{ fill: topKorosFillColor }}
+        />
+      );
+    };
 
     return (
       <div {...heroElementAttributes}>
@@ -193,12 +210,12 @@ export const Hero = ({ children, theme, koros, imageAspectRatio, ...elementAttri
             <ImageClone />
           </div>
           <div className={styles.backgroundMobileSpacer} />
-          <CommonKoros className={styles.topKoros} />
+          <CommonKoros top />
           <div className={classNames(styles.content, styles.singleColumn)}>
             <Content />
           </div>
         </div>
-        <CommonKoros className={styles.bottomKoros} />
+        <CommonKoros />
       </div>
     );
   }
@@ -228,12 +245,15 @@ export const Hero = ({ children, theme, koros, imageAspectRatio, ...elementAttri
   const columnStyle = imageChildIndex > -1 && cardChildIndex > -1 ? styles.twoColumns : styles.singleColumn;
   return (
     <div {...heroElementAttributes}>
-      <div className={classNames(styles.content, columnStyle)}>
+      <div key="content" className={classNames(styles.content, columnStyle)}>
         <Content />
         {!hideKoros && !canKorosBeFlipped && <KorosShiftSpacer {...koros} />}
       </div>
-      {!hideKoros && <Koros {...koros} shift flipHorizontal={canKorosBeFlipped} style={korosStyle} />}
+      {!hideKoros && (
+        <Koros {...koros} shift compact={canKorosBeFlipped} flipHorizontal={canKorosBeFlipped} style={korosStyle} />
+      )}
       <div
+        key="imageContainer"
         className={classNames(
           imageContainerClasses,
           wideImageChildIndex > -1 ? styles.wideImageContainer : styles.imageBelowKoros,
