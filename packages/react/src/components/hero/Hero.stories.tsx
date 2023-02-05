@@ -77,7 +77,7 @@ const NavigationComponent = () => (
 );
 
 export const ImageLeftOrRight = (args) => (
-  <Hero theme={{ '--background-color': '#c2a251', '--color': '#000' }} imageAspectRatio="16:9">
+  <Hero theme={{ '--background-color': '#c2a251', '--color': '#000', ...args.theme }}>
     {args?.imagePosition === 'left' && <Hero.Image src={imageFile} />}
     <Hero.Card>
       <DefaultCardContent buttonStyle={{ '--background-color': '#000', '--color': '#fff', '--border-color': '#000' }} />
@@ -132,9 +132,6 @@ export const WithBackgroundImage = (args) => {
     heroProps.theme = { '--background-color': '#fff', ...args.theme };
   } else if (args.imagePosition === 'right') {
     heroProps.theme = { '--background-color': '#f5a3c7', '--color': '#000', ...args.theme };
-  }
-  if (args.imageAspectRatio) {
-    heroProps.imageAspectRatio = args.imageAspectRatio;
   }
 
   return (
@@ -271,9 +268,8 @@ KorosPlayground.argTypes = {
 };
 
 export const ImagePlayground = (args) => {
-  const { imagePosition, imageAspectRatio } = args;
+  const { imagePosition } = args;
   const heroProps: HeroProps = {
-    imageAspectRatio: imageAspectRatio || undefined,
     theme: {
       '--background-color': '#9fc9eb',
       ...(imagePosition && { '--image-position': imagePosition }),
@@ -291,10 +287,6 @@ export const ImagePlayground = (args) => {
 };
 
 ImagePlayground.argTypes = {
-  imageAspectRatio: {
-    type: 'text',
-    defaultValue: '',
-  },
   imagePosition: {
     control: {
       type: 'select',
@@ -308,9 +300,8 @@ ImagePlayground.argTypes = {
         'bottom left',
         'bottom center',
         'bottom right',
-        'default',
+        'none',
       ],
-      defaultValue: 'default',
     },
   },
 };
@@ -372,3 +363,16 @@ EmbeddedToPage.argTypes = {
     },
   },
 };
+
+export const BottomWideImage = (args) => (
+  <Hero theme={{ '--background-color': '#fff', '--image-position': 'bottom left', ...args.theme }}>
+    <Hero.Card>
+      <h1>This is a hero header</h1>
+      <p>This is a hero text with lorem ipsum</p>
+      <Button variant="secondary" role="link">
+        Button
+      </Button>
+    </Hero.Card>
+    <Hero.WideImage src={imageFile} />
+  </Hero>
+);

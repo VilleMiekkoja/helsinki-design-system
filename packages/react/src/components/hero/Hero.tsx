@@ -18,14 +18,12 @@ export type HeroProps = React.PropsWithChildren<
       forcedDirection?: 'up' | 'down';
       hide?: boolean;
     };
-    imageAspectRatio?: string;
   }
 >;
 
 export interface HeroCustomTheme {
   '--background-color'?: string;
   '--color'?: string;
-  '--image-aspect-ratio'?: string;
   '--image-position'?: string;
   '--koros-color'?: string;
   // used only with top bg image!
@@ -123,7 +121,7 @@ const BackgroundImage = (props: ImgElementAttributes) => {
 };
 BackgroundImage.componentName = 'BackgroundImage';
 
-export const Hero = ({ children, theme, koros, imageAspectRatio, ...elementAttributes }: HeroProps) => {
+export const Hero = ({ children, theme, koros, ...elementAttributes }: HeroProps) => {
   const {
     components,
     imageChildIndex,
@@ -132,16 +130,14 @@ export const Hero = ({ children, theme, koros, imageAspectRatio, ...elementAttri
     wideImageChildIndex,
     cardChildIndex,
   } = pickChildProps(children);
-  const combinedTheme = imageAspectRatio
-    ? { ...theme, '--image-aspect-ratio': imageAspectRatio.replace(/(\D)+/g, ' / ') }
-    : { ...theme };
+  const editableTheme = { ...theme };
   if (backgroundImageSrc) {
-    combinedTheme['--background-image'] = `url(${backgroundImageSrc})`;
+    editableTheme['--background-image'] = `url(${backgroundImageSrc})`;
   }
-  if (!combinedTheme['--koros-color']) {
-    combinedTheme['--koros-color'] = 'var(--background-color)';
+  if (!editableTheme['--koros-color']) {
+    editableTheme['--koros-color'] = 'var(--background-color)';
   }
-  const customThemeClass = useTheme<HeroCustomTheme>(styles.hero, combinedTheme);
+  const customThemeClass = useTheme<HeroCustomTheme>(styles.hero, editableTheme);
   const korosStyle = { fill: 'var(--koros-color)' };
   const canKorosBeFlipped = koros?.forcedDirection !== 'up';
   const hideKoros = !!koros?.hide;
