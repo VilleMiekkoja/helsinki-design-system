@@ -22,21 +22,6 @@ type DefaultCardContentProps = {
   buttonStyle?: Record<string, string>;
 };
 
-const disabledArgType = {
-  table: {
-    type: {
-      summary: '-',
-    },
-  },
-  control: false,
-};
-
-const disabledPropControls = {
-  theme: disabledArgType,
-  koros: disabledArgType,
-  imageAspectRatio: disabledArgType,
-};
-
 const defaultText =
   'Nullam ut nunc consectetur, accumsan nunc sed, luctus nisl. Curabitur lacinia tristique est, sit amet egestas velit elementum sit amet. Nam lacinia volutpat erat vel faucibus.';
 
@@ -107,7 +92,6 @@ ImageLeftOrRight.argTypes = {
     control: { type: 'radio' },
     defaultValue: 'right',
   },
-  ...disabledPropControls,
 };
 
 export const WithoutImage = (args) => {
@@ -140,7 +124,6 @@ WithoutImage.argTypes = {
     defaultValue: 'blueAndGreen',
     description: 'Choose a preset hero type',
   },
-  ...disabledPropControls,
 };
 
 export const WithBackgroundImage = (args) => {
@@ -285,7 +268,6 @@ KorosPlayground.argTypes = {
       defaultValue: 'none',
     },
   },
-  ...disabledPropControls,
 };
 
 export const ImagePlayground = (args) => {
