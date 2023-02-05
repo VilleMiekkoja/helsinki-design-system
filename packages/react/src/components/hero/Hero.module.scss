@@ -57,41 +57,19 @@
   }
 }
 
-.imageContainer {
-  display: flex;
-  width: 100%;
-}
-
-.imageBelowKoros {
-  display: block;
-}
-
 .image {
   display: block;
   width: 100%;
 }
 
-.fixedImageAspectRatio {
-  aspect-ratio: var(--image-aspect-ratio);
-  .image {
-    object-fit: fill;
-    width: 100%;
-    height: 100%;
-  }
-}
-
+.imageBelowKoros,
 .wideImageContainer {
+  display: block;
+  height: 300px;
   .image {
-    height: 275px;
     object-fit: cover;
-    width: 100%;
-    object-position: var(--image-position);
-  }
-}
-
-.wideImageContainer.fixedImageAspectRatio {
-  .image {
     height: 100%;
+    object-position: var(--image-position);
   }
 }
 
@@ -170,6 +148,14 @@
 
     .imageContainer {
       display: block;
+    }
+  }
+  .wideImageContainer {
+    height: 400px;
+    .image {
+      object-fit: cover;
+      height: 100%;
+      object-position: var(--image-position);
     }
   }
 

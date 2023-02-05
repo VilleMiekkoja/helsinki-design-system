@@ -142,9 +142,6 @@ export const Hero = ({ children, theme, koros, imageAspectRatio, ...elementAttri
     combinedTheme['--koros-color'] = 'var(--background-color)';
   }
   const customThemeClass = useTheme<HeroCustomTheme>(styles.hero, combinedTheme);
-  const imageContainerClasses = imageAspectRatio
-    ? classNames(styles.imageContainer, styles.fixedImageAspectRatio)
-    : styles.imageContainer;
   const korosStyle = { fill: 'var(--koros-color)' };
   const canKorosBeFlipped = koros?.forcedDirection !== 'up';
   const hideKoros = !!koros?.hide;
@@ -158,7 +155,7 @@ export const Hero = ({ children, theme, koros, imageAspectRatio, ...elementAttri
       {components.map((c, index) => {
         if (index === imageChildIndex) {
           return (
-            <div key="imageContainer" className={imageContainerClasses}>
+            <div key="imageContainer" className={styles.imageContainer}>
               {c}
             </div>
           );
@@ -204,7 +201,7 @@ export const Hero = ({ children, theme, koros, imageAspectRatio, ...elementAttri
     return (
       <div {...heroElementAttributes}>
         <div className={styles.backgroundContainer}>
-          <div className={classNames(imageContainerClasses, styles.mobileImage)} />
+          <div className={classNames(styles.imageContainer, styles.mobileImage)} />
           <CommonKoros top />
           <div className={classNames(styles.content, styles.singleColumn)}>
             <Content />
@@ -223,7 +220,7 @@ export const Hero = ({ children, theme, koros, imageAspectRatio, ...elementAttri
             <Content />
             <div className={styles.mobileImageAndKoros}>
               <Koros {...koros} flipHorizontal shift compact style={korosStyle} />
-              <div className={classNames(imageContainerClasses, styles.mobileImage)} />
+              <div className={classNames(styles.imageContainer, styles.mobileImage)} />
             </div>
           </div>
           <Koros {...koros} className={styles.angledKorosWithBg} style={korosStyle} />;
@@ -244,7 +241,7 @@ export const Hero = ({ children, theme, koros, imageAspectRatio, ...elementAttri
       <div
         key="imageContainer"
         className={classNames(
-          imageContainerClasses,
+          styles.imageContainer,
           wideImageChildIndex > -1 ? styles.wideImageContainer : styles.imageBelowKoros,
         )}
       >
