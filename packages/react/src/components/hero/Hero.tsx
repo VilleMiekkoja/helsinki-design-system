@@ -28,8 +28,10 @@ export interface HeroCustomTheme {
   '--image-aspect-ratio'?: string;
   '--image-position'?: string;
   '--koros-color'?: string;
-  // used only with bg image!
+  // used only with top bg image!
   '--bottom-koros-color'?: string;
+  // used only with angled bg image!
+  '--angled-koros-inset'?: string;
 }
 
 export type ChildProps = {
@@ -224,13 +226,7 @@ export const Hero = ({ children, theme, koros, imageAspectRatio, ...elementAttri
               <div className={classNames(imageContainerClasses, styles.mobileImage)} />
             </div>
           </div>
-          <div className={styles.backgroundArea}>
-            <div className={styles.clippedBackground} />
-            <div className={styles.overflowBackground} />
-            <div className={styles.korosContainer}>
-              <Koros {...koros} flipHorizontal rotate="45deg" style={korosStyle} />;
-            </div>
-          </div>
+          <Koros {...koros} className={styles.angledKorosWithBg} style={korosStyle} />;
         </div>
       </div>
     );
