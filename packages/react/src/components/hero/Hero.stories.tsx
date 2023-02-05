@@ -174,7 +174,20 @@ WithBackgroundImage.argTypes = {
   },
 };
 
-export const CustomStyling = () => (
+export const BottomWideImage = (args) => (
+  <Hero theme={{ '--background-color': '#fff', '--image-position': 'bottom left', ...args.theme }}>
+    <Hero.Card>
+      <h1>This is a hero header</h1>
+      <p>This is a hero text with lorem ipsum</p>
+      <Button variant="secondary" role="link">
+        Button
+      </Button>
+    </Hero.Card>
+    <Hero.WideImage src={imageFile} />
+  </Hero>
+);
+
+export const XtraStyling = () => (
   <div>
     <style>
       {`
@@ -310,12 +323,13 @@ const componentTypes = {
   imageOnSide: 'image on side',
   backgroundImage: 'background image',
   withoutImage: 'without image',
-  customStyling: 'custom styling',
+  wideImage: 'wide image',
+  xtraStyling: 'extra nice styling',
 };
 
 export const EmbeddedToPage = (args) => {
   const { componentType, variant } = args;
-  const { imageOnSide, backgroundImage, withoutImage, customStyling } = componentTypes;
+  const { imageOnSide, backgroundImage, withoutImage, xtraStyling: customStyling, wideImage } = componentTypes;
   const BasicImageVersion = () => {
     const imagePosition = variant === '1' ? 'left' : 'right';
     return <ImageLeftOrRight imagePosition={imagePosition} />;
@@ -335,7 +349,8 @@ export const EmbeddedToPage = (args) => {
       {componentType === imageOnSide && <BasicImageVersion />}
       {componentType === backgroundImage && <BackgroundImageVersion />}
       {componentType === withoutImage && <NoImage />}
-      {componentType === customStyling && <CustomStyling />}
+      {componentType === customStyling && <XtraStyling />}
+      {componentType === wideImage && <BottomWideImage />}
       <Section color="secondary">
         <h1 className="heading-xl">Component after hero</h1>
         This component shows padding after hero
@@ -363,16 +378,3 @@ EmbeddedToPage.argTypes = {
     },
   },
 };
-
-export const BottomWideImage = (args) => (
-  <Hero theme={{ '--background-color': '#fff', '--image-position': 'bottom left', ...args.theme }}>
-    <Hero.Card>
-      <h1>This is a hero header</h1>
-      <p>This is a hero text with lorem ipsum</p>
-      <Button variant="secondary" role="link">
-        Button
-      </Button>
-    </Hero.Card>
-    <Hero.WideImage src={imageFile} />
-  </Hero>
-);
