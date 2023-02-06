@@ -97,7 +97,7 @@ Card.componentName = 'Card';
 const ImageContainer = (props: ImgElementAttributes) => {
   return (
     /* eslint-disable-next-line jsx-a11y/alt-text */
-    <img className={styles.image} {...props} />
+    <img className={styles.image} {...props} aria-hidden alt="" />
   );
 };
 
