@@ -232,7 +232,7 @@ export const XtraStyling = () => (
   </div>
 );
 
-export const KorosPlayground = (args) => {
+export const PlaygroundForKoros = (args) => {
   const heroProps: HeroProps = {
     koros: {
       type: args.type,
@@ -256,7 +256,7 @@ export const KorosPlayground = (args) => {
   );
 };
 
-KorosPlayground.argTypes = {
+PlaygroundForKoros.argTypes = {
   type: {
     control: {
       type: 'select',
@@ -280,7 +280,7 @@ KorosPlayground.argTypes = {
   },
 };
 
-export const ImagePlayground = (args) => {
+export const PlaygroundForImage = (args) => {
   const { imagePosition } = args;
   const heroProps: HeroProps = {
     theme: {
@@ -299,7 +299,7 @@ export const ImagePlayground = (args) => {
   );
 };
 
-ImagePlayground.argTypes = {
+PlaygroundForImage.argTypes = {
   imagePosition: {
     control: {
       type: 'select',
@@ -376,5 +376,48 @@ EmbeddedToPage.argTypes = {
     table: {
       type: { summary: 'Changes to another variant of the selected component.' },
     },
+  },
+};
+
+export const PlaygroundForAngledKoros = (args) => (
+  <div>
+    <style>
+      {`
+        .hero {
+          --angled-koros-inset: ${args.korosInset};
+        }
+        .hero-card h1{
+          max-width: ${args.headingMaxWidth};
+        }
+        .hero-card p {
+          padding-right: ${args.paragraphPadding};
+        }
+      `}
+    </style>
+    <Hero id="hero" className="hero" theme={{ '--background-color': '#f5a3c7', '--color': '#000', ...args.theme }}>
+      <Hero.Card id="hero-card" className="hero-card">
+        <DefaultCardContent />
+      </Hero.Card>
+      <Hero.BackgroundImage id="hero-image" src={imageFile} />
+    </Hero>
+    <p>This story demonstrates possibilities to fix content overflowing the image.</p>
+  </div>
+);
+
+PlaygroundForAngledKoros.argTypes = {
+  korosInset: {
+    defaultValue: 'auto auto 40% -50%',
+    control: 'text',
+    description: 'Position of the koros',
+  },
+  headingMaxWidth: {
+    defaultValue: '35vw',
+    control: 'text',
+    description: 'Max width of the heading',
+  },
+  paragraphPadding: {
+    defaultValue: '42%',
+    control: 'text',
+    description: 'Padding of the p element',
   },
 };
