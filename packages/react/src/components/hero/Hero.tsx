@@ -126,9 +126,31 @@ export const Hero = ({ children, theme, koros, ...elementAttributes }: HeroProps
   const korosStyle = { fill: 'var(--koros-color)' };
   const canKorosBeFlipped = koros?.forcedDirection !== 'up';
   const hideKoros = !!koros?.hide;
+
+  const getHeroType = () => {
+    if (wideImageChildIndex > -1) {
+      return 'wideImage';
+    }
+    if (backgroundChildIndex > -1) {
+      // if background is first, then the Hero version is the one where card is floating over background image
+      // if background is not first, then the Hero version is the one with angled Koros
+      return backgroundChildIndex === 0 ? 'backgroundTop' : 'angledKoros';
+    }
+    if (imageChildIndex === -1) {
+      return 'textOnly';
+    }
+    return imageChildIndex === 0 ? 'imageLeft' : 'imageRight';
+  };
+
+  const type = getHeroType();
   const heroElementAttributes: HTMLElementAttributes = {
     ...elementAttributes,
-    className: classNames(styles.hero, customThemeClass, (elementAttributes as HTMLElementAttributes).className),
+    className: classNames(
+      styles.hero,
+      customThemeClass,
+      styles[type],
+      (elementAttributes as HTMLElementAttributes).className,
+    ),
   };
 
   const Content = () => (
@@ -150,7 +172,7 @@ export const Hero = ({ children, theme, koros, ...elementAttributes }: HeroProps
   );
 
   const ImageClone = () => {
-    const imageIndex = wideImageChildIndex > -1 ? wideImageChildIndex : imageChildIndex;
+    const imageIndex = type === 'wideImage' ? wideImageChildIndex : imageChildIndex;
     if (imageIndex === -1) {
       return null;
     }
@@ -169,8 +191,7 @@ export const Hero = ({ children, theme, koros, ...elementAttributes }: HeroProps
     return <div className={classNames(styles.background)}>{components[backgroundChildIndex]}</div>;
   };
 
-  // if background is first, then the Hero version is the one where card is floating over background image
-  if (backgroundChildIndex === 0) {
+  if (type === 'backgroundTop') {
     const CommonKoros = ({ top }: { top?: boolean }) => {
       const className = top ? styles.topKoros : styles.bottomKoros;
       const topKorosFillColor =
@@ -199,8 +220,8 @@ export const Hero = ({ children, theme, koros, ...elementAttributes }: HeroProps
       </div>
     );
   }
-  // if background is last, then the Hero version is the one with angled Koros
-  if (backgroundChildIndex > 0) {
+
+  if (type === 'angledKoros') {
     return (
       <div {...heroElementAttributes}>
         <div className={styles.angledKorosContainer}>
@@ -217,7 +238,6 @@ export const Hero = ({ children, theme, koros, ...elementAttributes }: HeroProps
     );
   }
   const columnStyle = imageChildIndex > -1 && cardChildIndex > -1 ? styles.twoColumns : styles.singleColumn;
-  const hasBottomImage = imageChildIndex > -1 || wideImageChildIndex > -1;
   return (
     <div {...heroElementAttributes}>
       <div key="content" className={classNames(styles.content, columnStyle)}>
@@ -227,12 +247,12 @@ export const Hero = ({ children, theme, koros, ...elementAttributes }: HeroProps
       {!hideKoros && (
         <Koros {...koros} shift compact={canKorosBeFlipped} flipHorizontal={canKorosBeFlipped} style={korosStyle} />
       )}
-      {hasBottomImage && (
+      {type !== 'textOnly' && (
         <div
           key="imageContainer"
           className={classNames(
             styles.imageContainer,
-            wideImageChildIndex > -1 ? styles.wideImageContainer : styles.imageBelowKoros,
+            type === 'wideImage' ? styles.wideImageContainer : styles.imageBelowKoros,
           )}
         >
           <ImageClone />

@@ -182,11 +182,7 @@ WithBackgroundImage.argTypes = {
 export const BottomWideImage = (args) => (
   <Hero koros={args.koros} theme={{ '--background-color': '#fff', '--image-position': 'bottom left', ...args.theme }}>
     <Hero.Card>
-      <h1>This is a hero header</h1>
-      <p>This is a hero text with lorem ipsum</p>
-      <Button variant="secondary" role="link">
-        Button
-      </Button>
+      <DefaultCardContent />
     </Hero.Card>
     <Hero.WideImage src={imageFile} />
   </Hero>

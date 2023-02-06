@@ -126,6 +126,9 @@
     h1 {
       font-size: var(--fontsize-heading-xxl);
     }
+    &.wideImage {
+      --padding-horizontal: var(--spacing-layout-2-xl);
+    }
   }
   .imageBelowKoros {
     display: none;
