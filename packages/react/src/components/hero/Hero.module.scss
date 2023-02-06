@@ -2,18 +2,14 @@
 
 .hero {
   --background-color: var(--color-white);
-  --border-color: var(--color-black-90);
   --color: var(--color-black-90);
-  --border-width: 2px;
   --padding-horizontal: var(--spacing-s);
   --padding-vertical: var(--spacing-xl);
-  --image-aspect-ratio: unset;
   --image-position: bottom right;
   --koros-color: var(--color-white);
   --angled-koros-inset: auto auto 10% -40%;
 
   color: var(--color);
-
   display: flex;
   flex-direction: column;
 
@@ -23,9 +19,11 @@
     line-height: 1em;
     margin-top: 0;
   }
+
   p {
     font-size: var(--fontsize-body-xl);
   }
+
   z-index: 1;
 }
 
@@ -35,18 +33,17 @@
   background-color: var(--background-color);
 }
 
+.singleColumn,
 .twoColumns {
   display: flex;
   flex-direction: column;
+}
+
+.twoColumns {
   align-items: center;
   .imageContainer {
     display: none;
   }
-}
-
-.singleColumn {
-  display: flex;
-  flex-direction: column;
 }
 
 .card {
@@ -62,8 +59,7 @@
   width: 100%;
 }
 
-.imageBelowKoros,
-.wideImageContainer {
+.imageBelowKoros {
   display: block;
   height: 300px;
   .image {
@@ -73,28 +69,33 @@
   }
 }
 
-.angledKorosContainer,
-.backgroundContainer {
-  position: relative;
-  .background {
-    height: 300px;
-    width: 100%;
-    .image {
-      object-fit: cover;
-      height: 100%;
-      object-position: var(--image-position);
+.angledKoros,
+.backgroundTop {
+  .container {
+    position: relative;
+    .background {
+      height: 300px;
+      width: 100%;
+      .image {
+        object-fit: cover;
+        height: 100%;
+        object-position: var(--image-position);
+      }
     }
   }
 }
 
-.topKoros {
-  display: block;
-}
-.bottomKoros {
-  display: none;
+.backgroundTop .container {
+  .topKoros {
+    display: block;
+  }
+
+  .bottomKoros {
+    display: none;
+  }
 }
 
-.angledKorosContainer {
+.angledKoros .container {
   display: flex;
   position: relative;
   background-color: transparent;
@@ -114,7 +115,7 @@
   .mobileKoros {
     display: block;
   }
-  .angledKorosWithBg {
+  .korosAndBackground {
     display: none;
   }
 }
@@ -130,9 +131,14 @@
       --padding-horizontal: var(--spacing-layout-2-xl);
     }
   }
-  .imageBelowKoros {
-    display: none;
+
+  .imageLeft,
+  .imageRight {
+    .imageBelowKoros {
+      display: none;
+    }
   }
+
   .twoColumns {
     flex-direction: row;
     > * {
@@ -149,34 +155,35 @@
       display: block;
     }
   }
-  .wideImageContainer {
+
+  .wideImage.imageBelowKoros {
     height: 400px;
-    .image {
-      object-fit: cover;
-      height: 100%;
-      object-position: var(--image-position);
-    }
   }
 
-  .backgroundContainer {
+  .backgroundTop .container {
     padding: var(--padding-vertical) var(--padding-horizontal);
+
     .singleColumn {
       width: 50%;
     }
+
     .content {
       --padding-vertical: var(--spacing-2-xl);
       --padding-horizontal: var(--spacing-xl);
     }
+
+    .topKoros {
+      display: none;
+    }
+
+    .bottomKoros {
+      display: block;
+    }
   }
-  .topKoros {
-    display: none;
-  }
-  .bottomKoros {
-    display: block;
-  }
-  .angledKorosContainer,
-  .backgroundContainer {
-    .background {
+
+  .angledKoros,
+  .backgroundTop {
+    .container .background {
       position: absolute;
       z-index: -1;
       inset: 0;
@@ -185,7 +192,7 @@
     }
   }
 
-  .angledKorosContainer {
+  .angledKoros .container {
     .content {
       background-color: transparent;
       width: 50%;
@@ -195,10 +202,12 @@
         background: none;
       }
     }
+
     .mobileKoros {
       display: none;
     }
-    .angledKorosWithBg {
+
+    .korosAndBackground {
       inset: var(--angled-koros-inset);
       transform: rotate(135deg);
       transform-origin: center;
@@ -208,14 +217,14 @@
       z-index: 1;
       height: 100%;
       &:after {
-        background-color: var(--koros-color);
         content: '';
+        background-color: var(--koros-color);
         display: block;
+        width: 100%;
         height: 200%;
         left: 0;
         position: absolute;
         top: 50px;
-        width: 100%;
       }
     }
   }

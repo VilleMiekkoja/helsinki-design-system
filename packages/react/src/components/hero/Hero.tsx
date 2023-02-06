@@ -209,7 +209,7 @@ export const Hero = ({ children, theme, koros, ...elementAttributes }: HeroProps
 
     return (
       <div {...heroElementAttributes}>
-        <div className={styles.backgroundContainer}>
+        <div className={styles.container}>
           <ImageAsBackground />
           <CommonKoros top />
           <div className={classNames(styles.content, styles.singleColumn)}>
@@ -224,14 +224,14 @@ export const Hero = ({ children, theme, koros, ...elementAttributes }: HeroProps
   if (type === 'angledKoros') {
     return (
       <div {...heroElementAttributes}>
-        <div className={styles.angledKorosContainer}>
+        <div className={styles.container}>
           <div className={styles.content}>
             <Content />
             <div className={styles.mobileKoros}>
               <Koros {...koros} flipHorizontal shift compact style={korosStyle} />
             </div>
           </div>
-          <Koros {...koros} className={styles.angledKorosWithBg} style={korosStyle} />
+          <Koros {...koros} className={styles.korosAndBackground} style={korosStyle} />
           <ImageAsBackground />
         </div>
       </div>
@@ -248,13 +248,7 @@ export const Hero = ({ children, theme, koros, ...elementAttributes }: HeroProps
         <Koros {...koros} shift compact={canKorosBeFlipped} flipHorizontal={canKorosBeFlipped} style={korosStyle} />
       )}
       {type !== 'textOnly' && (
-        <div
-          key="imageContainer"
-          className={classNames(
-            styles.imageContainer,
-            type === 'wideImage' ? styles.wideImageContainer : styles.imageBelowKoros,
-          )}
-        >
+        <div key="imageContainer" className={classNames(styles.imageContainer, styles.imageBelowKoros)}>
           <ImageClone />
         </div>
       )}
