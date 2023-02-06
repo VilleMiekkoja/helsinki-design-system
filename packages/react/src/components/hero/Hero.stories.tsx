@@ -77,7 +77,7 @@ const NavigationComponent = () => (
 );
 
 export const ImageLeftOrRight = (args) => (
-  <Hero theme={{ '--background-color': '#c2a251', '--color': '#000', ...args.theme }}>
+  <Hero koros={args.koros} theme={{ '--background-color': '#c2a251', '--color': '#000', ...args.theme }}>
     {args?.imagePosition === 'left' && <Hero.Image src={imageFile} />}
     <Hero.Card>
       <DefaultCardContent buttonStyle={{ '--background-color': '#000', '--color': '#fff', '--border-color': '#000' }} />
@@ -99,7 +99,7 @@ export const WithoutImage = (args) => {
   const defaultContentProps: DefaultCardContentProps = {};
   if (args.heroType === 'blueAndGreen') {
     heroProps.theme = { '--background-color': '#9fc9eb', '--color': '#000', '--koros-color': '#009246' };
-    heroProps.koros = { type: 'storm', forcedDirection: 'up' };
+    heroProps.koros = { type: 'pulse', forcedDirection: 'up' };
   } else if (args.heroType === 'blackAndWhite') {
     heroProps.theme = { '--background-color': '#000', '--color': '#fff' };
     defaultContentProps.buttonStyle = { '--background-color': '#fff', '--color': '#000', '--border-color': '#fff' };
@@ -108,6 +108,8 @@ export const WithoutImage = (args) => {
     heroProps.theme = { '--background-color': '#fff', '--color': '#000' };
     defaultContentProps.buttonStyle = {};
   }
+  heroProps.theme = { ...heroProps.theme, ...args.theme };
+  heroProps.koros = { ...heroProps.koros, ...args.koros };
   return (
     <Hero {...heroProps}>
       <Hero.Card centered={args.heroType === 'blueAndGreen'}>
@@ -133,6 +135,9 @@ export const WithBackgroundImage = (args) => {
   } else if (args.imagePosition === 'right') {
     heroProps.theme = { '--background-color': '#f5a3c7', '--color': '#000', ...args.theme };
   }
+
+  heroProps.theme = { ...heroProps.theme, ...args.theme };
+  heroProps.koros = { ...args.koros };
 
   return (
     <Hero {...heroProps}>
@@ -175,7 +180,7 @@ WithBackgroundImage.argTypes = {
 };
 
 export const BottomWideImage = (args) => (
-  <Hero theme={{ '--background-color': '#fff', '--image-position': 'bottom left', ...args.theme }}>
+  <Hero koros={args.koros} theme={{ '--background-color': '#fff', '--image-position': 'bottom left', ...args.theme }}>
     <Hero.Card>
       <h1>This is a hero header</h1>
       <p>This is a hero text with lorem ipsum</p>
@@ -187,7 +192,7 @@ export const BottomWideImage = (args) => (
   </Hero>
 );
 
-export const XtraStyling = () => (
+export const XtraStyling = (args) => (
   <div>
     <style>
       {`
@@ -223,7 +228,7 @@ export const XtraStyling = () => (
         }
       `}
     </style>
-    <Hero id="hero" className="hero">
+    <Hero id="hero" className="hero" koros={args.koros} theme={args.theme}>
       <Hero.Card id="hero-card" className="hero-card">
         <DefaultCardContent />
       </Hero.Card>
@@ -239,10 +244,12 @@ export const PlaygroundForKoros = (args) => {
       dense: !!args.dense,
       hide: !!args.hide,
       forcedDirection: args.forcedDirection || undefined,
+      ...args.koros,
     },
     theme: {
       '--background-color': '#9fc9eb',
       '--koros-color': args.color || '#9fc9eb',
+      ...args.theme,
     },
   };
 
@@ -258,10 +265,10 @@ export const PlaygroundForKoros = (args) => {
 
 PlaygroundForKoros.argTypes = {
   type: {
+    defaultValue: 'basic',
     control: {
       type: 'select',
-      options: ['basic', 'pulse'],
-      defaultValue: 'basic',
+      options: ['basic', 'beat', 'pulse', 'storm', 'wave', 'calm'],
     },
   },
   color: { control: { type: 'color' } },
@@ -272,10 +279,10 @@ PlaygroundForKoros.argTypes = {
     control: 'boolean',
   },
   forcedDirection: {
+    defaultValue: 'none',
     control: {
       type: 'select',
       options: ['up', 'down', 'none'],
-      defaultValue: 'none',
     },
   },
 };
@@ -286,11 +293,12 @@ export const PlaygroundForImage = (args) => {
     theme: {
       '--background-color': '#9fc9eb',
       ...(imagePosition && { '--image-position': imagePosition }),
+      ...args.theme,
     },
   };
 
   return (
-    <Hero {...heroProps}>
+    <Hero koros={args.koros} {...heroProps}>
       <Hero.BackgroundImage src={imageFile} />
       <Hero.Card>
         <DefaultCardContent />
@@ -360,6 +368,14 @@ export const EmbeddedToPage = (args) => {
 };
 
 EmbeddedToPage.argTypes = {
+  koros: {
+    description: '*** Koros is not passed the the components ***',
+    control: false,
+  },
+  theme: {
+    description: '*** Theme is not passed the the components ***',
+    control: false,
+  },
   componentType: {
     defaultValue: 'image on side',
     control: {
@@ -394,7 +410,12 @@ export const PlaygroundForAngledKoros = (args) => (
         }
       `}
     </style>
-    <Hero id="hero" className="hero" theme={{ '--background-color': '#f5a3c7', '--color': '#000', ...args.theme }}>
+    <Hero
+      id="hero"
+      koros={args.koros}
+      className="hero"
+      theme={{ '--background-color': '#f5a3c7', '--color': '#000', ...args.theme }}
+    >
       <Hero.Card id="hero-card" className="hero-card">
         <DefaultCardContent />
       </Hero.Card>
