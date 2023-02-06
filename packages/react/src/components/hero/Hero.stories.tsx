@@ -291,7 +291,7 @@ export const ImagePlayground = (args) => {
 
   return (
     <Hero {...heroProps}>
-      <Hero.Image src={imageFile} />
+      <Hero.BackgroundImage src={imageFile} />
       <Hero.Card>
         <DefaultCardContent />
       </Hero.Card>

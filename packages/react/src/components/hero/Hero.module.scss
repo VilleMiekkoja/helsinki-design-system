@@ -73,20 +73,16 @@
   }
 }
 
-.backgroundContainer,
-.angledKorosContainer {
-  .mobileImage {
-    background-image: var(--background-image);
-    background-repeat: no-repeat;
-    background-size: cover;
-    display: block;
+.angledKorosContainer,
+.backgroundContainer {
+  position: relative;
+  .background {
     height: 300px;
     width: 100%;
-  }
-  .fixedImageAspectRatio {
-    &.mobileImage {
-      aspect-ratio: 16 / 9;
-      height: auto;
+    .image {
+      object-fit: cover;
+      height: 100%;
+      object-position: var(--image-position);
     }
   }
 }
@@ -101,10 +97,10 @@
 .angledKorosContainer {
   display: flex;
   position: relative;
-  background-image: none;
   background-color: transparent;
   overflow: hidden;
   z-index: 1;
+  flex-direction: column;
   .content {
     display: block;
     z-index: 2;
@@ -115,7 +111,7 @@
       padding: var(--padding-vertical) var(--padding-horizontal);
     }
   }
-  .mobileImageAndKoros {
+  .mobileKoros {
     display: block;
   }
   .angledKorosWithBg {
@@ -160,10 +156,6 @@
   }
 
   .backgroundContainer {
-    background-image: var(--background-image);
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-size: cover;
     padding: var(--padding-vertical) var(--padding-horizontal);
     .singleColumn {
       width: 50%;
@@ -172,9 +164,6 @@
       --padding-vertical: var(--spacing-2-xl);
       --padding-horizontal: var(--spacing-xl);
     }
-    .mobileImage {
-      display: none;
-    }
   }
   .topKoros {
     display: none;
@@ -182,11 +171,18 @@
   .bottomKoros {
     display: block;
   }
+  .angledKorosContainer,
+  .backgroundContainer {
+    .background {
+      position: absolute;
+      z-index: -1;
+      inset: 0;
+      height: auto;
+      width: auto;
+    }
+  }
+
   .angledKorosContainer {
-    background-image: var(--background-image);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: var(--image-position);
     .content {
       background-color: transparent;
       width: 50%;
@@ -196,7 +192,7 @@
         background: none;
       }
     }
-    .mobileImageAndKoros {
+    .mobileKoros {
       display: none;
     }
     .angledKorosWithBg {

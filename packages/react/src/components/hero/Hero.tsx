@@ -36,7 +36,6 @@ export type ChildProps = {
   imageChildIndex: number;
   cardChildIndex: number;
   backgroundChildIndex: number;
-  backgroundImageSrc?: string;
   wideImageChildIndex?: number;
   components: React.ReactElement[];
 };
@@ -67,7 +66,6 @@ const pickChildProps = (children: React.ReactNode): ChildProps => {
       }
       case 'BackgroundImage': {
         childProps.backgroundChildIndex = index;
-        childProps.backgroundImageSrc = child.props.src;
         break;
       }
       default: {
@@ -112,28 +110,15 @@ const WideImage = (props: ImgElementAttributes) => {
 WideImage.componentName = 'WideImage';
 
 const BackgroundImage = (props: ImgElementAttributes) => {
-  return (
-    <div className={styles.backgroundImage}>
-      {/* eslint-disable-next-line jsx-a11y/alt-text */}
-      <img {...props} />
-    </div>
-  );
+  return <ImageContainer {...props} />;
 };
 BackgroundImage.componentName = 'BackgroundImage';
 
 export const Hero = ({ children, theme, koros, ...elementAttributes }: HeroProps) => {
-  const {
-    components,
-    imageChildIndex,
-    backgroundChildIndex,
-    backgroundImageSrc,
-    wideImageChildIndex,
-    cardChildIndex,
-  } = pickChildProps(children);
+  const { components, imageChildIndex, backgroundChildIndex, wideImageChildIndex, cardChildIndex } = pickChildProps(
+    children,
+  );
   const editableTheme = { ...theme };
-  if (backgroundImageSrc) {
-    editableTheme['--background-image'] = `url(${backgroundImageSrc})`;
-  }
   if (!editableTheme['--koros-color']) {
     editableTheme['--koros-color'] = 'var(--background-color)';
   }
@@ -177,6 +162,13 @@ export const Hero = ({ children, theme, koros, ...elementAttributes }: HeroProps
     return React.cloneElement(imageComponent, clonedProps);
   };
 
+  const ImageAsBackground = () => {
+    if (backgroundChildIndex === -1) {
+      return null;
+    }
+    return <div className={classNames(styles.background)}>{components[backgroundChildIndex]}</div>;
+  };
+
   // if background is first, then the Hero version is the one where card is floating over background image
   if (backgroundChildIndex === 0) {
     const CommonKoros = ({ top }: { top?: boolean }) => {
@@ -197,7 +189,7 @@ export const Hero = ({ children, theme, koros, ...elementAttributes }: HeroProps
     return (
       <div {...heroElementAttributes}>
         <div className={styles.backgroundContainer}>
-          <div className={classNames(styles.imageContainer, styles.mobileImage)} />
+          <ImageAsBackground />
           <CommonKoros top />
           <div className={classNames(styles.content, styles.singleColumn)}>
             <Content />
@@ -214,12 +206,12 @@ export const Hero = ({ children, theme, koros, ...elementAttributes }: HeroProps
         <div className={styles.angledKorosContainer}>
           <div className={styles.content}>
             <Content />
-            <div className={styles.mobileImageAndKoros}>
+            <div className={styles.mobileKoros}>
               <Koros {...koros} flipHorizontal shift compact style={korosStyle} />
-              <div className={classNames(styles.imageContainer, styles.mobileImage)} />
             </div>
           </div>
-          <Koros {...koros} className={styles.angledKorosWithBg} style={korosStyle} />;
+          <Koros {...koros} className={styles.angledKorosWithBg} style={korosStyle} />
+          <ImageAsBackground />
         </div>
       </div>
     );
