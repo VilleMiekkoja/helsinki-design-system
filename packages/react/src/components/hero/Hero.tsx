@@ -225,6 +225,7 @@ export const Hero = ({ children, theme, koros, ...elementAttributes }: HeroProps
     );
   }
   const columnStyle = imageChildIndex > -1 && cardChildIndex > -1 ? styles.twoColumns : styles.singleColumn;
+  const hasBottomImage = imageChildIndex > -1 || wideImageChildIndex > -1;
   return (
     <div {...heroElementAttributes}>
       <div key="content" className={classNames(styles.content, columnStyle)}>
@@ -234,15 +235,17 @@ export const Hero = ({ children, theme, koros, ...elementAttributes }: HeroProps
       {!hideKoros && (
         <Koros {...koros} shift compact={canKorosBeFlipped} flipHorizontal={canKorosBeFlipped} style={korosStyle} />
       )}
-      <div
-        key="imageContainer"
-        className={classNames(
-          styles.imageContainer,
-          wideImageChildIndex > -1 ? styles.wideImageContainer : styles.imageBelowKoros,
-        )}
-      >
-        <ImageClone />
-      </div>
+      {hasBottomImage && (
+        <div
+          key="imageContainer"
+          className={classNames(
+            styles.imageContainer,
+            wideImageChildIndex > -1 ? styles.wideImageContainer : styles.imageBelowKoros,
+          )}
+        >
+          <ImageClone />
+        </div>
+      )}
     </div>
   );
 };
