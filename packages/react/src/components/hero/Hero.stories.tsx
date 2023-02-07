@@ -373,7 +373,10 @@ export const PlaygroundForAngledKoros = (args) => (
       theme={{ '--background-color': '#f5a3c7', '--color': '#000', ...args.theme }}
     >
       <Hero.Card id="hero-card" className="hero-card">
-        <DefaultCardContent />
+        <DefaultCardContent
+          title="This is hero layout is broken intentionally"
+          text="When angled koros is visible, on larger screens (>=992px), heading or text may overflow the koros and image. Can be fixed by adding padding to the elements with css. Can also be fixed by changing theme property '--angled-koros-inset'"
+        />
       </Hero.Card>
       <Hero.BackgroundImage id="hero-image" src={imageFile} />
     </Hero>
@@ -383,7 +386,7 @@ export const PlaygroundForAngledKoros = (args) => (
 
 PlaygroundForAngledKoros.argTypes = {
   korosInset: {
-    defaultValue: 'auto auto 40% -50%',
+    defaultValue: 'auto auto 30% -40%',
     control: 'text',
     description: 'Position of the koros',
   },
