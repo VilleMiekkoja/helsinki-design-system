@@ -30,6 +30,10 @@ export interface HeroCustomTheme {
   '--bottom-koros-color'?: string;
   // used only with angled bg image!
   '--angled-koros-inset'?: string;
+  '--horizontal-padding-small'?: string;
+  '--horizontal-padding-medium'?: string;
+  '--horizontal-padding-large'?: string;
+  '--horizontal-padding-x-large'?: string;
 }
 
 export type ChildProps = {

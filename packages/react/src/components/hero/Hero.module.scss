@@ -1,13 +1,17 @@
-@value large-up from "../../styles/breakpoints.css";
+@value x-large-up, large-up, medium-up, small-up from "../../styles/breakpoints.css";
 
 .hero {
   --background-color: var(--color-white);
   --color: var(--color-black-90);
-  --padding-horizontal: var(--spacing-s);
-  --padding-vertical: var(--spacing-xl);
   --image-position: bottom right;
   --koros-color: var(--color-white);
   --angled-koros-inset: auto auto 10% -40%;
+  --horizontal-padding-small: var(--spacing-s);
+  --horizontal-padding-medium: var(--spacing-m);
+  --horizontal-padding-large: var(--spacing-layout-xl);
+  --horizontal-padding-x-large: var(--spacing-layout-2-xl);
+  --padding-horizontal: var(--horizontal-padding-small);
+  --padding-vertical: var(--spacing-xl);
 
   color: var(--color);
   display: flex;
@@ -15,13 +19,14 @@
 
   h1 {
     font-size: var(--fontsize-heading-xl);
+    letter-spacing: -1px;
     font-weight: normal;
     line-height: 1em;
     margin-top: 0;
   }
 
   p {
-    font-size: var(--fontsize-body-xl);
+    font-size: var(--fontsize-body-l);
   }
 
   z-index: 1;
@@ -48,6 +53,7 @@
 
 .card {
   display: block;
+  max-width: var(--container-width-xl);
   &.centeredContent {
     width: 100%;
     text-align: center;
@@ -61,7 +67,6 @@
 
 .imageBelowKoros {
   display: block;
-  height: 300px;
   .image {
     object-fit: cover;
     height: 100%;
@@ -74,7 +79,6 @@
   .container {
     position: relative;
     .background {
-      height: 300px;
       width: 100%;
       .image {
         object-fit: cover;
@@ -120,20 +124,40 @@
   }
 }
 
+.angledKoros .container .background,
+.backgroundTop .container .background,
+.imageBelowKoros,
+.wideImage.imageBelowKoros {
+  height: 300px;
+}
+
+@media medium-up {
+  .hero {
+    --padding-horizontal: var(--horizontal-padding-medium);
+    --padding-vertical: var(--spacing-layout-m);
+  }
+  .angledKoros .container .background,
+  .backgroundTop .container .background,
+  .imageBelowKoros,
+  .wideImage.imageBelowKoros {
+    height: 400px;
+  }
+}
+
 @media large-up {
   .hero {
-    --padding-horizontal: var(--spacing-m);
+    --padding-horizontal: var(--horizontal-padding-large);
     --padding-vertical: var(--spacing-layout-xl);
-    h1 {
-      font-size: var(--fontsize-heading-xxl);
-    }
-    &.wideImage {
-      --padding-horizontal: var(--spacing-layout-2-xl);
+    p {
+      font-size: var(--fontsize-body-xl);
     }
   }
 
   .imageLeft,
   .imageRight {
+    .content {
+      padding-bottom: var(--spacing-layout-xl);
+    }
     .imageBelowKoros {
       display: none;
     }
@@ -154,10 +178,6 @@
     .imageContainer {
       display: block;
     }
-  }
-
-  .wideImage.imageBelowKoros {
-    height: 400px;
   }
 
   .backgroundTop .container {
@@ -225,6 +245,24 @@
         left: 0;
         position: absolute;
         top: 50px;
+      }
+    }
+  }
+}
+
+@media x-large-up {
+  .hero {
+    --padding-horizontal: var(--horizontal-padding-x-large);
+    h1 {
+      font-size: var(--fontsize-heading-xxl);
+      letter-spacing: -1.2px;
+    }
+  }
+  .angledKoros .container {
+    .content {
+      width: 45%;
+      p {
+        padding-right: var(--spacing-l);
       }
     }
   }
