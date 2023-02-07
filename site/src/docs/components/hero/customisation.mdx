@@ -1,0 +1,78 @@
+---
+slug: '/components/hero/customisation'
+title: 'Hero - Customisation'
+---
+
+import { Card } from 'hds-react';
+import Playground from '../../../components/Playground';
+import TabsLayout from './tabs.mdx';
+
+export default ({ children, pageContext }) => <TabsLayout pageContext={pageContext}>{children}</TabsLayout>;
+
+## Customisation
+
+### Customisation properties
+
+In Core version, you can either use the `style` or `class` attributes in the HTML to customise the component.
+
+In React version, you can use the `theme` property to customise the component.
+
+See all available theme variables in the table below.
+
+| Theme variable                 | Description                                                                                                                          |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `--background-color`           | Background color                                                                                                                     |
+| `--color`                      | Text color                                                                                                                           |
+| `--image-position`             | How image is aligned if it does not fit the container. Default is...                                                                 |
+| `--koros-color`                | Color of the koros. Defaults to `--background-color`                                                                                 |
+| `--bottom-koros-color`         | Color of the bottom koros. Defaults to `--koros-color`. Applied only when there is a background image used and not the angled koros. |
+| `--angled-koros-inset`         | How is angled koros positioned. Default is.... Use this to move the koros, if texts overflow.                                        |
+| `--horizontal-padding-small`   | Horizontal padding on small screens (< 768px)                                                                                        |
+| `--horizontal-padding-medium`  | Horizontal padding on medium screens (>=768px)                                                                                       |
+| `--horizontal-padding-large`   | Horizontal padding on large screens (>= 992px)                                                                                       |
+| `--horizontal-padding-x-large` | Horizontal padding on xtra large screens (>= 1248px)                                                                                 |
+
+In React version, you can use the `koros` property to customise the component.
+
+You can use same propertis as the Koros component except 'flipHorizontal', 'shift' and 'rotate', which are locked.
+
+| Koros property    | Description                                  |
+| ----------------- | -------------------------------------------- |
+| `forcedDirection` | You can force koros direction `up` or `down` |
+| `hide`            | If set to `true`, koros is not shown         |
+
+### Customisation example
+
+<Playground>
+
+```jsx
+<Card
+  border
+  heading="Customised card"
+  text="In order to customise the card component, use the theme property."
+  theme={{
+    '--background-color': 'var(--color-black-5)',
+    '--border-color': 'var(--color-black-90)',
+    '--border-width': '3px',
+    '--color': 'var(--color-black-90)',
+    '--padding-horizontal': 'var(--spacing-l)',
+    '--padding-vertical': 'var(--spacing-m)',
+  }}
+/>
+```
+
+```html
+<div
+  class="hds-card hds-card--border"
+  role="region"
+  style="--background-color:var(--color-black-5); --border-color:var(--color-black-90); --border-width:3px;
+  --color:var(--color-black-90); --padding-horizontal:var(--spacing-l); --padding-vertical:var(--spacing-m);"
+>
+  <div class="hds-card__body">
+    <div class="heading-m" role="heading" aria-level="2">Customised card</div>
+    <div class="hds-card__text">In order to customise the card component, use the theme properties.</div>
+  </div>
+</div>
+```
+
+</Playground>

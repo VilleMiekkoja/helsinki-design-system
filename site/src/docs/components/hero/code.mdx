@@ -1,0 +1,54 @@
+---
+slug: '/components/hero/code'
+title: 'Hero - Code'
+---
+
+import { Button, Hero, Link } from 'hds-react';
+import ExternalLink from '../../../components/ExternalLink';
+import Playground from '../../../components/Playground';
+import TabsLayout from './tabs.mdx';
+
+export default ({ children, pageContext }) => <TabsLayout pageContext={pageContext}>{children}</TabsLayout>;
+
+## Code
+
+### Code examples
+
+#### Empty
+
+<Playground>
+
+```jsx
+<>
+  <div>
+    <p>Replace cards with hero!</p>
+    <Card />
+    <Card border />
+  </div>
+</>
+```
+
+```html
+<div>
+  <div class="hds-hero"></div>
+  <div class="hds-hero hds-hero--border"></div>
+</div>
+```
+
+</Playground>
+
+### Packages
+
+| Package       | Included                                                                                        | Storybook link                                                                                                                                           | Source link                                                                                                                                                                                                                |
+| ------------- | ----------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **HDS React** | <div style={{ display: 'flex', gap: 'var(--spacing-3-xs)' }}><IconCheckCircleFill /> Yes </div> | <Link openInNewTab openInNewTabAriaLabel="Opens in a new tab" href="/storybook/react/?path=?path=/story/components-hero--empty">View in Storybook</Link> | <ExternalLink openInNewTab openInNewTabAriaLabel="Opens in a new tab" href="https://github.com/City-of-Helsinki/helsinki-design-system/blob/master/packages/react/src/components/hero/Hero.tsx">View source</ExternalLink> |
+| **HDS Core**  | <div style={{ display: 'flex', gap: 'var(--spacing-3-xs)' }}><IconCheckCircleFill /> Yes </div> | <Link openInNewTab openInNewTabAriaLabel="Opens in a new tab" href="/storybook/core/?path=/story/components-hero--empty">View in Storybook</Link>        | <ExternalLink openInNewTab openInNewTabAriaLabel="Opens in a new tab" href="https://github.com/City-of-Helsinki/helsinki-design-system/tree/master/packages/core/src/components/hero">View source</ExternalLink>           |
+
+### Properties
+
+Note! You can find the full list of properties in the <Link openInNewTab openInNewTabAriaLabel="Opens in a new tab" href="/storybook/react/?path=?path=/story/components-hero--empty">React Storybook.</Link>
+
+| Property | Description    | Values | Default value |
+| -------- | -------------- | ------ | ------------- |
+| `theme`  | Theme          | -      | -             |
+| `koros`  | Koros settings | -      | -             |
