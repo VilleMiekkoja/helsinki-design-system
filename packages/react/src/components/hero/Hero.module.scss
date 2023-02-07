@@ -168,10 +168,10 @@
     > * {
       width: 50%;
       &:first-child {
-        margin-right: var(--spacing-s);
+        margin-right: var(--spacing-xl);
       }
       &:last-child {
-        margin-left: var(--spacing-s);
+        margin-left: var(--spacing-xl);
       }
     }
 
@@ -263,6 +263,16 @@
       width: 45%;
       p {
         padding-right: var(--spacing-l);
+      }
+    }
+  }
+  .twoColumns {
+    > * {
+      &:first-child {
+        margin-right: var(--spacing-2-xl);
+      }
+      &:last-child {
+        margin-left: var(--spacing-2-xl);
       }
     }
   }
