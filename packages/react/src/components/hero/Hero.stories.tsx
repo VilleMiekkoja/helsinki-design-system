@@ -283,46 +283,6 @@ PlaygroundForKoros.argTypes = {
   },
 };
 
-export const PlaygroundForImage = (args) => {
-  const { imagePosition } = args;
-  const heroProps: HeroProps = {
-    theme: {
-      '--background-color': '#9fc9eb',
-      ...(imagePosition && { '--image-position': imagePosition }),
-      ...args.theme,
-    },
-  };
-
-  return (
-    <Hero koros={args.koros} {...heroProps}>
-      <Hero.BackgroundImage src={imageFile} />
-      <Hero.Card>
-        <DefaultCardContent />
-      </Hero.Card>
-    </Hero>
-  );
-};
-
-PlaygroundForImage.argTypes = {
-  imagePosition: {
-    control: {
-      type: 'select',
-      options: [
-        'top left',
-        'top center',
-        'top right',
-        'center left',
-        'center center',
-        'center right',
-        'bottom left',
-        'bottom center',
-        'bottom right',
-        'none',
-      ],
-    },
-  },
-};
-
 const componentTypes = {
   imageOnSide: 'image on side',
   backgroundImage: 'background image',
@@ -436,5 +396,127 @@ PlaygroundForAngledKoros.argTypes = {
     defaultValue: '42%',
     control: 'text',
     description: 'Padding of the p element',
+  },
+};
+
+const demoPadding = '55px';
+const demoBgColor = '#f5a3c7';
+
+export const PlaygroundForTheme = (args) => {
+  const argsAsTheme = {
+    '--background-color': args.backgroundColor,
+    '--color': args.color,
+    '--image-position': args.imagePosition,
+    '--koros-color': args.korosColor,
+    '--bottom-koros-color': args.bottomKorosColor,
+    '--angled-koros-inset': args.angledKorosInset,
+    '--horizontal-padding-small': args.horizontalPaddingSmall,
+    '--horizontal-padding-medium': args.horizontalPaddingMedium,
+    '--horizontal-padding-large': args.horizontalPaddingLarge,
+    '--horizontal-padding-x-large': args.horizontalPaddingXLarge,
+  };
+
+  const theme = Object.fromEntries(Object.entries(argsAsTheme).filter(([, value]) => !!value));
+
+  return (
+    <div>
+      <style>
+        {`
+        .oddly-padded {
+          padding: 20px ${demoPadding};
+          background:${demoBgColor};
+        }
+        .theme {
+          padding: 20px 20px 20px ${demoPadding};
+          font-size:10px;
+          border:1px solid #000;
+        }
+       
+      `}
+      </style>
+      <Hero koros={args.koros} theme={theme}>
+        <Hero.BackgroundImage src={imageFile} />
+        <Hero.Card>
+          <DefaultCardContent />
+        </Hero.Card>
+      </Hero>
+      <div className="oddly-padded">
+        <p>This text should align with the hero content box on all screen sizes</p>
+      </div>
+      <div className="theme">
+        <p>Applied theme:</p>
+        <pre>{JSON.stringify(theme, null, 2)}</pre>
+      </div>
+    </div>
+  );
+};
+
+PlaygroundForTheme.argTypes = {
+  theme: {
+    description: '*** Theme is not used here ***',
+    control: false,
+  },
+  backgroundColor: {
+    defaultValue: demoBgColor,
+    control: 'color',
+    description: 'Background / koros color',
+  },
+  color: {
+    defaultValue: '',
+    control: 'color',
+    description: 'Text color',
+  },
+  korosColor: {
+    defaultValue: '',
+    control: 'color',
+    description: 'Optional koros color',
+  },
+  bottomKorosColor: {
+    defaultValue: '',
+    control: 'color',
+    description: 'Optional bottom koros color. Used only with top bg image.',
+  },
+  imagePosition: {
+    defaultValue: '',
+    control: {
+      type: 'select',
+      options: [
+        'top left',
+        'top center',
+        'top right',
+        'center left',
+        'center center',
+        'center right',
+        'bottom left',
+        'bottom center',
+        'bottom right',
+        '',
+      ],
+    },
+  },
+  korosInset: {
+    defaultValue: demoPadding,
+    control: 'text',
+    description: 'Position of the koros. Used only with angled koros.',
+  },
+  horizontalPaddingSmall: {
+    defaultValue: demoPadding,
+    control: 'text',
+    description: 'Horizontal padding on small screens <768px',
+  },
+  horizontalPaddingMedium: {
+    defaultValue: demoPadding,
+    control: 'text',
+    description: 'Horizontal padding on medium screens >=768px',
+  },
+  horizontalPaddingLarge: {
+    defaultValue: demoPadding,
+    control: 'text',
+    description: 'Horizontal padding on large screens >=992px',
+  },
+  horizontalPaddingXLarge: {
+    defaultValue: demoPadding,
+    control: 'text',
+    description: 'Horizontal padding on x-large screens >=1248px',
   },
 };
