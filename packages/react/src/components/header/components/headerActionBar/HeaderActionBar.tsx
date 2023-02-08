@@ -1,4 +1,4 @@
-import React, { EventHandler, PropsWithChildren, MouseEvent, KeyboardEvent } from 'react';
+import React, { EventHandler, PropsWithChildren, MouseEvent, KeyboardEvent, MouseEventHandler, KeyboardEventHandler } from 'react';
 
 import classNames from '../../../../utils/classNames';
 import { Logo } from '../../../logo';
@@ -36,11 +36,13 @@ export type HeaderActionBarProps = PropsWithChildren<{
    * The aria-label for the title describing the logo and service to screen reader users.
    */
   titleAriaLabel?: string;
+  logoAriaLabel?: string;
 
   /**
    * Callback fired when the title or logo is clicked
    */
-  onTitleClick?: EventHandler<MouseEvent | KeyboardEvent>;
+  onTitleClick?: MouseEventHandler;
+  onLogoClick?: MouseEventHandler;
 
   /**
    * The aria-label for the menu button to screen reader users.
@@ -52,83 +54,72 @@ export type HeaderActionBarProps = PropsWithChildren<{
    * Call event.stopPropagation() to disable calling
    * the default menu toggling function.
    */
-  onMenuButtonClick?: EventHandler<MouseEvent>;
+  onMenuButtonClick?: MouseEventHandler;
 
   /**
    * URL to navigate to when the logo or title is clicked
    */
   titleUrl?: string;
+  logoUrl?: string;
 }>;
-
-type TitleLogoAreaProps = {
-  children: string;
-  titleStyle: TitleStyleType;
-  href?: string;
-  ariaLabel?: string;
-  onClick?: EventHandler<MouseEvent | KeyboardEvent>;
-};
-
-const Title = ({ children }: { children: string }) => <span className={classNames(styles.title)}>{children}</span>;
-
-const TitleLogoArea = ({ children, titleStyle, href, ariaLabel, onClick }: TitleLogoAreaProps) => {
-  const language = useActiveLanguage();
-  const handleClick = useCallbackIfDefined(onClick);
-  const handleKeyPress = useEnterOrSpacePressCallback(onClick);
-
-  const props: LinkProps = {
-    href,
-    'aria-label': ariaLabel,
-    className: classNames(styles.titleAndLogoContainer, styles[titleStyle]),
-  };
-
-  if (!(href || onClick)) {
-    props.role = ariaLabel && 'img';
-  } else {
-    props.onKeyPress = handleKeyPress;
-    props.onClick = handleClick;
-  }
-
-  return (
-    <LinkItem {...props}>
-      <Logo className={styles.logo} language={language} aria-hidden />
-      {children && <Title>{children}</Title>}
-    </LinkItem>
-  );
-};
 
 export const HeaderActionBar = (props: HeaderActionBarProps) => {
   const {
     title,
     titleStyle = 'normal',
     titleAriaLabel,
-    titleUrl,
-    onTitleClick,
-
+    logoAriaLabel,
     menuButtonAriaLabel,
+    titleUrl,
+    logoUrl,
+    onTitleClick,
+    onLogoClick,
     onMenuButtonClick,
-
     children,
   } = props;
+  const language = useActiveLanguage();
+  const handleClick = useCallbackIfDefined(onTitleClick);
+  const handleLogoClick = useCallbackIfDefined(onLogoClick);
+  const handleKeyPress = useEnterOrSpacePressCallback(handleClick);
+  const handleLogoKeyPress = useEnterOrSpacePressCallback(handleLogoClick);
 
-  const titleProps = {
-    titleStyle: TitleStyleType[titleStyle],
-    onClick: onTitleClick,
+  const logoProps: LinkProps = {
+    'aria-label': logoAriaLabel,
+    href: logoUrl,
+    className: classNames(styles.titleAndLogoContainer, styles.logo),
+    onClick: handleLogoClick,
+    onKeyPress: handleLogoKeyPress,
+  };
+
+  const titleProps: LinkProps = {
+    'aria-label': titleAriaLabel,
     href: titleUrl,
-    ariaLabel: titleAriaLabel,
+    className: classNames(styles.titleAndLogoContainer, styles.title, styles[titleStyle]),
+    onClick: onTitleClick,
+    onKeyPress: handleLogoKeyPress,
   };
 
-  const menuButtonProps = {
-    ariaLabel: menuButtonAriaLabel,
-    onClick: onMenuButtonClick,
-  };
+  if (!(titleProps.href || titleProps.onClick)) {
+    titleProps.role = titleAriaLabel && 'img';
+  } else {
+    titleProps.onKeyPress = handleKeyPress;
+    titleProps.onClick = handleClick;
+  }
 
   return (
     <>
       <div className={styles.headerActionBar}>
-        <TitleLogoArea {...titleProps}>{title}</TitleLogoArea>
+        <LinkItem {...logoProps}>
+          <Logo className={styles.logo} language={language} aria-hidden />
+        </LinkItem>
+        {title && (
+          <LinkItem {...titleProps}>
+            <span className={classNames(styles.title)}>{title}</span>
+          </LinkItem>
+        )}
         <div className={styles.headerActions}>
           {children}
-          <HeaderActionBarMenuItem {...menuButtonProps} />
+          <HeaderActionBarMenuItem onClick={onMenuButtonClick} ariaLabel={menuButtonAriaLabel} />
         </div>
       </div>
       <HeaderActionBarNavigationMenu />
