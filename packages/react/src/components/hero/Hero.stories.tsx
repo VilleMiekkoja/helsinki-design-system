@@ -361,7 +361,7 @@ export const PlaygroundForAngledKoros = (args) => (
         .hero-card h1{
           max-width: ${args.headingMaxWidth};
         }
-        .hero-card p {
+        #hero .hero-card > p {
           padding-right: ${args.paragraphPadding};
         }
       `}
@@ -374,13 +374,13 @@ export const PlaygroundForAngledKoros = (args) => (
     >
       <Hero.Card id="hero-card" className="hero-card">
         <DefaultCardContent
-          title="This is hero layout is broken intentionally"
-          text="When angled koros is visible, on larger screens (>=992px), heading or text may overflow the koros and image. Can be fixed by adding padding to the elements with css. Can also be fixed by changing theme property '--angled-koros-inset'"
+          title="This hero layout is broken intentionally"
+          text="When angled koros is visible*, heading or text may overflow the koros and image. Can be fixed by adding padding to the elements with css. Can also be fixed by changing theme property 'angled-koros-inset'"
         />
       </Hero.Card>
       <Hero.BackgroundImage id="hero-image" src={imageFile} />
     </Hero>
-    <p>This story demonstrates possibilities to fix content overflowing the image.</p>
+    <p>*On large screens, resolution &gt;=992px</p>
   </div>
 );
 
@@ -396,7 +396,7 @@ PlaygroundForAngledKoros.argTypes = {
     description: 'Max width of the heading',
   },
   paragraphPadding: {
-    defaultValue: '42%',
+    defaultValue: '0%',
     control: 'text',
     description: 'Padding of the p element',
   },
