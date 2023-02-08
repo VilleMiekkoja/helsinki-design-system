@@ -188,51 +188,6 @@ export const BottomWideImage = (args) => (
   </Hero>
 );
 
-export const XtraStyling = (args) => (
-  <div>
-    <style>
-      {`
-        .hero {
-          margin: 20px 0;
-          padding: 50px;
-          border: 4px solid rgba(10,147,175,1);
-          background: linear-gradient(291deg, rgba(2,0,36,1) 0%, rgba(15,170,203,1) 60%, rgba(10,147,175,1) 100%);
-          --image-position: top left;
-          --background-color: rgba(10,147,175,1);
-        }
-        #hero{
-          --bottom-koros-color: rgba(2,0,36,1);
-          
-        }
-        .hero-card {
-          border: 2px solid rgba(15,170,203,1);
-          padding: 10px;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          text-align: center;
-          
-        }
-        .hero-card h1,
-        .hero-card p,
-        .hero-card button {
-          color: #fff;
-          font-weight: 600;
-          border-color: #fff !important;
-          max-width:500px;
-          
-        }
-      `}
-    </style>
-    <Hero id="hero" className="hero" koros={args.koros} theme={args.theme}>
-      <Hero.Card id="hero-card" className="hero-card">
-        <DefaultCardContent />
-      </Hero.Card>
-      <Hero.WideImage id="hero-image" src={imageFile} />
-    </Hero>
-  </div>
-);
-
 export const PlaygroundForKoros = (args) => {
   const heroProps: HeroProps = {
     koros: {
@@ -288,12 +243,11 @@ const componentTypes = {
   backgroundImage: 'background image',
   withoutImage: 'without image',
   wideImage: 'wide image',
-  xtraStyling: 'extra nice styling',
 };
 
 export const EmbeddedToPage = (args) => {
   const { componentType, variant } = args;
-  const { imageOnSide, backgroundImage, withoutImage, xtraStyling: customStyling, wideImage } = componentTypes;
+  const { imageOnSide, backgroundImage, withoutImage, wideImage } = componentTypes;
   const BasicImageVersion = () => {
     const imagePosition = variant === '1' ? 'left' : 'right';
     return <ImageLeftOrRight imagePosition={imagePosition} />;
@@ -313,7 +267,6 @@ export const EmbeddedToPage = (args) => {
       {componentType === imageOnSide && <BasicImageVersion />}
       {componentType === backgroundImage && <BackgroundImageVersion />}
       {componentType === withoutImage && <NoImage />}
-      {componentType === customStyling && <XtraStyling />}
       {componentType === wideImage && <BottomWideImage />}
       <Section color="secondary">
         <h1 className="heading-xl">Component after hero</h1>
