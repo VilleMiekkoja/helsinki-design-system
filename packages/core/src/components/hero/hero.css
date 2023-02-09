@@ -1,0 +1,234 @@
+.hero {
+  --background-color: var(--color-white);
+  --color: var(--color-black-90);
+  --image-position: bottom right;
+  --koros-color: var(--color-white);
+  --angled-koros-inset: auto auto 10% -40%;
+  --horizontal-padding-small: var(--spacing-s);
+  --horizontal-padding-medium: var(--spacing-m);
+  --horizontal-padding-large: var(--spacing-layout-xl);
+  --horizontal-padding-x-large: var(--spacing-layout-2-xl);
+  --padding-horizontal: var(--horizontal-padding-small);
+  --padding-vertical: var(--spacing-xl);
+  color: var(--color);
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+}
+.hero h1 {
+  font-size: var(--fontsize-heading-xl);
+  letter-spacing: -1px;
+  font-weight: normal;
+  line-height: 1em;
+  margin-top: 0;
+}
+.hero p {
+  font-size: var(--fontsize-body-l);
+}
+.content {
+  display: flex;
+  padding: var(--padding-vertical) var(--padding-horizontal);
+  background-color: var(--background-color);
+}
+.singleColumn,
+.twoColumns {
+  display: flex;
+  flex-direction: column;
+}
+.twoColumns {
+  align-items: center;
+}
+.twoColumns .imageContainer {
+  display: none;
+}
+.card {
+  display: block;
+  max-width: var(--container-width-xl);
+}
+.card.centeredContent {
+  width: 100%;
+  text-align: center;
+}
+.image {
+  display: block;
+  width: 100%;
+}
+.imageBelowKoros {
+  display: block;
+}
+.imageBelowKoros .image {
+  object-fit: cover;
+  height: 100%;
+  object-position: var(--image-position);
+}
+.angledKoros .container,
+.backgroundTop .container {
+  position: relative;
+}
+.angledKoros .container .background,
+.backgroundTop .container .background {
+  width: 100%;
+}
+.angledKoros .container .background .image,
+.backgroundTop .container .background .image {
+  object-fit: cover;
+  height: 100%;
+  object-position: var(--image-position);
+}
+.backgroundTop .container .topKoros {
+  display: block;
+}
+.backgroundTop .container .bottomKoros {
+  display: none;
+}
+.angledKoros .container {
+  display: flex;
+  position: relative;
+  background-color: transparent;
+  overflow: hidden;
+  z-index: 1;
+  flex-direction: column;
+}
+.angledKoros .container .content {
+  display: block;
+  z-index: 2;
+  width: 100%;
+  padding: 0;
+}
+.angledKoros .container .content .card {
+  background-color: var(--background-color);
+  padding: var(--padding-vertical) var(--padding-horizontal);
+}
+.angledKoros .container .mobileKoros {
+  display: block;
+}
+.angledKoros .container .korosAndBackground {
+  display: none;
+}
+.angledKoros .container .background,
+.backgroundTop .container .background,
+.imageBelowKoros,
+.wideImage.imageBelowKoros {
+  height: 300px;
+}
+@media only screen and (min-width: 768px) {
+  .hero {
+    --padding-horizontal: var(--horizontal-padding-medium);
+    --padding-vertical: var(--spacing-layout-m);
+  }
+  .angledKoros .container .background,
+  .backgroundTop .container .background,
+  .imageBelowKoros,
+  .wideImage.imageBelowKoros {
+    height: 400px;
+  }
+}
+@media only screen and (min-width: 992px) {
+  .hero {
+    --padding-horizontal: var(--horizontal-padding-large);
+    --padding-vertical: var(--spacing-layout-xl);
+  }
+  .hero p {
+    font-size: var(--fontsize-body-xl);
+  }
+  .imageLeft .content,
+  .imageRight .content {
+    padding-bottom: var(--spacing-layout-xl);
+  }
+  .imageLeft .imageBelowKoros,
+  .imageRight .imageBelowKoros {
+    display: none;
+  }
+  .twoColumns {
+    flex-direction: row;
+  }
+  .twoColumns > * {
+    width: 50%;
+  }
+  .twoColumns > *:first-child {
+    margin-right: var(--spacing-xl);
+  }
+  .twoColumns > *:last-child {
+    margin-left: var(--spacing-xl);
+  }
+  .twoColumns .imageContainer {
+    display: block;
+  }
+  .backgroundTop .container {
+    padding: var(--padding-vertical) var(--padding-horizontal);
+  }
+  .backgroundTop .container .singleColumn {
+    width: 50%;
+  }
+  .backgroundTop .container .content {
+    --padding-vertical: var(--spacing-2-xl);
+    --padding-horizontal: var(--spacing-xl);
+  }
+  .backgroundTop .container .topKoros {
+    display: none;
+  }
+  .backgroundTop .container .bottomKoros {
+    display: block;
+  }
+  .angledKoros .container .background,
+  .backgroundTop .container .background {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    height: auto;
+    width: auto;
+  }
+  .angledKoros .container .content {
+    background-color: transparent;
+    width: 50%;
+    padding: var(--padding-vertical) var(--padding-horizontal);
+  }
+  .angledKoros .container .content .card {
+    padding: 0;
+    background: none;
+  }
+  .angledKoros .container .mobileKoros {
+    display: none;
+  }
+  .angledKoros .container .korosAndBackground {
+    transform: rotate(135deg);
+    transform-origin: center;
+    width: 150%;
+    display: block;
+    position: absolute;
+    z-index: 1;
+    height: 100%;
+    inset: var(--angled-koros-inset);
+  }
+  .angledKoros .container .korosAndBackground:after {
+    content: '';
+    background-color: var(--koros-color);
+    display: block;
+    width: 100%;
+    height: 200%;
+    left: 0;
+    position: absolute;
+    top: 50px;
+  }
+}
+@media only screen and (min-width: 1248px) {
+  .hero {
+    --padding-horizontal: var(--horizontal-padding-x-large);
+  }
+  .hero h1 {
+    font-size: var(--fontsize-heading-xxl);
+    letter-spacing: -1.2px;
+  }
+  .angledKoros .container .content {
+    width: 45%;
+  }
+  .angledKoros .container .content p {
+    padding-right: var(--spacing-l);
+  }
+  .twoColumns > *:first-child {
+    margin-right: var(--spacing-2-xl);
+  }
+  .twoColumns > *:last-child {
+    margin-left: var(--spacing-2-xl);
+  }
+}
