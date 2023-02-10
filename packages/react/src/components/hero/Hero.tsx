@@ -162,7 +162,7 @@ export const Hero = ({ children, theme, koros, ...elementAttributes }: HeroProps
       {components.map((c, index) => {
         if (index === imageChildIndex) {
           return (
-            <div key="imageContainer" className={styles.imageContainer}>
+            <div key="imageContainer" className={styles.twoColumnsImageContainer}>
               {c}
             </div>
           );
@@ -188,11 +188,15 @@ export const Hero = ({ children, theme, koros, ...elementAttributes }: HeroProps
     return React.cloneElement(imageComponent, clonedProps);
   };
 
-  const ImageAsBackground = () => {
+  const ImageAsBackground = (props: HTMLElementAttributes) => {
     if (backgroundChildIndex === -1) {
       return null;
     }
-    return <div className={classNames(styles.background)}>{components[backgroundChildIndex]}</div>;
+    return (
+      <div className={classNames(styles.withBackgroundBackground, props && props.className)}>
+        {components[backgroundChildIndex]}
+      </div>
+    );
   };
 
   if (type === 'backgroundTop') {
@@ -213,7 +217,7 @@ export const Hero = ({ children, theme, koros, ...elementAttributes }: HeroProps
 
     return (
       <div {...heroElementAttributes}>
-        <div className={styles.container}>
+        <div className={styles.withBackgroundContainer}>
           <ImageAsBackground />
           <CommonKoros top />
           <div className={classNames(styles.content, styles.singleColumn)}>
@@ -228,15 +232,15 @@ export const Hero = ({ children, theme, koros, ...elementAttributes }: HeroProps
   if (type === 'angledKoros') {
     return (
       <div {...heroElementAttributes}>
-        <div className={styles.container}>
+        <div className={styles.angledKorosWithBackgroundContainer}>
           <div className={styles.content}>
             <Content />
-            <div className={styles.mobileKoros}>
+            <div className={styles.angledKorosMobileKoros}>
               <Koros {...koros} flipHorizontal shift compact style={korosStyle} />
             </div>
           </div>
-          <Koros {...koros} className={styles.korosAndBackground} style={korosStyle} />
-          <ImageAsBackground />
+          <Koros {...koros} className={styles.angledKorosAndBackground} style={korosStyle} />
+          <ImageAsBackground className={styles.angledKorosBackgroundContainer} />
         </div>
       </div>
     );
@@ -259,7 +263,6 @@ export const Hero = ({ children, theme, koros, ...elementAttributes }: HeroProps
     </div>
   );
 };
-
 Hero.Card = Card;
 Hero.Image = ImageContainer;
 Hero.BackgroundImage = BackgroundImage;

@@ -1,279 +1,102 @@
 @value x-large-up, large-up, medium-up, small-up from "../../styles/breakpoints.css";
 
+@value heroCss: "../../../../core/src/components/hero/hero.css";
+
 .hero {
-  --background-color: var(--color-white);
-  --color: var(--color-black-90);
-  --image-position: bottom right;
-  --koros-color: var(--color-white);
-  --angled-koros-inset: auto auto 10% -40%;
-  --horizontal-padding-small: var(--spacing-s);
-  --horizontal-padding-medium: var(--spacing-m);
-  --horizontal-padding-large: var(--spacing-layout-xl);
-  --horizontal-padding-x-large: var(--spacing-layout-2-xl);
-  --padding-horizontal: var(--horizontal-padding-small);
-  --padding-vertical: var(--spacing-xl);
-
-  color: var(--color);
-  display: flex;
-  flex-direction: column;
-
-  h1 {
-    font-size: var(--fontsize-heading-xl);
-    letter-spacing: -1px;
-    font-weight: normal;
-    line-height: 1em;
-    margin-top: 0;
-  }
-
-  p {
-    font-size: var(--fontsize-body-l);
-  }
-
-  z-index: 1;
+  composes: hds-hero from heroCss;
 }
 
 .content {
-  display: flex;
-  padding: var(--padding-vertical) var(--padding-horizontal);
-  background-color: var(--background-color);
+  composes: hds-hero__content from heroCss;
 }
 
-.singleColumn,
-.twoColumns {
-  display: flex;
-  flex-direction: column;
+.singleColumn {
+  composes: hds-hero__content--single-column from heroCss;
 }
 
 .twoColumns {
-  align-items: center;
-  .imageContainer {
-    display: none;
-  }
+  composes: hds-hero__content--two-columns from heroCss;
+}
+
+.twoColumnsImageContainer {
+  composes: hds-hero__content--two-columns__image-container from heroCss;
 }
 
 .card {
-  display: block;
-  max-width: var(--container-width-xl);
-  &.centeredContent {
-    width: 100%;
-    text-align: center;
-  }
+  composes: hds-hero__card from heroCss;
+}
+
+.centeredContent {
+  composes: hds-hero__card--centered-content from heroCss;
 }
 
 .image {
-  display: block;
-  width: 100%;
+  composes: hds-hero__image from heroCss;
 }
 
 .imageBelowKoros {
-  display: block;
-  .image {
-    object-fit: cover;
-    height: 100%;
-    object-position: var(--image-position);
-  }
+  composes: hds-hero__image-below-koros from heroCss;
 }
 
-.angledKoros,
+.withBackgroundContainer {
+  composes: hds-hero--with-background__container from heroCss;
+}
+
+.withBackgroundBackground {
+  composes: hds-hero--with-background__background from heroCss;
+}
+
+/* backgroundTop specific styles */
+
 .backgroundTop {
-  .container {
-    position: relative;
-    .background {
-      width: 100%;
-      .image {
-        object-fit: cover;
-        height: 100%;
-        object-position: var(--image-position);
-      }
-    }
-  }
+  composes: hds-hero--background-top from heroCss;
 }
 
-.backgroundTop .container {
-  .topKoros {
-    display: block;
-  }
-
-  .bottomKoros {
-    display: none;
-  }
+.topKoros {
+  composes: hds-hero--background-top__top-koros from heroCss;
 }
 
-.angledKoros .container {
-  display: flex;
-  position: relative;
-  background-color: transparent;
-  overflow: hidden;
-  z-index: 1;
-  flex-direction: column;
-  .content {
-    display: block;
-    z-index: 2;
-    width: 100%;
-    padding: 0;
-    .card {
-      background-color: var(--background-color);
-      padding: var(--padding-vertical) var(--padding-horizontal);
-    }
-  }
-  .mobileKoros {
-    display: block;
-  }
-  .korosAndBackground {
-    display: none;
-  }
+.bottomKoros {
+  composes: hds-hero--background-top__bottom-koros from heroCss;
 }
 
-.angledKoros .container .background,
-.backgroundTop .container .background,
-.imageBelowKoros,
-.wideImage.imageBelowKoros {
-  height: 300px;
+/* angledKoros specific styles */
+
+.angledKoros {
+  composes: hds-hero--angled-koros from heroCss;
 }
 
-@media medium-up {
-  .hero {
-    --padding-horizontal: var(--horizontal-padding-medium);
-    --padding-vertical: var(--spacing-layout-m);
-  }
-  .angledKoros .container .background,
-  .backgroundTop .container .background,
-  .imageBelowKoros,
-  .wideImage.imageBelowKoros {
-    height: 400px;
-  }
+.angledKorosWithBackgroundContainer {
+  composes: hds-hero--angled-koros hds-hero--with-background__container from heroCss;
+}
+
+.angledKorosAndBackground {
+  composes: hds-hero--angled-koros hds-hero--angled-koros__koros-and-background from heroCss;
+}
+
+.angledKorosMobileKoros {
+  display: block;
+}
+
+.angledKorosAndBackground {
+  display: none;
+}
+
+/* imageLeft/Right specific styles */
+
+.imageLeft {
+  composes: hds-hero--image-left from heroCss;
+}
+.imageRight {
+  composes: hds-hero--image-right from heroCss;
 }
 
 @media large-up {
-  .hero {
-    --padding-horizontal: var(--horizontal-padding-large);
-    --padding-vertical: var(--spacing-layout-xl);
-    p {
-      font-size: var(--fontsize-body-xl);
-    }
+  /* angledKoros specific styles */
+  .angledKorosMobileKoros {
+    display: none;
   }
-
-  .imageLeft,
-  .imageRight {
-    .content {
-      padding-bottom: var(--spacing-layout-xl);
-    }
-    .imageBelowKoros {
-      display: none;
-    }
-  }
-
-  .twoColumns {
-    flex-direction: row;
-    > * {
-      width: 50%;
-      &:first-child {
-        margin-right: var(--spacing-xl);
-      }
-      &:last-child {
-        margin-left: var(--spacing-xl);
-      }
-    }
-
-    .imageContainer {
-      display: block;
-    }
-  }
-
-  .backgroundTop .container {
-    padding: var(--padding-vertical) var(--padding-horizontal);
-
-    .singleColumn {
-      width: 50%;
-    }
-
-    .content {
-      --padding-vertical: var(--spacing-2-xl);
-      --padding-horizontal: var(--spacing-xl);
-    }
-
-    .topKoros {
-      display: none;
-    }
-
-    .bottomKoros {
-      display: block;
-    }
-  }
-
-  .angledKoros,
-  .backgroundTop {
-    .container .background {
-      position: absolute;
-      z-index: -1;
-      inset: 0;
-      height: auto;
-      width: auto;
-    }
-  }
-
-  .angledKoros .container {
-    .content {
-      background-color: transparent;
-      width: 50%;
-      padding: var(--padding-vertical) var(--padding-horizontal);
-      .card {
-        padding: 0;
-        background: none;
-      }
-    }
-
-    .mobileKoros {
-      display: none;
-    }
-
-    .korosAndBackground {
-      inset: var(--angled-koros-inset);
-      transform: rotate(135deg);
-      transform-origin: center;
-      width: 150%;
-      display: block;
-      position: absolute;
-      z-index: 1;
-      height: 100%;
-      &:after {
-        content: '';
-        background-color: var(--koros-color);
-        display: block;
-        width: 100%;
-        height: 200%;
-        left: 0;
-        position: absolute;
-        top: 50px;
-      }
-    }
-  }
-}
-
-@media x-large-up {
-  .hero {
-    --padding-horizontal: var(--horizontal-padding-x-large);
-    h1 {
-      font-size: var(--fontsize-heading-xxl);
-      letter-spacing: -1.2px;
-    }
-  }
-  .angledKoros .container {
-    .content {
-      width: 45%;
-      p {
-        padding-right: var(--spacing-l);
-      }
-    }
-  }
-  .twoColumns {
-    > * {
-      &:first-child {
-        margin-right: var(--spacing-2-xl);
-      }
-      &:last-child {
-        margin-left: var(--spacing-2-xl);
-      }
-    }
+  .angledKorosAndBackground {
+    display: block;
   }
 }
