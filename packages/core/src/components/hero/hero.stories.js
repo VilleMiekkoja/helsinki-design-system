@@ -57,16 +57,31 @@ export const AngledKoros = () => `
     --background-color: #f5a3c7;
     --koros-color: var(--background-color);
     --color: #000;
+  }
+  /*
+    Koros is very high by default, so height is defined here. Padding is set in the container.
+    Koros should also "pull" next sibling upwards so koros overflows it.
+    These are not in the css file as the amounts depend on the koros height.
+    React version calculates these automatically.
+    Heights of differents koros are in https://github.com/City-of-Helsinki/helsinki-design-system/blob/master/packages/react/src/components/koros/Koros.tsx
+  */
+  .shifted-koros{
+    margin-bottom: -14px;
+    height: 14px;
+  }  
+  @media only screen and (min-width: 992px){
+    .shifted-koros{
+      margin-bottom: 0;
+      height: auto;
+    }  
+  }
   </style>
 <div class="hds-hero custom-theme hds-hero--angled-koros">
    <div class="hds-hero--with-background__container">
       <div class="hds-hero__content">
         ${card}
-         <div class="hds-hero--angled-koros__mobile-koros">
-            ${koros}
-         </div>
       </div>
-      <div class="hds-koros hds-hero--angled-koros__koros-and-background" style="fill: var(--koros-color);">
+      <div class="hds-koros shifted-koros hds-hero--angled-koros__koros-and-background" style="fill: var(--koros-color);">
          ${getKorosSVG()}
       </div>
       <div class="hds-hero--with-background__background">
@@ -83,13 +98,14 @@ export const WithoutImage = () => `
       --background-color: #9fc9eb;
       --color: #000;
       --koros-color: #009246;
+    }
     </style>
     <div class="hds-hero custom-theme">
       <div class="hds-hero__content hds-hero__content--single-column">
         ${card}
         <div class="hds-koros__spacer" style="height: 34px;"></div>
       </div>
-      <div class="hds-koros" style="fill: var(--koros-color); margin-top: -34px;">
+      <div class="hds-koros" style="fill: var(--koros-color); margin-top: -14px;">
           <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="100%" height="85">
             <defs>
                 <pattern id="koros_pulse-23" x="0" y="0" width="106" height="85" patternUnits="userSpaceOnUse">
@@ -111,6 +127,7 @@ export const ImageRight = () => `
       --background-color: #c2a251;
       --color: #000;
       --koros-color: var(--background-color);
+    }
     </style>
 <div class="hds-hero custom-theme hds-hero--image-right">
    <div class="hds-hero__content hds-hero__content--two-columns">
@@ -129,6 +146,7 @@ export const ImageLeft = () => `
       --background-color: #c2a251;
       --color: #000;
       --koros-color: var(--background-color);
+    }
     </style>
 <div class="hds-hero custom-theme hds-hero--image-left">
    <div class="hds-hero__content hds-hero__content--two-columns">
@@ -147,6 +165,7 @@ export const BackgroundImage = () => `
         --background-color: #fff;
         --color: #000;
         --koros-color: var(--background-color);
+      }
     </style>
     <div class="hds-hero custom-theme hds-hero--background-top">
         <div class="hds-hero--with-background__container">

@@ -97,12 +97,11 @@
   background-color: var(--background-color);
   padding: var(--padding-vertical) var(--padding-horizontal);
 }
-.hds-hero--angled-koros__mobile-koros {
-  display: block;
+.hds-hero--angled-koros .hds-hero--angled-koros__koros-and-background {
+  transform: scaleY(-1);
+  overflow: hidden;
 }
-.hds-hero--angled-koros__koros-and-background {
-  display: none;
-}
+
 .hds-hero--with-background__background,
 .hds-hero__image-below-koros {
   height: 300px;
@@ -151,7 +150,7 @@
   .hds-hero--background-top .hds-hero--with-background__container {
     padding: var(--padding-vertical) var(--padding-horizontal);
   }
-  .hds-hero--background-top .container .hds-hero__content--single-column {
+  .hds-hero--background-top .hds-hero__content--single-column {
     width: 50%;
   }
   .hds-hero--background-top .hds-hero__content {
@@ -180,9 +179,7 @@
     padding: 0;
     background: none;
   }
-  .hds-hero--angled-koros__mobile-koros {
-    display: none;
-  }
+
   .hds-hero--angled-koros .hds-hero--angled-koros__koros-and-background {
     transform: rotate(135deg);
     transform-origin: center;
@@ -192,6 +189,7 @@
     z-index: 1;
     height: 100%;
     inset: var(--angled-koros-inset);
+    overflow: visible;
   }
   .hds-hero--angled-koros__koros-and-background:after {
     content: '';
