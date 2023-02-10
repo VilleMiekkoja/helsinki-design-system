@@ -1,4 +1,4 @@
-.hero {
+.hds-hero {
   --background-color: var(--color-white);
   --color: var(--color-black-90);
   --image-position: bottom right;
@@ -15,73 +15,71 @@
   flex-direction: column;
   z-index: 1;
 }
-.hero h1 {
+.hds-hero h1 {
   font-size: var(--fontsize-heading-xl);
   letter-spacing: -1px;
   font-weight: normal;
   line-height: 1em;
   margin-top: 0;
 }
-.hero p {
+.hds-hero p {
   font-size: var(--fontsize-body-l);
 }
-.content {
+.hds-hero__content {
   display: flex;
   padding: var(--padding-vertical) var(--padding-horizontal);
   background-color: var(--background-color);
 }
-.singleColumn,
-.twoColumns {
+.hds-hero__content--single-column,
+.hds-hero__content--two-columns {
   display: flex;
   flex-direction: column;
 }
-.twoColumns {
+.hds-hero__content--two-columns {
   align-items: center;
 }
-.twoColumns .imageContainer {
+.hds-hero__content--two-columns__image-container {
   display: none;
 }
-.card {
+.hds-hero__card {
   display: block;
   max-width: var(--container-width-xl);
 }
-.card.centeredContent {
+.hds-hero__card--centered-content {
   width: 100%;
   text-align: center;
 }
-.image {
+.hds-hero__image {
   display: block;
   width: 100%;
 }
-.imageBelowKoros {
+.hds-hero__image-below-koros {
   display: block;
 }
-.imageBelowKoros .image {
+.hds-hero__image-below-koros .hds-hero__image {
   object-fit: cover;
   height: 100%;
   object-position: var(--image-position);
 }
-.angledKoros .container,
-.backgroundTop .container {
+.hds-hero--with-background__container {
   position: relative;
 }
-.angledKoros .container .background,
-.backgroundTop .container .background {
+.hds-hero--with-background__background {
   width: 100%;
 }
-.angledKoros .container .background .image,
-.backgroundTop .container .background .image {
+.hds-hero--with-background__background .hds-hero__image {
   object-fit: cover;
   height: 100%;
   object-position: var(--image-position);
 }
-.backgroundTop .container .topKoros {
+.hds-hero--background-top__top-koros {
   display: block;
 }
-.backgroundTop .container .bottomKoros {
+.hds-hero--background-top-bottom-koros {
   display: none;
 }
-.angledKoros .container {
+
+.hds-hero--angled-koros .hds-hero--with-background__container {
   display: flex;
   position: relative;
   background-color: transparent;
@@ -89,108 +87,103 @@
   z-index: 1;
   flex-direction: column;
 }
-.angledKoros .container .content {
+.hds-hero--angled-koros .hds-hero__content {
   display: block;
   z-index: 2;
   width: 100%;
   padding: 0;
 }
-.angledKoros .container .content .card {
+.hds-hero--angled-koros .hds-hero__card {
   background-color: var(--background-color);
   padding: var(--padding-vertical) var(--padding-horizontal);
 }
-.angledKoros .container .mobileKoros {
+.hds-hero--angled-koros__mobile-koros {
   display: block;
 }
-.angledKoros .container .korosAndBackground {
+.hds-hero--angled-koros__koros-and-background {
   display: none;
 }
-.angledKoros .container .background,
-.backgroundTop .container .background,
-.imageBelowKoros,
-.wideImage.imageBelowKoros {
+.hds-hero--with-background__background,
+.hds-hero__image-below-koros {
   height: 300px;
 }
 @media only screen and (min-width: 768px) {
-  .hero {
+  .hds-hero {
     --padding-horizontal: var(--horizontal-padding-medium);
     --padding-vertical: var(--spacing-layout-m);
   }
-  .angledKoros .container .background,
-  .backgroundTop .container .background,
-  .imageBelowKoros,
-  .wideImage.imageBelowKoros {
+  .hds-hero--with-background__background,
+  .hds-hero__image-below-koros {
     height: 400px;
   }
 }
 @media only screen and (min-width: 992px) {
-  .hero {
+  .hds-hero {
     --padding-horizontal: var(--horizontal-padding-large);
     --padding-vertical: var(--spacing-layout-xl);
   }
-  .hero p {
+  .hds-hero p {
     font-size: var(--fontsize-body-xl);
   }
-  .imageLeft .content,
-  .imageRight .content {
+  .hds-hero--image-left .hds-hero__content,
+  .hds-hero--image-right .hds-hero__content {
     padding-bottom: var(--spacing-layout-xl);
   }
-  .imageLeft .imageBelowKoros,
-  .imageRight .imageBelowKoros {
+  .hds-hero--image-left .hds-hero__image-below-koros,
+  .hds-hero--image-right .hds-hero__image-below-koros {
     display: none;
   }
-  .twoColumns {
+  .hds-hero__content--two-columns {
     flex-direction: row;
   }
-  .twoColumns > * {
+  .hds-hero__content--two-columns > * {
     width: 50%;
   }
-  .twoColumns > *:first-child {
+  .hds-hero__content--two-columns > *:first-child {
     margin-right: var(--spacing-xl);
   }
-  .twoColumns > *:last-child {
+  .hds-hero__content--two-columns > *:last-child {
     margin-left: var(--spacing-xl);
   }
-  .twoColumns .imageContainer {
+  .hds-hero__content--two-columns__image-container {
     display: block;
   }
-  .backgroundTop .container {
+  .hds-hero--background-top .hds-hero--with-background__container {
     padding: var(--padding-vertical) var(--padding-horizontal);
   }
-  .backgroundTop .container .singleColumn {
+  .hds-hero--background-top .container .hds-hero__content--single-column {
     width: 50%;
   }
-  .backgroundTop .container .content {
+  .hds-hero--background-top .hds-hero__content {
     --padding-vertical: var(--spacing-2-xl);
     --padding-horizontal: var(--spacing-xl);
   }
-  .backgroundTop .container .topKoros {
+  .hds-hero--background-top__top-koros {
     display: none;
   }
-  .backgroundTop .container .bottomKoros {
+  .hds-hero--background-top__bottom-koros {
     display: block;
   }
-  .angledKoros .container .background,
-  .backgroundTop .container .background {
+  .hds-hero--with-background__background {
     position: absolute;
     z-index: -1;
     inset: 0;
     height: auto;
     width: auto;
   }
-  .angledKoros .container .content {
+  .hds-hero--angled-koros .hds-hero__content {
     background-color: transparent;
     width: 50%;
     padding: var(--padding-vertical) var(--padding-horizontal);
   }
-  .angledKoros .container .content .card {
+  .hds-hero--angled-koros .hds-hero__card {
     padding: 0;
     background: none;
   }
-  .angledKoros .container .mobileKoros {
+  .hds-hero--angled-koros__mobile-koros {
     display: none;
   }
-  .angledKoros .container .korosAndBackground {
+  .hds-hero--angled-koros .hds-hero--angled-koros__koros-and-background {
     transform: rotate(135deg);
     transform-origin: center;
     width: 150%;
@@ -200,7 +193,7 @@
     height: 100%;
     inset: var(--angled-koros-inset);
   }
-  .angledKoros .container .korosAndBackground:after {
+  .hds-hero--angled-koros__koros-and-background:after {
     content: '';
     background-color: var(--koros-color);
     display: block;
@@ -212,23 +205,23 @@
   }
 }
 @media only screen and (min-width: 1248px) {
-  .hero {
+  .hds-hero {
     --padding-horizontal: var(--horizontal-padding-x-large);
   }
-  .hero h1 {
+  .hds-hero h1 {
     font-size: var(--fontsize-heading-xxl);
     letter-spacing: -1.2px;
   }
-  .angledKoros .container .content {
+  .hds-hero--angled-koros .hds-hero__content {
     width: 45%;
   }
-  .angledKoros .container .content p {
+  .hds-hero--angled-koros .hds-hero__content p {
     padding-right: var(--spacing-l);
   }
-  .twoColumns > *:first-child {
+  .hds-hero__content--two-columns > *:first-child {
     margin-right: var(--spacing-2-xl);
   }
-  .twoColumns > *:last-child {
+  .hds-hero__content--two-columns > *:last-child {
     margin-left: var(--spacing-2-xl);
   }
 }

@@ -10,7 +10,7 @@ const button = `
     </button>`;
 
 const card = `
-      <div class="card">
+      <div class="hds-hero__card">
         <h1>Welcome to the hero story</h1>
         <p>Nullam ut nunc consectetur, accumsan nunc sed, luctus nisl. Curabitur lacinia tristique est, sit amet egestas velit elementum sit amet. Nam lacinia volutpat erat vel faucibus.</p>
         ${button}
@@ -35,15 +35,15 @@ const koros = `
         ${getKorosSVG()}
       </div>`;
 
-const image = `<img class="image" src="https://hds.hel.fi/images/homepage/amos58.jpg" aria-hidden="true" alt="">`;
+const image = `<img class="hds-hero__image" src="https://hds.hel.fi/images/homepage/amos58.jpg" aria-hidden="true" alt="">`;
 
 export const BottomWideImage = () => `
-<div class="hero wideImage">
-  <div class="content singleColumn">
+<div class="hds-hero hds-hero--wide-image">
+  <div class="hds-hero__content hds-hero__content--single-column">
     ${card}
   </div>
   ${koros}
-  <div class="imageContainer imageBelowKoros">
+  <div class="hds-hero__image-below-koros">
     ${image}
   </div>
 </div>`;
@@ -58,18 +58,18 @@ export const AngledKoros = () => `
     --koros-color: var(--background-color);
     --color: #000;
   </style>
-<div class="hero custom-theme angledKoros">
-   <div class="container">
-      <div class="content">
+<div class="hds-hero custom-theme hds-hero--angled-koros">
+   <div class="hds-hero--with-background__container">
+      <div class="hds-hero__content">
         ${card}
-         <div class="mobileKoros">
+         <div class="hds-hero--angled-koros__mobile-koros">
             ${koros}
          </div>
       </div>
-      <div class="hds-koros korosAndBackground" style="fill: var(--koros-color);">
+      <div class="hds-koros hds-hero--angled-koros__koros-and-background" style="fill: var(--koros-color);">
          ${getKorosSVG()}
       </div>
-      <div class="background">
+      <div class="hds-hero--with-background__background">
         ${image}
       </div>
    </div>
@@ -84,8 +84,8 @@ export const WithoutImage = () => `
       --color: #000;
       --koros-color: #009246;
     </style>
-    <div class="hero custom-theme">
-      <div class="content singleColumn">
+    <div class="hds-hero custom-theme">
+      <div class="hds-hero__content hds-hero__content--single-column">
         ${card}
         <div class="hds-koros__spacer" style="height: 34px;"></div>
       </div>
@@ -112,13 +112,13 @@ export const ImageRight = () => `
       --color: #000;
       --koros-color: var(--background-color);
     </style>
-<div class="hero custom-theme imageRight">
-   <div class="content twoColumns">
+<div class="hds-hero custom-theme hds-hero--image-right">
+   <div class="hds-hero__content hds-hero__content--two-columns">
       ${card}
-      <div class="imageContainer">${image}</div>
+      <div class="hds-hero__content--two-columns__image-container">${image}</div>
    </div>
    ${koros}
-   <div class="imageContainer imageBelowKoros">${image}</div>
+   <div class="hds-hero__image-below-koros">${image}</div>
 </div>`;
 ImageRight.storyName = 'Image right';
 
@@ -130,13 +130,13 @@ export const ImageLeft = () => `
       --color: #000;
       --koros-color: var(--background-color);
     </style>
-<div class="hero custom-theme imageLeft">
-   <div class="content twoColumns">
-    <div class="imageContainer">${image}</div>
+<div class="hds-hero custom-theme hds-hero--image-left">
+   <div class="hds-hero__content hds-hero__content--two-columns">
+    <div class="hds-hero__content--two-columns__image-container">${image}</div>
       ${card}
    </div>
    ${koros}
-   <div class="imageContainer imageBelowKoros">${image}</div>
+   <div class="hds-hero__image-below-koros">${image}</div>
 </div>`;
 ImageLeft.storyName = 'Image left';
 
@@ -148,17 +148,17 @@ export const BackgroundImage = () => `
         --color: #000;
         --koros-color: var(--background-color);
     </style>
-    <div class="hero custom-theme backgroundTop">
-        <div class="container">
-          <div class="background">${image}</div>
-          <div class="hds-koros topKoros" style="fill: var(--koros-color); margin-top: -14px; height: 14px; overflow: hidden;">
+    <div class="hds-hero custom-theme hds-hero--background-top">
+        <div class="hds-hero--with-background__container">
+          <div class="hds-hero--with-background__background">${image}</div>
+          <div class="hds-koros hds-hero--background-top__top-koros" style="fill: var(--koros-color); margin-top: -14px; height: 14px; overflow: hidden;">
             ${getKorosSVG()}
           </div>
-          <div class="content singleColumn">
+          <div class="hds-hero__content hds-hero__content--single-column">
               ${card}
           </div>
         </div>
-        <div class="hds-koros bottomKoros" style="fill: var(--koros-color); margin-top: -14px; height: 14px; overflow: hidden;">
+        <div class="hds-koros hds-hero--background-top__bottom-koros" style="fill: var(--koros-color); margin-top: -14px; height: 14px; overflow: hidden;">
           ${getKorosSVG()}
         </div>
     </div>`;
