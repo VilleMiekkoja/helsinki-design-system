@@ -30,7 +30,7 @@ export const getComponentFromChildren = (children: React.ReactNode, componentNam
  * Get the child elements even if there is a parent container element.
  * @param children
  */
-export const getChildElementsEvenIfContainerInbetween = (children: React.ReactNode): React.ReactElement[] => {
+export const getChildElementsEvenIfContainerInbetween = (children: React.ReactNode) => {
   const arrayChildren = React.Children.toArray(children);
   const childrenHasContainer =
     arrayChildren.length === 1 &&

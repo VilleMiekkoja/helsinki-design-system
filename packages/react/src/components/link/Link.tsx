@@ -8,10 +8,7 @@ import classNames from '../../utils/classNames';
 import { getTextFromReactChildren } from '../../utils/getTextFromReactChildren';
 import getLinkAriaLabel from '../../utils/getLinkAriaLabel';
 
-export type LinkProps = Omit<
-  React.ComponentPropsWithoutRef<'a'>,
-  'target' | 'href' | 'onPointerEnterCapture' | 'onPointerLeaveCapture' | 'aria-label'
-> & {
+export type LinkProps = {
   /**
    * aria-label for providing detailed information for screen readers about a link text.
    */
@@ -56,7 +53,10 @@ export type LinkProps = Omit<
    * Additional styles
    */
   style?: React.CSSProperties;
-};
+} & Omit<
+  React.ComponentPropsWithoutRef<'a'>,
+  'target' | 'href' | 'onPointerEnterCapture' | 'onPointerLeaveCapture' | 'aria-label'
+>;
 
 type LinkToIconSizeMappingType = {
   L: 'l';
