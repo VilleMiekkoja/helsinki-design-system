@@ -3,7 +3,7 @@
   --color: var(--color-black-90);
   --image-position: bottom right;
   --koros-color: var(--color-white);
-  --angled-koros-inset: auto auto 10% -40%;
+  --angled-koros-inset: auto auto 10% -33%;
   --horizontal-padding-small: var(--spacing-s);
   --horizontal-padding-medium: var(--spacing-m);
   --horizontal-padding-large: var(--spacing-layout-xl);
