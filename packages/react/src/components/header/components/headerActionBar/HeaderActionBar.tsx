@@ -125,7 +125,7 @@ export const HeaderActionBar: ComponentType<HeaderActionBarProps> = (props) => {
     <>
       <div className={classNames(styles.headerActionBar, className)}>
         <LinkItem {...logoProps}>
-          <Logo className={styles.logo} language={language} aria-hidden />
+          <Logo className={styles.logo} language={language} dataTestId="action-bar-logo" aria-hidden />
         </LinkItem>
         {title && (
           <LinkItem {...titleProps}>
