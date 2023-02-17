@@ -1,4 +1,4 @@
-@value x-small-down, small-down, small-only, medium-down, medium-only, medium-up, large-up, x-large-up from "../../../styles/breakpoints.css";
+@value x-small-down, small-down, medium-down, large-up from "../../../styles/breakpoints.css";
 @import '../common';
 
 .divider {
@@ -23,10 +23,6 @@
   gap: var(--spacing-xs);
   grid-auto-flow: column;
 
-  /* display: flex;
-  flex-direction: row;
-  flex-wrap: wrap; */
-
   > * {
     align-self: center;
   }
@@ -43,9 +39,6 @@
 .utilityLinks {
   display: grid;
   grid-auto-flow: column;
-  /* display: flex;
-  flex-direction: row;
-  flex-wrap: wrap; */
   position: relative;
 }
 
