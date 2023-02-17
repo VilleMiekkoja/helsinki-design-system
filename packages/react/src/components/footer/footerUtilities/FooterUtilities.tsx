@@ -1,10 +1,9 @@
-import React, { Children, cloneElement } from 'react';
+import React, { cloneElement, isValidElement } from 'react';
 
 // import core base styles
 import 'hds-core';
 import styles from './FooterUtilities.module.scss';
-import { getComponentFromChildren, getChildElementsEvenIfContainerInbetween } from '../../../utils/getChildren';
-import { FCWithName } from '../../../common/types';
+import classNames from '../../../utils/classNames';
 
 export type FooterUtilitiesProps = {
   /**
@@ -15,30 +14,33 @@ export type FooterUtilitiesProps = {
    * Children elements to render.
    */
   children: React.ReactNode;
+  /**
+   * List of Footer.NavigationLink components to display in the social media section.
+   */
+  soMeLinks?: React.ReactNode[];
+  /**
+   * Props that will be passed to the native `<section>` element.
+   * Can be used to pass aria attributes that describes the SoMe section to screen reader users.
+   */
+  soMeSectionProps?: React.ComponentPropsWithoutRef<'section'>;
 };
 
-export const FooterUtilities = ({ ariaLabel, children }: FooterUtilitiesProps) => {
-  // filter out the SoMe group, so that other utils can be wrapped in a separate div
-  const [soMeGroup, childrenWithoutSoMeGroup] = getComponentFromChildren(children, 'FooterSoMe');
-  const groups = getChildElementsEvenIfContainerInbetween(childrenWithoutSoMeGroup).filter(
-    (child) => (child.type as FCWithName).componentName === 'FooterUtilityGroup',
-  );
-
+export const FooterUtilities = ({ ariaLabel, children, soMeLinks, soMeSectionProps }: FooterUtilitiesProps) => {
   return (
     <div className={styles.utilities} aria-label={ariaLabel}>
       <hr className={styles.divider} aria-hidden />
-      {groups && groups.length > 0 ? (
-        <div className={styles.groups}>
-          {Children.map(groups, (child, index) => {
-            return cloneElement(child, {
-              key: index,
-            });
+      <div className={classNames(styles.links, !soMeLinks && styles.widerLinks)}>{children}</div>
+      {soMeLinks && (
+        <section className={styles.soMe} {...soMeSectionProps}>
+          {soMeLinks.map((link) => {
+            if (isValidElement(link)) {
+              /* Set variant to null just in case user set it. It should be null for SoMelinks so it doesn't mess with the styles. */
+              return cloneElement(link, { variant: null });
+            }
+            return null;
           })}
-        </div>
-      ) : (
-        <nav className={styles.links}>{childrenWithoutSoMeGroup}</nav>
+        </section>
       )}
-      {soMeGroup}
     </div>
   );
 };

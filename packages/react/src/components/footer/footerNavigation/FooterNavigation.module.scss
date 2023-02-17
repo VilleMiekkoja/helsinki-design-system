@@ -1,20 +1,8 @@
 @value large-down from "../../../styles/breakpoints.css";
 @import '../common';
 
-.groups {
-  display: flex;
-  flex-wrap: wrap;
-  row-gap: var(--spacing-m);
-}
-
 .navigation {
   display: flex;
   gap: var(--spacing-xs) var(--spacing-m);
   flex-wrap: wrap;
-
-  &.sitemap {
-    align-items: start;
-    justify-items: start;
-    gap: var(--spacing-l) var(--spacing-m);
-  }
 }
