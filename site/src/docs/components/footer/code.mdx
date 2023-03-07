@@ -3,7 +3,7 @@ slug: '/components/footer/code'
 title: 'Footer - Code'
 ---
 
-import { Footer, IconFacebook, IconTwitter, IconInstagram, IconYoutube, IconTiktok, Link } from 'hds-react';
+import { Footer, IconFacebook, IconTwitter, IconInstagram, IconYoutube, IconTiktok, Link, FooterVariant } from 'hds-react';
 import ExternalLink from '../../../components/ExternalLink';
 import Playground from '../../../components/Playground';
 import TabsLayout from './tabs.mdx';
@@ -21,14 +21,14 @@ export default ({ children, pageContext }) => <TabsLayout pageContext={pageConte
 ```jsx
 <Footer title="Helsinki Design System" footerAriaLabel="HDS Footer">
   <Footer.Navigation navigationAriaLabel="HDS Footer navigation">
-    <Footer.NavigationLink label="Item" />
-    <Footer.NavigationLink label="Item" />
-    <Footer.NavigationLink label="Item" />
-    <Footer.NavigationLink label="Item" />
-    <Footer.NavigationLink label="Item" />
-    <Footer.NavigationLink label="Item" />
-    <Footer.NavigationLink label="Item" />
-    <Footer.NavigationLink label="Item" />
+    <Footer.NavigationLink label="Item" variant={FooterVariant.Navigation} />
+    <Footer.NavigationLink label="Item" variant={FooterVariant.Navigation} />
+    <Footer.NavigationLink label="Item" variant={FooterVariant.Navigation} />
+    <Footer.NavigationLink label="Item" variant={FooterVariant.Navigation} />
+    <Footer.NavigationLink label="Item" variant={FooterVariant.Navigation} />
+    <Footer.NavigationLink label="Item" variant={FooterVariant.Navigation} />
+    <Footer.NavigationLink label="Item" variant={FooterVariant.Navigation} />
+    <Footer.NavigationLink label="Item" variant={FooterVariant.Navigation} />
   </Footer.Navigation>
   <Footer.Utilities
     soMeLinks={[
@@ -39,15 +39,15 @@ export default ({ children, pageContext }) => <TabsLayout pageContext={pageConte
       <Footer.NavigationLink icon={<IconTiktok />} />,
     ]}
   >
-    <Footer.NavigationLink label="Contact us" />
-    <Footer.NavigationLink label="Give feedback" />
+    <Footer.NavigationLink label="Contact us" variant={FooterVariant.Utility}/>
+    <Footer.NavigationLink label="Give feedback" variant={FooterVariant.Utility}/>
   </Footer.Utilities>
   <Footer.Base copyrightHolder="Copyright" copyrightText="All rights reserved" backToTopLabel="Back to top">
-    <Footer.NavigationLink label="Link" />
-    <Footer.NavigationLink label="Link" />
-    <Footer.NavigationLink label="Link" />
-    <Footer.NavigationLink label="Link" />
-    <Footer.NavigationLink label="Link" />
+    <Footer.NavigationLink label="Link" variant={FooterVariant.Base} />
+    <Footer.NavigationLink label="Link" variant={FooterVariant.Base} />
+    <Footer.NavigationLink label="Link" variant={FooterVariant.Base} />
+    <Footer.NavigationLink label="Link" variant={FooterVariant.Base} />
+    <Footer.NavigationLink label="Link" variant={FooterVariant.Base} />
   </Footer.Base>
 </Footer>
 ```
@@ -62,33 +62,33 @@ export default ({ children, pageContext }) => <TabsLayout pageContext={pageConte
 <>
   <Footer title="Helsinki Design System" footerAriaLabel="HDS Footer">
     <Footer.Navigation navigationAriaLabel="HDS Footer navigation">
-      <Footer.NavigationLink label="Item" />
-      <Footer.NavigationLink label="Item" />
-      <Footer.NavigationLink label="Item" />
-      <Footer.NavigationLink label="Item" />
-      <Footer.NavigationLink label="Item" />
-      <Footer.NavigationLink label="Item" />
+      <Footer.NavigationLink label="Item" variant={FooterVariant.Navigation} />
+      <Footer.NavigationLink label="Item" variant={FooterVariant.Navigation} />
+      <Footer.NavigationLink label="Item" variant={FooterVariant.Navigation} />
+      <Footer.NavigationLink label="Item" variant={FooterVariant.Navigation} />
+      <Footer.NavigationLink label="Item" variant={FooterVariant.Navigation} />
+      <Footer.NavigationLink label="Item" variant={FooterVariant.Navigation} />
     </Footer.Navigation>
     <Footer.Base copyrightHolder="Copyright" copyrightText="All rights reserved" backToTopLabel="Back to top">
-      <Footer.NavigationLink label="Link" />
-      <Footer.NavigationLink label="Link" />
-      <Footer.NavigationLink label="Link" />
+      <Footer.NavigationLink label="Link" variant={FooterVariant.Base} />
+      <Footer.NavigationLink label="Link" variant={FooterVariant.Base} />
+      <Footer.NavigationLink label="Link" variant={FooterVariant.Base} />
     </Footer.Base>
   </Footer>
   <br />
   <Footer title="Helsinki Design System" theme="dark" footerAriaLabel="HDS Footer">
-    <Footer.Navigation navigationAriaLabel="HDS Footer navigation">
-      <Footer.NavigationLink label="Item" />
-      <Footer.NavigationLink label="Item" />
-      <Footer.NavigationLink label="Item" />
-      <Footer.NavigationLink label="Item" />
-      <Footer.NavigationLink label="Item" />
-      <Footer.NavigationLink label="Item" />
+    <Footer.Navigation navigationAriaLabe variant={FooterVariant.Navigation}l="HDS Footer navigation">
+      <Footer.NavigationLink label="Item" variant={FooterVariant.Navigation} />
+      <Footer.NavigationLink label="Item" variant={FooterVariant.Navigation} />
+      <Footer.NavigationLink label="Item" variant={FooterVariant.Navigation} />
+      <Footer.NavigationLink label="Item" variant={FooterVariant.Navigation} />
+      <Footer.NavigationLink label="Item" variant={FooterVariant.Navigation} />
+      <Footer.NavigationLink label="Item" variant={FooterVariant.Navigation} />
     </Footer.Navigation>
     <Footer.Base copyrightHolder="Copyright" copyrightText="All rights reserved" backToTopLabel="Back to top">
-      <Footer.NavigationLink label="Link" />
-      <Footer.NavigationLink label="Link" />
-      <Footer.NavigationLink label="Link" />
+      <Footer.NavigationLink label="Link" variant={FooterVariant.Base} />
+      <Footer.NavigationLink label="Link" variant={FooterVariant.Base} />
+      <Footer.NavigationLink label="Link" variant={FooterVariant.Base} />
     </Footer.Base>
   </Footer>
 </>
@@ -104,14 +104,14 @@ export default ({ children, pageContext }) => <TabsLayout pageContext={pageConte
 <>
   <Footer title="Default" footerAriaLabel="HDS Footer">
     <Footer.Navigation navigationAriaLabel="HDS Footer navigation">
-      <Footer.NavigationLink label="Item" />
-      <Footer.NavigationLink label="Item" />
-      <Footer.NavigationLink label="Item" />
-      <Footer.NavigationLink label="Item" />
-      <Footer.NavigationLink label="Item" />
-      <Footer.NavigationLink label="Item" />
-      <Footer.NavigationLink label="Item" />
-      <Footer.NavigationLink label="Item" />
+      <Footer.NavigationLink label="Item" variant={FooterVariant.Navigation} />
+      <Footer.NavigationLink label="Item" variant={FooterVariant.Navigation} />
+      <Footer.NavigationLink label="Item" variant={FooterVariant.Navigation} />
+      <Footer.NavigationLink label="Item" variant={FooterVariant.Navigation} />
+      <Footer.NavigationLink label="Item" variant={FooterVariant.Navigation} />
+      <Footer.NavigationLink label="Item" variant={FooterVariant.Navigation} />
+      <Footer.NavigationLink label="Item" variant={FooterVariant.Navigation} />
+      <Footer.NavigationLink label="Item" variant={FooterVariant.Navigation} />
     </Footer.Navigation>
   </Footer>
   <br />
@@ -120,13 +120,13 @@ export default ({ children, pageContext }) => <TabsLayout pageContext={pageConte
     <Footer.Navigation navigationAriaLabel="HDS Footer navigation">
       {[1, 2, 3, 4].map((key) => (
         <Footer.NavigationGroup key={key}>
-          <Footer.GroupHeading href="http://www.google.com" onClick={(e) => e.preventDefault()} label="Item" />
-          <Footer.NavigationLink label="Sub item" />
-          <Footer.NavigationLink label="Sub item" />
-          <Footer.NavigationLink label="Sub item" />
-          <Footer.NavigationLink label="Sub item" />
-          <Footer.NavigationLink label="Sub item" />
-          <Footer.NavigationLink label="Sub item" />
+          <Footer.GroupHeading href="http://www.google.com" onClick={(e) => e.preventDefault()} label="Item" variant={FooterVariant.Navigation} />
+          <Footer.NavigationLink label="Sub item" variant={FooterVariant.Navigation} />
+          <Footer.NavigationLink label="Sub item" variant={FooterVariant.Navigation} />
+          <Footer.NavigationLink label="Sub item" variant={FooterVariant.Navigation} />
+          <Footer.NavigationLink label="Sub item" variant={FooterVariant.Navigation} />
+          <Footer.NavigationLink label="Sub item" variant={FooterVariant.Navigation} />
+          <Footer.NavigationLink label="Sub item" variant={FooterVariant.Navigation} />
         </Footer.NavigationGroup>
       ))}
     </Footer.Navigation>
