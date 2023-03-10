@@ -143,6 +143,13 @@
     }
   },
   {
+    "name": "Header",
+    "text": "Header is a wrapper component for all navigation elements.",
+    "linkboxAriaLabel": "Header component",
+    "linkAriaLabel": "Go to the Header component page",
+    "href": "/components/header"
+  },
+  {
     "name": "Icon",
     "text": "Icons are used for providing visual cues and highlighting actions.",
     "linkboxAriaLabel": "Icon component",
